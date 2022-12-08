@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<!-- selectNoticeId(공지 게시판 상세보기) -->
+     <select id="selectNoticeId" parameterType="hashmap" resultType="hashmap">
+     <![CDATA[
+     		SELECT * 
+				FROM BOARD
+				WHERE BD_TYPE = 'N' AND BD_NUM = #{BD_NUM}
+     ]]>
+	</select>
+	
+	<!-- selectQnaId(고객센터 게시판 상세보기) -->
+	<select id="selectQnaId" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT * 
+				FROM BOARD 
+				WHERE BD_TYPE = 'Q' AND BD_NUM = #{BD_NUM}
+		]]>
+	</select>
+
+	<!-- selectQnaMemberId(마이페이지 고객센터) -->
+	<select id="selectQnaMemberId" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT * 
+				FROM BOARD 
+				WHERE BD_TYPE = 'Q' AND BD_ID = #{MEM_ID}
+		]]>
+	</select>
+
+	<!-- selectReviewMemberId(마이페이지 후기) -->
+	<select id="selectReviewMemberId" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+				SELECT * 
+				FROM BOARD 
+				WHERE BD_TYPE = 'R' AND BD_ID=#{MEM_ID}
+		]]>
+	</select>
+	
+	<!-- selectReviewProduct(상품 후기 리스트) -->
+	<select id="selectReviewProduct" parameterType="hashmap" resultType="hashmap">
+	 <![CDATA[
+			SELECT * 
+			FROM BOARD 
+			WHERE BD_TYPE='R' AND BD_GID=#{BD_GID}
+	   ]]>
+	</select>
+	
+	<!-- noticeListPaging(공지 게시판 리스트 페이징) -->
+	<select id="noticeListPaging" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT *
+		FROM (
+			SELECT BD_NUM, BD_TITLE, BD_REGDATE, BD_ID, BD_GID, BD_COUNT, BD_CONTENT, ROWNUM R
+			FROM ( 	
+				SELECT BD_NUM, BD_TITLE, BD_REGDATE, BD_ID, BD_GID, BD_COUNT, BD_CONTENT 
+				FROM
+					BOARD
+				WHERE
+					BD_TYPE = 'N'
+				ORDER BY BD_NUM DESC
+			)
+		)
+		WHERE
+			R BETWEEN #{START} AND #{END}
+	]]>
+     </select>
+     
+	<!-- qnaListPaging(고객센터 게시판 리스트 페이징) -->
+	<select id="qnaListPaging" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT *
+		FROM (
+			SELECT BD_NUM, BD_TITLE, BD_REGDATE, BD_ID, BD_GID, BD_COUNT, BD_CONTENT, ROWNUM R
+			FROM ( 	
+				SELECT BD_NUM, BD_TITLE, BD_REGDATE, BD_ID, BD_GID, BD_COUNT, BD_CONTENT 
+				FROM
+					BOARD
+				WHERE
+					BD_TYPE = 'Q'
+				ORDER BY BD_NUM DESC
+			)
+		)
+		WHERE
+			R BETWEEN #{START} AND #{END}
+	]]>
+	</select>
+	
+	<!-- reviewListPaging(후기 게시판 리스트 페이징) -->
+	<select id="reviewListPaging" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT *
+		FROM (
+			SELECT BD_NUM, BD_TITLE, BD_REGDATE, BD_ID, BD_GID, BD_COUNT, BD_CONTENT, ROWNUM R
+			FROM ( 	
+				SELECT BD_NUM, BD_TITLE, BD_REGDATE, BD_ID, BD_GID, BD_COUNT, BD_CONTENT 
+				FROM
+					BOARD
+				WHERE
+					BD_TYPE = 'R'
+				ORDER BY BD_NUM DESC
+			)
+		)
+		WHERE
+			R BETWEEN #{START} AND #{END}
+	]]>
+	</select>
+	
+	<!-- noticeListCount(공지 게시판 게시글수) -->
+	<select id="noticeListCount" resultType="hashmap">
+        <![CDATA[
+				SELECT COUNT(*) COUNT
+				FROM
+					BOARD
+				WHERE
+					BD_TYPE = 'N'
+	 	]]>
+	</select>
+
+	<!-- qnaListCount(고객센터 게시판 게시글수) -->
+	<select id="qnaListCount" resultType="hashmap">
+        <![CDATA[
+				SELECT COUNT(*) COUNT
+				FROM
+					BOARD
+				WHERE
+					BD_TYPE = 'Q'
+	 	]]>
+	</select>
+
+	<!-- reviewListCount(후기 게시판 게시글수) -->
+	<select id="reviewListCount" resultType="hashmap">
+        <![CDATA[
+				SELECT COUNT(*) COUNT 
+				FROM
+					BOARD
+				WHERE
+					BD_TYPE = 'R'
+	 	]]>
+	</select>
+	
+	<!-- insertNotice(공지사항 등록 기능) -->
+	<insert id="insertNotice" parameterType="hashmap">
+	<![CDATA[
+		INSERT 
+		INTO BOARD
+		VALUES(
+			BD_NUM_SEQ.NEXTVAL, 
+			#{BD_TITLE}, 
+			SYSDATE, 
+			#{BD_ID}, 
+			NULL, 
+			0, 
+			#{BD_CONTENT}, 
+			'N'
+			)
+		]]>
+	</insert>
+	
+	<!-- insertReview(후기 게시판 글 입력 기능) -->
+	<insert id="insertReview" parameterType="hashmap">
+	<![CDATA[
+			INSERT 
+				INTO BOARD
+				VALUES(
+					BD_NUM_SEQ.NEXTVAL, 
+					#{BD_TITLE}, 
+					SYSDATE, 
+					#{BD_ID}, 
+					#{BD_GID}, 
+					0, 
+					#{BD_CONTENT}, 
+					'R'
+					)
+	]]>
+	</insert>
+	
+	<!-- insertQna(고객센터 게시판 글 입력 기능) -->
+	<insert id="insertQna" parameterType="hashmap">
+	<![CDATA[
+		INSERT 
+			INTO BOARD
+			VALUES(
+				BD_NUM_SEQ.NEXTVAL, 
+				#{BD_TITLE}, 
+				SYSDATE, 
+				#{BD_ID}, 
+				NULL, 
+				0, 
+				#{BD_CONTENT}, 
+				'Q'
+				)
+		]]>
+	</insert> 
+	
+	<!-- updateNoticeId(공지사항 수정 기능) -->
+	<update id="updateNoticeId" parameterType="hashmap" >
+        <![CDATA[
+			UPDATE BOARD 
+				SET BD_TITLE=#{BD_TITLE}, 
+					BD_CONTENT=#{BD_CONTENT}
+				WHERE BD_NUM=#{BD_NUM}
+	   ]]>
+	</update>	
+	
+	<!-- deleteCommunityId(공지,후기 삭제 기능) -->
+	<delete id="deleteCommunityId" parameterType="hashmap" >
+	<![CDATA[
+		DELETE 
+			FROM BOARD
+			WHERE BD_NUM=#{BD_NUM}
+	]]>
+	</delete>
+	
+	<!-- commentListId(고객센터 댓글 리스트) -->
+	<select id="commentListId" parameterType="hashmap" resultType="hashmap">
+	 <![CDATA[
+		SELECT * 
+			FROM BOARDCOMMENT
+			WHERE BC_NUM=#{BC_NUM}
+	   ]]>
+	</select>
+	
+	<!-- insertComment(고객센터 댓글 입력기능) -->
+	<insert id="insertComment" parameterType="hashmap">
+	<![CDATA[
+		INSERT 
+		INTO BOARDCOMMENT
+			VALUES(
+				BC_BCID_SEQ.NEXTVAL, 
+				#{BC_NUM}, 
+				#{BC_ID}, 
+				SYSDATE, 
+				#{BC_COMMENT}
+				)
+	]]>
+	</insert>
+	
+	<!-- updateComment(고객센터 댓글 수정 기능) -->
+	<update id="updateComment" parameterType="hashmap" >
+        <![CDATA[
+				UPDATE BOARDCOMMENT 
+					SET BC_COMMENT=#{BC_COMMENT} 
+				WHERE BC_BCID=#{BC_BCID}
+	   ]]>
+	</update>
+	
+	
+	<!-- deleteComment(고객센터 댓글 삭제기능) -->
+	<delete id="deleteComment" parameterType="hashmap" >
+	<![CDATA[
+		DELETE 
+			FROM BOARDCOMMENT
+			WHERE BC_BCID=#{BC_BCID}
+	]]>
+	</delete>
+	
+		
+   	<!-- 사용하지 않음 -->	
+
+	<!-- noticeList(공지 게시판 리스트) -->
+	<select id="noticeList" resultType="hashmap">
+        <![CDATA[
+				SELECT * 
+					FROM BOARD
+					WHERE BD_TYPE = 'N'
+	 	]]>
+     </select>
+	
+	<!-- qnaList(고객센터 게시판 리스트) -->
+	<select id="qnaList" resultType="hashmap">
+	 <![CDATA[
+		SELECT *
+			FROM BOARD
+			WHERE BD_TYPE= 'Q'
+	   ]]>
+	</select>
+
+	<!-- reviewList(후기 게시판 리스트) -->
+	<select id="reviewList" resultType="hashmap">
+	 <![CDATA[
+			SELECT * 
+				FROM BOARD 
+				WHERE BD_TYPE='R'
+	   ]]>
+	</select>
+	
+</mapper>

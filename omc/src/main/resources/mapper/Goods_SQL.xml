@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="goods">
+
+	<!-- [selectGoodsList] 전체상품 게시판 리스트 (메인 페이지용 : 열 번호 1~3 까지만 꺼내기) -->
+	<select id="selectGoodsList" resultType="hashmap">
+	<![CDATA[
+		SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, R
+		FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, ROWNUM R
+			FROM (SELECT GD_GID, GD_GNAME, GD_SELL, GD_IMAGE, GD_PRICE, GD_DCPRICE
+				FROM GOODS
+				ORDER BY GD_SELL DESC)
+			)
+		WHERE R BETWEEN 1 AND 3
+	    ]]>
+	</select>
+	
+	<!-- [selectGoodsId] 상품 디테일 -->
+	<select id="selectGoodsId" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+	 	SELECT * 
+		FROM GOODS
+		WHERE GD_GID=#{GD_GID}
+		]]>
+	</select>
+	
+	<!-- [allGoodsList] 전체 상품 리스트 페이징 -->
+	<select id="allGoodsList" parameterType="hashmap" resultType="hashmap">
+	<include refid="common.pagingPre"/> 
+	<![CDATA[
+		SELECT ROW_NUMBER() OVER (ORDER BY GD_GID DESC) RNUM, GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE
+		FROM GDOOS
+	]]>
+	<include refid="common.pagingPost"/> 
+	</select>
+	
+	<!-- [allGoodsListSearch] 전체 상품 리스트 검색 -->
+	<select id="allGoodsListSearch" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT *
+		FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY, ROWNUM R
+		    FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY
+		        FROM GOODS 
+				]]>
+			 	<trim prefix="WHERE" prefixOverrides="AND">
+					<if test="GD_CATEGORY != NULL">
+						AND GD_CATEGORY=#{GD_CATEGORY}
+					</if>
+					<if test="GD_PRICEMIN != -1">
+						AND GD_PRICE BETWEEN #{GD_PRICEMIN} AND #{GD_PRICEMAX} 
+					</if>
+				</trim>
+				<trim prefix="ORDER BY">
+			 		<if test="GD_SELL != NULL">
+						GD_SELL DESC  
+					</if>
+					<if test="GD_ORDER!=NULL and GD_ORDER.equals('LOW')">
+						GD_PRICE ASC 
+					</if>
+					<if test="GD_ORDER!=NULL and GD_ORDER.equals('HIGH')">
+						GD_PRICE DESC 
+					</if>
+					<if test="GD_REGDATE!=NULL">
+						GD_REGDATE DESC 
+					</if>
+				</trim>
+			)
+			ORDER BY R
+		)
+		WHERE R BETWEEN #{START} AND #{END}
+	</select>
+	
+	<!-- [allGoodsKeywordSearch] 전체 상품 키워드 검색 -->
+	<select id="allListKeywordPaging" parameterType="hashmap" resultType="hashmap">
+		SELECT *
+		FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY, ROWNUM R
+		    FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY
+		        FROM GOODS 
+				<trim prefix="WHERE" prefixOverrides="OR">
+					<if test="KEYWORD!=NULL">	
+						<if test="KEYNUMBER!=NULL">	
+							OR GD_GNAME LIKE '%'||#{KEYWORD}||'%'
+			                OR GD_CATEGORY LIKE '%'||#{KEYWORD}||'%'
+			                OR GD_PRICE =#{KEYNUMBER}
+			                OR GD_STOCK =#{KEYNUMBER}
+						</if>
+						<if test="KEYNUMBER==NULL">				
+							OR GD_GNAME LIKE '%'||#{KEYWORD}||'%'
+                			OR GD_CATEGORY LIKE '%'||#{KEYWORD}||'%'		
+						</if>
+					</if>
+				</trim>
+			) ORDER BY R
+		) WHERE R BETWEEN #{START} AND #{END}
+	</select>
+	
+	<!-- [goodsCategoryList] 카테고리별 상품 리스트-->
+	<select id="goodsCategoryList" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT * 
+		FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY, ROWNUM R
+		    FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY
+		        FROM GOODS
+		        WHERE GD_CATEGORY=#{GD_CATEGORY}
+		        ORDER BY GD_GID
+		        ) ORDER BY R
+		    )
+		WHERE R BETWEEN #{START} AND #{END} 
+	]]>
+	</select> 
+	
+	<!-- [allGoodsCount] 전체상품 수량 -->
+	<select id="allGoodsCount" resultType="hashmap">
+	<![CDATA[
+		SELECT COUNT(*) COUNT
+		FROM GOODS
+	]]>
+	</select>
+	
+	<!-- [allGoodsSearchCount] 전체상품 검색 수량 -->
+	<select id="allGoodsSearchCount" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT COUNT(*) COUNT
+		FROM PRODUCT
+		]]>
+	 	<trim prefix="WHERE" prefixOverrides="AND">
+			<if test='GD_CATEGORY != NULL'>
+				AND GD_CATEGORY = #{GD_CATEGORY} 
+			</if>
+			<if test="GD_PRICEMIN != -1">
+				AND GD_PRICE BETWEEN #{GD_PRICEMIN} AND #{GD_PRICEMAX}
+			</if>
+		</trim>
+	</select>
+	
+	<!-- [allgoodsKeywordSearchCount] 전체 상품 키워드 검색 수량 -->
+	<select id="allgoodsKeywordSearchCount" parameterType="hashmap" resultType="hashmap">
+		SELECT COUNT(*) COUNT
+		FROM GOODS
+		<trim prefix="WHERE" prefixOverrides="OR">
+			<if test="KEYWORD!=NULL">	
+				<if test="KEYNUMBER!=NULL">	
+					OR GD_GNAME LIKE '%'||#{KEYWORD}||'%'
+		            OR GD_CATEGORY LIKE '%'||#{KEYWORD}||'%'
+		            OR GD_PRICE = #{KEYNUMBER}
+		            OR GD_STOCK = #{KEYNUMBER}
+				</if>
+				<if test="KEYNUMBER==NULL">				
+					OR GD_GNAME LIKE '%'||#{KEYWORD}||'%'
+            		OR GD_CATEGORY LIKE '%'||#{KEYWORD}||'%'		
+				</if>
+			</if>
+		</trim>
+	</select>
+	
+	<!-- [goodsCategoryCount] 카테고리별 상품 수량 -->
+	<select id="goodsCategoryCount" resultType="hashmap">
+	<![CDATA[
+		SELECT COUNT(*) COUNT
+		FROM GOODS
+		WHERE GD_CATEGORY=#{GD_CATEGORY}
+	]]>
+	</select> 
+	
+	<!-- [insertGoods] 상품 입력 -->
+	<insert id="insertGoods" parameterType="hashmap">
+		INSERT INTO GOODS 
+		VALUES(GD_GID_SEQ.NEXTVAL, #{GD_GNAME}, #{GD_IMAGE}, SYSDATE, #{GD_PRICE}, 
+			#{GD_DCPRICE}, #{GD_STOCK}, #{GD_SELL}, #{GD_CATEGORY})
+	</insert>
+	
+	<!-- [updateGoods] 상품 수정 -->
+	<update id="updateGoods" parameterType="hashmap">
+		UPDATE GOODS
+		SET GD_GNAME=#{GD_GNAME}, GD_IMAGE=#{GD_IMAGE}, GD_PRICE=#{GD_PRICE}, GD_DCPRICE=#{GD_DCPRICE}, 
+			GD_STOCK=#{GD_STOCK}, GD_SELL=#{GD_SELL}, GD_CATEGORY=#{GD_CATEGORY}
+		WHERE GD_GID=#{GD_GID}
+	</update>
+	
+	<!-- [deleteGoods] 상품 삭제 -->
+	<delete id="deleteGoods" parameterType="hashmap">
+	<![CDATA[
+		DELETE FROM GOODS
+		WHERE GD_GID=#{GD_GID}
+		]]>
+	</delete>	
+	
+</mapper>
