@@ -3,6 +3,8 @@ package omc.common.goods;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Repository;
 
 import omc.common.common.AbstractDAO;
@@ -44,27 +46,55 @@ public class GoodsDAO extends AbstractDAO {
 		return (List<Map<String, Object>>) selectList("goods.Review2",map);
 	}
 	
-	
-	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> reviewRe(Map<String, Object> map){
 		return (List<Map<String, Object>>) selectList("goods.ReviewRe",map);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> goodsWrite(Map<String, Object> map){
-		return (List<Map<String, Object>>) selectList("goods.goodsWrite",map);
-	}
-	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getSaleThumb(Map<String, Object> map){
 		return (List<Map<String, Object>>) selectList("goods.getSaleThumb",map);
 	}
 	
 	//메인 페이지
-		@SuppressWarnings("unchecked")
-		public List<Map<String, Object>> maingoods(Map<String, Object> map){
-			return (List<Map<String, Object>>) selectList("goods.maingoods",map);
-		}
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> maingoods(Map<String, Object> map){
+		return (List<Map<String, Object>>) selectList("goods.maingoods",map);
+	}
+	
+	/* 전체 상품 리스트 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> allGoodsList(Map<String, Object> map) throws Exception{
+		return (Map<String, Object>)selectPagingList("goods.allGoodsList", map);
+	}
+	
+	/* 신상품 리스트 */
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> newGoodsList(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList ("goods.newGoodsList", map);
+	}
+	
+	/* 베스트 상품 리스트 */
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> bestGoodsList(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList ("goods.bestGoodsList", map);
+	}
+	
+	/* 상품 추가 폼*/
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> goodsWriteForm(Map<String, Object> map){
+		return (Map<String, Object>) selectList("goods.goodsWrite",map);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void goodsWrite(Map<String, Object> map) throws Exception {
+		insert("goods.goodsWrite", map);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void goodsWriteImage(Map<String, Object> map) throws Exception{
+		insert("goods.goodsWriteImage", map);
+	}
 	
 //	subList()구독판매페이지
 //	saleList()일반판매페이지

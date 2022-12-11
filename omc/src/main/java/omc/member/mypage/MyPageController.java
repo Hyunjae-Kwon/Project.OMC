@@ -67,7 +67,7 @@ public class MyPageController {
 	}
 	
 	/* 정보수정 완료 */
-	@RequestMapping(value = "/myPage/myInfoModifyOk.omc", method = RequestMethod.POST)
+	@RequestMapping(value = "/myInfoModifyOk.omc", method = RequestMethod.POST)
 	public ModelAndView myInfoModifyOk(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/myPage.omc");
 		/* System.out.println(commandMap.get("MEM_ID")); */ 
@@ -78,7 +78,7 @@ public class MyPageController {
 	}
 	
 	/* 회원탈퇴 */
-	@RequestMapping(value="/myPage/myInfoDelete.omc", method = RequestMethod.POST)
+	@RequestMapping(value="/myInfoDelete.omc", method = RequestMethod.POST)
 	public ModelAndView deleteMember(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("redirect:/logout.omc");
 			
@@ -90,7 +90,7 @@ public class MyPageController {
 	}
 	
 	/* 마이페이지 주문 조회 */
-	@RequestMapping(value="/myPage/myOrderList.omc", method = RequestMethod.GET)
+	@RequestMapping(value="/myOrderList.omc", method = RequestMethod.GET)
 	public ModelAndView myOrderList(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("member/myInfoOrder");
 			
@@ -106,7 +106,7 @@ public class MyPageController {
 	}
 	
 	/* 사용자가 작성한 후기리스트 */
-	@RequestMapping(value="/myPage/myReviewList.omc", method = RequestMethod.GET)
+	@RequestMapping(value="/myReviewList.omc", method = RequestMethod.GET)
 	public ModelAndView myReviewList(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("member/myInfoReview");
 			
@@ -122,7 +122,7 @@ public class MyPageController {
 	}
 	
 	/* 사용자가 작성한 Qna */
-	@RequestMapping(value="/myPage/myQnaList.omc", method = RequestMethod.GET)
+	@RequestMapping(value="/myQnaList.omc", method = RequestMethod.GET)
 	public ModelAndView myQnaList(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("member/myInfoQna");
 			

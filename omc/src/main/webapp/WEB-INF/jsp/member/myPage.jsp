@@ -10,7 +10,7 @@
 <script>
 function escapeCheck() {
 	if(confirm("탈퇴하시겠습니까?") == true) {
-		location.href = "/myPage/deleteMember.omc";
+		location.href = "/deleteMember.omc";
 	}
 }
 </script>
@@ -34,15 +34,15 @@ function escapeCheck() {
 		
 	<p></p>		
 
-	<a href="/myPage/myOrderList.omc" class="nav-link" style="font-size:large; color:#82ae46;">주문조회</a>
+	<a href="/myOrderList.omc" class="nav-link" style="font-size:large; color:#82ae46;">주문조회</a>
 
 	<p></p>
 	
-	<a href="/myPage/myReviewList.omc" class="nav-link" style="font-size:large; color:#82ae46;">후기</a>
+	<a href="/myReviewList.omc" class="nav-link" style="font-size:large; color:#82ae46;">후기</a>
 	
 	<p></p>
 	
-	<a href="/myPage/myQnaList.omc" class="nav-link" style="font-size:large; color:#82ae46;">문의내역</a>
+	<a href="/myQnaList.omc" class="nav-link" style="font-size:large; color:#82ae46;">문의내역</a>
 	
 	<p></p>
 		

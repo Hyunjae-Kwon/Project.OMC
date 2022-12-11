@@ -12,9 +12,10 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import omc.common.common.CommandMap;
 
 @Controller
@@ -25,14 +26,13 @@ public class GoodsController {
 	@Resource(name = "goodsService")
 	GoodsService goodsService;
 	
-	
 	// 구독 페이지
 	@RequestMapping(value = "/goods/sub")
 	public ModelAndView subList(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("subList");	
 		return mv;
-
 	}
+	
 	@RequestMapping(value ="/goods/goodsSubList")
 	public ModelAndView goodsSubList(CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView("jsonView");
@@ -154,15 +154,6 @@ public class GoodsController {
 		session.setAttribute("USER_ID", USER_ID);// 세션정보를 user_id 에 담아 jsp로 리턴
 		return mv;
 	}
-	@RequestMapping(value = "/goodsWritePage")
-	public ModelAndView goodsWritePage(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("goodsWritePage");
-		//HttpSession session = request.getSession(true);
-		//session.getAttribute("USER_ID");
-	
-		return mv;
-
-	}
 	
 	@RequestMapping(value = "/insertgoodsimgPage")
 	public ModelAndView insertgoodsimg(CommandMap commandMap, HttpServletRequest request) throws Exception {
@@ -176,16 +167,72 @@ public class GoodsController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/goodsWritePage/goodsWrite")
-	@ResponseBody
-	public ModelAndView goodsWrite(CommandMap commandMap, HttpServletRequest request) throws Exception {		
-		List<Map<String, Object>> goodsWrite = goodsService.goodsWrite(commandMap.getMap());				
-		ModelAndView mv = new ModelAndView("goodsWritePage");
-		mv.addObject("goodsWrite", goodsWrite);		
+	/* 전체 상품 리스트 */
+	@RequestMapping(value="/allGoodsList.omc")
+	public ModelAndView allGoodsList(CommandMap commandMap) throws Exception{
+		ModelAndView mv = new ModelAndView("/goods/allGoodsList");
+		
+		Map<String,Object> resultMap = goodsService.allGoodsList(commandMap.getMap());
+		
+		mv.addObject("paginationInfo", (PaginationInfo)resultMap.get("paginationInfo"));
+		mv.addObject("allGoodsList", resultMap.get("result"));
+		
 		return mv;
-	
 	}
-
+	
+	/* 신상품 리스트 */
+	@RequestMapping(value="/allGoodsListNew.omc", method=RequestMethod.GET)
+	public ModelAndView newGoodsList(Map<String, Object> commandMap) throws Exception{
+		ModelAndView mv = new ModelAndView("goods/newGoodsList");
+		
+		List<Map<String, Object>> list = goodsService.newGoodsList(commandMap);
+		 mv.addObject("newGoodsList", list);
+	
+		 return mv;
+	}
+	
+	/* 베스트 상품 리스트 */
+	@RequestMapping(value="/allGoodsListBest.omc", method=RequestMethod.GET)
+	public ModelAndView bestGoodsList(Map<String, Object> commandMap) throws Exception{
+		ModelAndView mv = new ModelAndView("goods/bestGoodsList");
+		
+		List<Map<String, Object>> list = goodsService.bestGoodsList(commandMap);
+		System.out.println(list);
+		 mv.addObject("bestGoodsList", list);
+	
+		 return mv;
+	}
+	
+	/* 상품 추가 폼 */
+	@RequestMapping(value = "/goodsWriteForm.omc")
+	public ModelAndView goodsWriteForm(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("goods/goodsWriteForm");
+	
+		return mv;
+	}
+	
+	/* 상품 추가 기능 */
+	@RequestMapping(value = "/goodsWrite.omc")
+	public ModelAndView goodsWrite(CommandMap commandMap, HttpServletRequest request) throws Exception {		
+		ModelAndView mv = new ModelAndView("redirect:/main.omc");
+		
+		goodsService.goodsWrite(commandMap.getMap(), request);
+		
+		return mv;
+	}
+	
+//	/* 상품 추가 완료 */
+//	@RequestMapping(value = "/goodsWrite.omc")
+//	@ResponseBody
+//	public ModelAndView goodsWrite(CommandMap commandMap, HttpServletRequest request) throws Exception {		
+//		Map<String, Object> goodsWrite = goodsService.goodsWriteForm(commandMap.getMap());				
+//		ModelAndView mv = new ModelAndView("goods/goodsWrite");
+//		mv.addObject("goodsWrite", goodsWrite);
+//		mv.addObject("goodsWrite", request);
+//		
+//		return mv;
+//	}
+	
 //	subList()구독판매페이지
 //	saleList()일반판매페이지
 //	subDetail()구독판매상세페이지

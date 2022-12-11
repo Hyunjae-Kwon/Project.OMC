@@ -17,11 +17,11 @@
 		<ul class="categories">
 			<li><a href="/myPage.omc" style="font-size:middle;">마이페이지</a></li>
 			<c:if test="${MEM_ID != 'ADMIN'}">
-			<li><a href="/myPage/myInfoModify.omc" style="font-size:middle;">회원정보 수정</a></li>
+			<li><a href="/myInfoModify.omc" style="font-size:middle;">회원정보 수정</a></li>
 			</c:if>
-			<li><a href="/myPage/myOrderList.omc" style="font-size:middle;">주문조회</a></li>
-			<li><a href="/myPage/myReviewList.omc" style="font-size:middle;">후기</a></li>
-			<li><a href="/myPage/myQnaList.omc" style="font-size:middle; color:#82ae46;">문의내역</a></li>
+			<li><a href="/myOrderList.omc" style="font-size:middle;">주문조회</a></li>
+			<li><a href="/myReviewList.omc" style="font-size:middle;">후기</a></li>
+			<li><a href="/myQnaList.omc" style="font-size:middle; color:#82ae46;">문의내역</a></li>
 		</ul>
 	</div>
 </div>

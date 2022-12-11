@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import omc.common.file.FileUploadController;
+//import omc.common.file.FileUploadController;
 import omc.common.goods.GoodsDAO;
-import omc.util.FileUtils;
+//import omc.util.FileUtils;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -32,13 +32,13 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	//ReviewServiceImpl 내용
-	private static final Logger log = Logger.getLogger(FileUploadController.class);
+//	private static final Logger log = Logger.getLogger(FileUploadController.class);
 
 	@Resource(name = "goodsDAO")
 	private GoodsDAO goodsDAO;
 
-	@Resource(name = "fileUtils")
-	private FileUtils fileUtils;
+//	@Resource(name = "fileUtils")
+//	private FileUtils fileUtils;
 
 	// 리뷰 작성
 	/*
@@ -56,25 +56,25 @@ public class BoardServiceImpl implements BoardService {
 	//리뷰작성
 	@Override
 	public void reviewUserWrite(Map<String, Object> map, HttpServletRequest request) throws Exception {
-		List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(map, request);
-		for (int i = 0; i < list.size(); i++) {
-			Map<String, Object> vo = list.get(i);
-			boardDAO.reviewUserWrite(vo);
-		}
-
-		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-		MultipartFile multipartFile = null;
-		while (iterator.hasNext()) {
-			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
-			if (multipartFile.isEmpty() == false) {
-				log.debug("---------- file start ----------");
-				log.debug("name : " + multipartFile.getName());
-				log.debug("filename : " + multipartFile.getOriginalFilename());
-				log.debug("size : " + multipartFile.getSize());
-				log.debug("---------- file end ----------\n");
-			}
-		}
+//		List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(map, request);
+//		for (int i = 0; i < list.size(); i++) {
+//			Map<String, Object> vo = list.get(i);
+//			boardDAO.reviewUserWrite(vo);
+//		}
+//
+//		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+//		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+//		MultipartFile multipartFile = null;
+//		while (iterator.hasNext()) {
+//			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+//			if (multipartFile.isEmpty() == false) {
+//				log.debug("---------- file start ----------");
+//				log.debug("name : " + multipartFile.getName());
+//				log.debug("filename : " + multipartFile.getOriginalFilename());
+//				log.debug("size : " + multipartFile.getSize());
+//				log.debug("---------- file end ----------\n");
+//			}
+//		}
 	}
 
 	// 관리자 답변 작성

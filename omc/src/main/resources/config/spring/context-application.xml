@@ -37,11 +37,5 @@
     <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"
         p:definitions="/WEB-INF/tiles.xml"
         />    
-       
-	<mvc:annotation-driven>
-    	<mvc:argument-resolvers>
-    		<bean class="omc.common.resolver.CustomMapArgumentResolver"></bean>
-    	</mvc:argument-resolvers>
-    </mvc:annotation-driven>
     
 </beans>

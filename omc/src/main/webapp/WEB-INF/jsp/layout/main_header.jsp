@@ -57,9 +57,11 @@ function logoutCheck() {
               	  		style="font-size:large; color:dark;">카테고리</a>
 	              		<div class="dropdown-menu" aria-labelledby="dropdown04">
 	              			<a class="dropdown-item" href="/allGoodsList.omc">전체 상품</a>
-			              	<a class="dropdown-item" href="/allGoodsListBest.omc">베스트</a>
-			                <a class="dropdown-item" href="/allGoodsListNew.omc">신상품</a>
-			                <a class="dropdown-item" href="/allGoodsList.omc">밀키트</a>
+			              	<a class="dropdown-item" href="/allGoodsList.omc">한식</a>
+			                <a class="dropdown-item" href="/allGoodsList.omc">양식</a>
+			                <a class="dropdown-item" href="/allGoodsList.omc" >중식/일식</a>
+			                <a class="dropdown-item" href="/allGoodsList.omc" >아시아</a>
+			                <a class="dropdown-item" href="/allGoodsList.omc" >분식</a>
 		              </div>
            	  		</li>
 					<li class="nav-item active"><a href="/allGoodsListBest.omc" class="nav-link" style="font-size:x-large; color:#82ae46;">베스트 상품</a></li>

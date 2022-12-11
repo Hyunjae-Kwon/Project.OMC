@@ -13,6 +13,6 @@
    }
     location.href='${pageContext.request.contextPath}${url}';
     </script>
-<a href="/Jumo/main.al">메인페이지</a><br>
+<a href="/main.omc">메인페이지</a><br>
 </body>
 </html>

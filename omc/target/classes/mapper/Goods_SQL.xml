@@ -3,6 +3,50 @@
 
 <mapper namespace="goods">
 
+	<!-- [newGoodsList] 신상품 리스트 -->
+	<select id="newGoodsList" parameterType="hashmap" resultType="hashmap"> 
+      <![CDATA[
+      SELECT
+            AAA.* 
+         FROM( select count(*) over() as total_count, AA.*
+         FROM(
+            select ROW_NUMBER() OVER (ORDER BY GD_REGDATE desc) RNUM,
+            GD_GID, 
+            GD_GNAME, 
+            GD_PRICE, 
+            GD_DCPRICE,
+            GD_REGDATE,
+            GD_CATEGORY,
+            GD_IMAGE
+         from GOODS
+         ) AA
+            ) AAA
+            WHERE AAA.RNUM BETWEEN 0 AND 8
+      ]]>
+   </select>
+   
+   <!-- [bestGoodsList] 베스트 상품 리스트 -->
+   <select id="bestGoodsList" parameterType="hashmap" resultType="hashmap"> 
+      <![CDATA[
+      SELECT
+            AAA.* 
+         FROM( select count(*) over() as total_count, AA.*
+         FROM(
+            select ROW_NUMBER() OVER (ORDER BY GD_SELL desc) RNUM,
+            GD_GID, 
+            GD_GNAME, 
+            GD_PRICE, 
+            GD_DCPRICE,
+            GD_REGDATE,
+            GD_CATEGORY,
+            GD_IMAGE
+         from GOODS
+         ) AA
+            ) AAA
+            WHERE AAA.RNUM BETWEEN 0 AND 8
+      ]]>
+   </select>
+
 	<!-- [selectGoodsList] 전체상품 게시판 리스트 (메인 페이지용 : 열 번호 1~3 까지만 꺼내기) -->
 	<select id="selectGoodsList" resultType="hashmap">
 	<![CDATA[
@@ -30,7 +74,7 @@
 	<include refid="common.pagingPre"/> 
 	<![CDATA[
 		SELECT ROW_NUMBER() OVER (ORDER BY GD_GID DESC) RNUM, GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE
-		FROM GDOOS
+		FROM GOODS
 	]]>
 	<include refid="common.pagingPost"/> 
 	</select>
@@ -163,11 +207,23 @@
 	]]>
 	</select> 
 	
-	<!-- [insertGoods] 상품 입력 -->
-	<insert id="insertGoods" parameterType="hashmap">
-		INSERT INTO GOODS 
-		VALUES(GD_GID_SEQ.NEXTVAL, #{GD_GNAME}, #{GD_IMAGE}, SYSDATE, #{GD_PRICE}, 
-			#{GD_DCPRICE}, #{GD_STOCK}, #{GD_SELL}, #{GD_CATEGORY})
+	<!-- [goodsWrite] 상품 입력 -->
+	<insert id="goodsWrite" parameterType="hashmap">
+	<selectKey keyProperty="GD_GID" resultType="string" order="BEFORE">
+		SELECT GD_GID_SEQ.NEXTVAL FROM DUAL
+	</selectKey>
+	<![CDATA[
+		INSERT INTO GOODS (GD_GID, GD_GNAME, GD_REGDATE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_CATEGORY)
+		VALUES(#{GD_GID}, #{GD_GNAME}, SYSDATE, #{GD_PRICE}, #{GD_DCPRICE}, #{GD_STOCK}, #{GD_CATEGORY})
+	]]>
+	</insert>
+	
+	<!-- [goodsWriteImage] 상품 이미지 입력 -->
+	<insert id="goodsWriteImage" parameterType="hashmap">
+	<![CDATA[
+		UPDATE GOODS SET GD_IMAGE = #{GD_IMAGE} 
+		WHERE GD_GID=#{GD_GID}
+	]]>
 	</insert>
 	
 	<!-- [updateGoods] 상품 수정 -->

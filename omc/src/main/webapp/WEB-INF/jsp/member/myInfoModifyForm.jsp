@@ -69,16 +69,16 @@ function checks() {
 		if (val == "-1") {
 			location.href = "myPage.omc";
 		} else if (val == "0") {
-			location.href = "main.jsp?contentPage=/myPage/myInfoModify.omc";
+			location.href = "main.jsp?contentPage=/myInfoModify.omc";
 		} else if (val == "1") {
-			location.href = "main.jsp?contentPage=/myPage/myInfoDelete.omc";
+			location.href = "main.jsp?contentPage=/myInfoDelete.omc";
 		}
 	}
 </script>
 <script>
 function submit2(del) {
 	if(confirm("탈퇴하시겠습니까?") == true) {
-		del.action="/myPage/myInfoDelete.omc";
+		del.action="/myInfoDelete.omc";
 		del.submit();
 		return true;
 	}
@@ -154,10 +154,10 @@ window.onload = function() {
 	<div class="sidebar-box ftco-animate" id="menu" style="margin-top:30px;">
 		<ul class="categories">
 			<li><a href="/myPage.omc" style="font-size:middle;">마이페이지</a></li>
-			<li><a href="/myPage/myInfoModify.omc" style="font-size:middle; color:#82ae46;">회원정보 수정</a></li>
-			<li><a href="/myPage/myOrderList.omc" style="font-size:middle;">주문조회</a></li>
-			<li><a href="/myPage/myReviewList.omc" style="font-size:middle;">후기</a></li>
-			<li><a href="/myPage/myQnaList.omc" style="font-size:middle;">문의내역</a></li>
+			<li><a href="/myInfoModify.omc" style="font-size:middle; color:#82ae46;">회원정보 수정</a></li>
+			<li><a href="/myOrderList.omc" style="font-size:middle;">주문조회</a></li>
+			<li><a href="/myReviewList.omc" style="font-size:middle;">후기</a></li>
+			<li><a href="/myQnaList.omc" style="font-size:middle;">문의내역</a></li>
 		</ul>
 	</div>
 </div>
@@ -165,7 +165,7 @@ window.onload = function() {
 <div class="container" style="text-align:center;">
 	<div class="row justify-content-center">
 		<div class="col-xl-9 ftco-animate">
-			<form id="modifyForm" name="modifyForm" method="POST" action="/myPage/myInfoModifyOk.omc" class="billing-form" >
+			<form id="modifyForm" name="modifyForm" method="POST" action="/myInfoModifyOk.omc" class="billing-form" >
 			<h2 class="mb-4 billing-heading">회원 정보 수정</h2><br><br>
 				<div class="row align-items-end" style="padding-left:150px;">
 					

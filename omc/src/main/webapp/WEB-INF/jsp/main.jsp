@@ -87,14 +87,18 @@
     <section class="ftco-section">
 
     	<div class="container">
-				<div class="row justify-content-center mb-3 pb-3">
-          <div class="col-md-12 heading-section text-center ftco-animate">
-          	<span class="subheading">판매중인 상품</span>
-            <h2 class="mb-4">베스트 상품</h2>
-            </div>
-        </div>   		
+			<div class="row justify-content-center mb-3 pb-3">
+          		<div class="col-md-12 heading-section text-center ftco-animate">
+          			<span class="subheading">판매중인 상품</span>
+            			<h2 class="mb-4">베스트 상품</h2>
+            	</div>
+        	</div> 
+        	<!-- 상품 추가 임시 버튼 -->
+        	<div align="right">
+				<input type="button" value="상품 추가" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='goodsWriteForm.omc'">
+        	</div>	
         </div>
-    	<form action="main.al" method="GET">
+    	<form action="main.omc" method="GET">
     	
     	<div class="container">
     	<div class="row">

@@ -3,6 +3,8 @@ package omc.common.goods;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 public interface GoodsService {
 
 	List<Map<String, Object>> goodsSubList(Map<String, Object> map);
@@ -19,11 +21,22 @@ public interface GoodsService {
 
 	List<Map<String, Object>> getsaleDetail(Map<String, Object> map);
 
-	List<Map<String, Object>> goodsWrite(Map<String, Object> map);
-
 	List<Map<String, Object>> maingoods(Map<String, Object> map);
-
-
+	
+	/* 전체 상품 리스트 */
+	Map<String, Object> allGoodsList(Map<String, Object> map) throws Exception;
+	
+	/* 신상품 리스트 */
+	List<Map<String, Object>> newGoodsList(Map<String, Object> map) throws Exception; //신상
+	
+	/* 베스트 상품 리스트 */
+	List<Map<String, Object>> bestGoodsList(Map<String, Object> map) throws Exception; //인기
+	
+	/* 상품 추가 */
+	Map<String, Object> goodsWriteForm(Map<String, Object> map);
+	
+	void goodsWrite(Map<String, Object> map, HttpServletRequest request) throws Exception;
+	
 //	subList()구독판매페이지
 //	saleList()일반판매페이지
 //	subDetail()구독판매상세페이지
