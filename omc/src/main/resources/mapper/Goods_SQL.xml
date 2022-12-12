@@ -69,6 +69,33 @@
 		]]>
 	</select>
 	
+	<!-- [goodsDetail] 상품 상세 정보 -->
+	<select id="goodsDetail" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+	 	SELECT * 
+		FROM GOODS
+		WHERE GD_GID=#{GD_GID}
+		]]>
+	</select>
+	
+	<!-- [goodsReview] 상품 리뷰 리스트 (상품 상세) -->
+	<select id="goodsReview" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+	 	SELECT * 
+		FROM BOARD
+		WHERE BD_GID=#{GD_GID} AND BD_TYPE='R'
+		]]>
+	</select>
+	
+	<!-- [goodsQna] 상품 문의 리스트 (상품 상세) -->
+	<select id="goodsQna" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+	 	SELECT * 
+		FROM BOARD
+		WHERE BD_GID=#{GD_GID} AND BD_TYPE='Q'
+		]]>
+	</select>
+	
 	<!-- [allGoodsList] 전체 상품 리스트 페이징 -->
 	<select id="allGoodsList" parameterType="hashmap" resultType="hashmap">
 	<include refid="common.pagingPre"/> 
@@ -209,22 +236,29 @@
 	
 	<!-- [goodsWrite] 상품 입력 -->
 	<insert id="goodsWrite" parameterType="hashmap">
-	<selectKey keyProperty="GD_GID" resultType="string" order="BEFORE">
-		SELECT GD_GID_SEQ.NEXTVAL FROM DUAL
-	</selectKey>
 	<![CDATA[
-		INSERT INTO GOODS (GD_GID, GD_GNAME, GD_REGDATE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_CATEGORY)
-		VALUES(#{GD_GID}, #{GD_GNAME}, SYSDATE, #{GD_PRICE}, #{GD_DCPRICE}, #{GD_STOCK}, #{GD_CATEGORY})
+		INSERT INTO GOODS
+		VALUES(
+			GD_GID_SEQ.NEXTVAL,
+			#{GD_GNAME},
+			#{GD_IMAGE},
+			SYSDATE,
+			#{GD_PRICE},
+			#{GD_DCPRICE},
+			#{GD_STOCK},
+			0,
+			#{GD_CATEGORY}
+		)
 	]]>
 	</insert>
 	
-	<!-- [goodsWriteImage] 상품 이미지 입력 -->
-	<insert id="goodsWriteImage" parameterType="hashmap">
-	<![CDATA[
-		UPDATE GOODS SET GD_IMAGE = #{GD_IMAGE} 
-		WHERE GD_GID=#{GD_GID}
-	]]>
-	</insert>
+	<!-- [selectPIDMax] 상품 테이블의 PID 최대값 -->
+	<select id="selectGD_GIDMax" resultType="hashmap">
+		SELECT
+			MAX(GD_GID) GD_GIDMAX
+		FROM
+			GOODS
+	</select>
 	
 	<!-- [updateGoods] 상품 수정 -->
 	<update id="updateGoods" parameterType="hashmap">

@@ -7,53 +7,39 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>주모</title>
+<title>오늘의 메뉴 추천, 오메추</title>
 <script>
  function formCheck() {
-	var form = document.getElementById("pWriteForm");
-	var PTYPE_ACL = $('input[type=radio][id="PTYPE_ACL"]:checked').val();
-	var PTYPE_ETC = $('input[type=radio][id="PTYPE_ETC"]:checked').val();
-	var PNAME = document.getElementById("PNAME");
-	var PIMAGE = document.getElementById("main_image");
-	var PSTOCK = document.getElementById("PSTOCK");
-	var PPRICE = document.getElementById("PPRICE");
-	var PSALE = document.getElementById("PSALE");
-	var PCOM = document.getElementById("PCOM");
-	var PLOC = document.getElementById("PLOC");
-	
-	var PDEGREE = document.getElementById("PDEGREE");
+	var form = document.getElementById("goodsWriteForm");
+	var GD_CATEGORY = document.getElementById("GD_CATEGORY");
+	var GD_NAME = document.getElementById("GD_NAME");
+	var GD_IMAGE = document.getElementById("main_image");
+	var GD_STOCK = document.getElementById("GD_STOCK");
+	var GD_PRICE = document.getElementById("GD_PRICE");
+	var GD_DCPRICE = document.getElementById("GD_DCPRICE");
 	
 	if(confirm("상품을 수정하시겠습니까?") == true) {
-		if(PTYPE_ACL == null && PTYPE_ETC == null) {
+		if(GD_CATEGORY.value.trim()=="") {
 			alert("상품 종류를 선택해주세요.");
 			return false;
-		} else if(PNAME.value.trim()=="") {
+		} else if(GD_GNAME.value.trim()=="") {
 			alert("상품 이름을 입력해주세요.");
-			PNAME.focus();
+			GD_GNAME.focus();
 			return false;
-		} else if(PSTOCK.value.trim()=="") {
+		} else if(GD_IMAGE.value.trim()=="") {
+			alert("상품 이미지를 넣어주세요.");
+			return false;
+		} else if(GD_STOCK.value.trim()=="") {
 			alert("상품 수량을 입력해주세요.");
-			PSTOCK.focus();
+			GD_STOCK.focus();
 			return false;
-		} else if(PPRICE.value.trim()=="") {
+		} else if(GD_PRICE.value.trim()=="") {
 			alert("상품 가격을 입력해주세요.");
-			PPRICE.focus();
+			GD_PRICE.focus();
 			return false;
-		} else if(PSALE.value.trim()=="") {
-			alert("할인률을 입력해주세요.");
-			PSALE.focus();
-			return false;
-		} else if(PCOM.value.trim()=="") {
-			alert("제조 회사를 입력해주세요.");
-			PCOM.focus();
-			return false;
-		} else if(PLOC.value.trim()=="") {
-			alert("생산지를 입력해주세요.");
-			PLOC.focus();
-			return false;
-		} else if(PDEGREE.value.trim()=="") {
-			alert("도수를 입력해주세요.");
-			PDEGREE.focus();
+		} else if(GD_DCPRICE.value.trim()=="") {
+			alert("할인 가격을 입력해주세요.");
+			GD_DCPRICE.focus();
 			return false;
 		} else {	
 			form.submit();
@@ -80,51 +66,16 @@ function readImage(input) {
 	}	
 }
 
-/* 라디오 체크 버튼 체크 유무에 따라 도수, 주종 폼 보이고 안 보이게 하기*/
-$(function (){
-	$('input[type="radio"][id="PTYPE_ETC"]').on('click', function(){
-	var etcChk = $('input[type=radio][id="PTYPE_ETC"]:checked').val();
-		if(etcChk=='ETC'){
-		$('#etc_view').css('display','none');
-		document.getElementById("PDEGREE").value = 0;
-		/* $('#etc_view2').css('display','none'); */
-		} 
-	});
-	$('input[type="radio"][id="PTYPE_ACL"]').on('click', function(){
-	var etcChk = $('input[type=radio][id="PTYPE_ACL"]:checked').val();
-		if(etcChk=='ALCOHOL'){
-			$('#etc_view').css('display','');
-		/* 	$('#etc_view2').css('display',''); */
-		}
-	});
-});
-</script>
-<script>
 window.onload = function() {
-	document.getElementById("PNAME").focus();
-
-	/* select tag의 값을 PKIND값에 맞게 변경 시켜줌 */
-	var pKind = document.getElementById('kind');
-	
-	if(pKind.value == '증류주') {
-		document.getElementById('pk1').selected = true;												
-	} else if(pKind.value == '막걸리') {
-		document.getElementById('pk2').selected = true;
-	} else if(pKind.value == '약주') {
-		document.getElementById('pk3').selected = true;
-	} else if(pKind.value == '과실주') {
-		document.getElementById('pk4').selected = true;
-	} else if(pKind.value == '기타주류') {
-		document.getElementById('pk5').selected = true;
-	}
+	document.getElementById("GD_NAME").focus();
 }
 </script>
 </head>
 <body>
-<form action="adminPModify.al" method="post" encType="multipart/form-data"
-	id="pWriteForm">
+<form action="goodsModify.omc" method="post" encType="multipart/form-data"
+	id="goodsWriteForm">
 	
-<input type="hidden" id="PID" name="PID" value="${productBean.PID}">
+<input type="hidden" id="GD_GID" name="GD_GID" value="${goods.GD_GID}">
 	
 <section class="ftco-section ftco-cart">
 	<div style="text-align:center"><h2>상품 수정</h2></div>
@@ -140,37 +91,26 @@ window.onload = function() {
 							<table class="table">
 								<tbody>
 									<tr>
-										<td>
-											<b><label for="PTYPE">상품 종류</label></b>
+										<td style="text-align:center;">
+											<b><label for="GD_CATEGORY">상품 종류</label></b>
 										</td>
 										<td>
-											<div class="select-wrap">
-												<c:choose>
-												<c:when test="${productBean.PTYPE == 'ALCOHOL'}">
-												<input type="radio" name="PTYPE" id="PTYPE_ACL" value="ALCOHOL" checked>주류	상품&emsp;
-												</c:when>
-												<c:otherwise>
-												<input type="radio" name="PTYPE" id="PTYPE_ACL" value="ALCOHOL">주류	상품&emsp;
-												</c:otherwise>
-												</c:choose>
-												
-												<c:choose>
-												<c:when test="${productBean.PTYPE == 'ETC'}">
-												<input type="radio" name="PTYPE" id="PTYPE_ACL" value="ETC" checked>기타 상품
-												</c:when>
-												<c:otherwise>
-												<input type="radio" name="PTYPE" id="PTYPE_ETC"	value="ETC">기타 상품
-												</c:otherwise>
-												</c:choose>
-											</div>
+											<select id="GD_CATEGORY" name="GD_CATEGORY" class="form-control">
+												<option value="KOREAN">한식</option>
+												<option value="ITALIAN">양식</option>
+												<option value="CHIJAP">중식/일식</option>
+												<option value="ASIAN">아시안</option>
+												<option value="SNACKBAR">분식</option>
+												<option value="HEALTHY">건강식</option>
+											</select>
 										</td>
 									</tr>
 									<tr>
 										<td>
-											<b><label for="PNAME">상품명</label></b>
+											<b><label for="GD_GNAME">상품명</label></b>
 										</td>
 										<td>
-											<input type="text" maxlength="50" id="PNAME" name="PNAME" class="form-control" value="${productBean.PNAME}">
+											<input type="text" maxlength="50" id="GD_GNAME" name="GD_GNAME" class="form-control" value="${goods.GD_GNAME}">
 										</td>
 									</tr>
 									<tr>
@@ -179,7 +119,7 @@ window.onload = function() {
 										</td>
 										<td>
 											<input type="file" id="main_image" name="main_image" class="form-control">
-											<input type="hidden" id="PIMAGE" name="PIMAGE" value="${productBean.PIMAGE}">
+											<input type="hidden" id="GD_IMAGE" name="GD_IMAGE" value="${goods.GD_IMAGE}">
 										</td>
 									</tr>
 									<!-- 파일 이미지 출력  -->
@@ -188,7 +128,7 @@ window.onload = function() {
 											<b><label style="color:slategray">상품 이미지 미리보기</label></b>
 										</td>
 										<td>
-											<img src="img/product-${productBean.PID}.png" width="300" border="0"
+											<img src="resources/img/goods-${goods.GD_GID}.png" width="300" border="0"
 												id="preview-image">
 											<script>
 												// input file에 change 이벤트 부여
@@ -201,75 +141,30 @@ window.onload = function() {
 									</tr>
 									<tr>
 										<td>
-											<b><label for="PSTOCK">상품 수량</label></b>
+											<b><label for="GD_STOCK">상품 수량</label></b>
 										</td>
 										<td>
-											<input type="text" maxlength="20" id="PSTOCK" name="PSTOCK" class="form-control" value="${productBean.PSTOCK}"
+											<input type="number" maxlength="20" id="GD_STOCK" name="GD_STOCK" class="form-control" value="${productBean.PSTOCK}"
 												onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
 										</td>
 									</tr>
 									<tr>
 										<td>
-											<b><label for="PPRICE">상품 원가</label></b>
+											<b><label for="GD_PRICE">상품 원가</label></b>
 										</td>
 										<td>
-											<input type="text" maxlength="20" id="PPRICE" name="PPRICE" class="form-control" value="${productBean.PPRICE}"
+											<input type="number" maxlength="20" id="GD_PRICE" name="GD_PRICE" class="form-control" value="${goods.GD_PRICE}"
 												onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>	
 										</td>
 									</tr>
 									<tr>
 										<td>
-											<b><label for="PSALE">할인률</label></b>
+											<b><label for="GD_DCPRICE">할인률</label></b>
 										</td>
 										<td>
-											<input type="number" min="0" max="100" class="form-control" value="${productBean.PSALE}"
-												id="PSALE" name="PSALE" value="0"
+											<input type="number" min="0" max="100" class="form-control" value="${goods.GD_DCPRICE}"
+												id="GD_DCPRICE" name="GD_DCPRICE" value="0"
 												onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
-										</td>
-									</tr>
-									<!-- ect_view start -->
-									<tbody id="etc_view">
-									<tr id="etc_view1">
-										<td style="text-align:center;">
-											<b><label for="country">주류 종류</label></b>
-										</td>
-										<td>
-											<input type="hidden" id="kind" value="${productBean.PKIND}" />
-											<select id="PKIND" name="PKIND" class="form-control">
-												<option id="pk1" value="증류주">증류주</option>
-												<option id="pk2" value="막걸리">막걸리</option>
-												<option id="pk3" value="약주">약주</option>
-												<option id="pk4" value="과실주">과실주</option>
-												<option id="pk5" value="기타주류">기타주류</option>
-											</select>
-										</td>
-									</tr>
-									<tr id="etc_view2">
-										<td style="text-align:center">
-											<b><label for="PDEGREE">도수</label></b>
-										</td>
-										<td>
-											<input type="number" min="0" max="100" class="form-control"
-												id="PDEGREE" name="PDEGREE" value="${productBean.PDEGREE}"
-												onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
-										</td>
-									</tr>
-									</tbody>
-									<!-- etc_view end  -->
-									<tr>
-										<td>
-											<b><label for="PCOM">제조사</label></b>
-										</td>
-										<td>
-											<input type="text" maxlength="20" id="PCOM" name="PCOM" class="form-control" value="${productBean.PCOM}">
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<b><label for="PLOC">원산지</label></b>
-										</td>
-										<td>
-											<input type="text" maxlength="50" id="PLOC" name="PLOC" class="form-control" value="${productBean.PLOC}">
 										</td>
 									</tr>
 									<tr>
@@ -309,13 +204,12 @@ window.onload = function() {
 											<input type="button" value="수정" class="btn btn-dark py-2 px-3"
 												onClick="return formCheck()">
 											<input type="button" value="메뉴" class="btn btn-primary py-2 px-3"
-												onClick="javascrpit:loaction.href='adminMain.al'">
+												onClick="javascrpit:loaction.href='main.omc'">
 										</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
-						
 						${paging.pageHtml}
 					</div>			
 				</div>

@@ -13,7 +13,7 @@
 	var form = document.getElementById("goodsWriteForm");
 	var GD_CATEGORY = document.getElementById("GD_CATEGORY");
 	var GD_NAME = document.getElementById("GD_NAME");
-	var GD_IMAGE = document.getElementById("GD_IMAGE");
+	var GD_IMAGE = document.getElementById("main_image");
 	var GD_STOCK = document.getElementById("GD_STOCK");
 	var GD_PRICE = document.getElementById("GD_PRICE");
 	var GD_DCPRICE = document.getElementById("GD_DCPRICE");
@@ -47,7 +47,7 @@
 	}
 }
 /* 이미지 미리보기 스크립트 */
-/* function readImage(input) {
+function readImage(input) {
 	// 인풋 태그에 파일이 있는 경우
 	if(input.files && input.files[0]) {
 		// 이미지 파일인지 검사 (생략)
@@ -64,14 +64,15 @@
 		// reader가 이미지 읽도록 하기
 		reader.readAsDataURL(input.files[0]);
 	}	
-} */
+}
 window.onload = function() {
 	document.getElementById("GD_NAME").focus();
 }
 </script>
 </head>
 <body>
-<form action="/goodsWrite.omc" method="post" encType="multipart/form-data" id="goodsWriteForm">
+<form action="goodsWrite.omc" method="post" encType="multipart/form-data"
+	id="goodsWriteForm">
 	
 <section class="ftco-section ftco-cart">
 	<div style="text-align:center"><h2>상품 등록</h2></div>
@@ -111,14 +112,14 @@ window.onload = function() {
 									</tr>
 									<tr>
 										<td>
-											<b><label for="GD_IMAGE">상품 이미지</label></b>
+											<b><label for="main_image">상품 이미지</label></b>
 										</td>
 										<td>
-											<input type="file" id="GD_IMAGE" name="GD_IMAGE" class="form-control">
+											<input type="file" id="main_image" name="main_image" class="form-control">
 										</td>
 									</tr>
 									<!-- 파일 이미지 출력  -->
-									<!-- <tr>
+									<tr>
 										<td>
 											<b><label style="color:slategray">상품 이미지 미리보기</label></b>
 										</td>
@@ -133,7 +134,7 @@ window.onload = function() {
 												});
 											</script>
 										</td>
-									</tr> -->
+									</tr>
 									<tr>
 										<td>
 											<b><label for="GD_STOCK">상품 수량</label></b>
@@ -164,7 +165,7 @@ window.onload = function() {
 												onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
 										</td>
 									</tr>
-									<!-- <tr>
+									<tr>
 										<td>
 											<b><label for="image1">상세 이미지1</label></b>
 										</td>
@@ -195,7 +196,7 @@ window.onload = function() {
 										<td>
 											<input type="file" id="image4" name="image4" class="form-control">
 										</td>
-									</tr> -->
+									</tr>
 									<tr>
 										<td colspan="2">
 											<input type="button" value="등록" class="btn btn-dark py-2 px-3"
@@ -207,7 +208,6 @@ window.onload = function() {
 								</tbody>
 							</table>
 						</div>
-						
 						${paging.pageHtml}
 					</div>			
 				</div>

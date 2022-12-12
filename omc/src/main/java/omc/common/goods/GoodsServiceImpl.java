@@ -1,15 +1,14 @@
 package omc.common.goods;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
-
-import omc.util.FileUtils;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Service("goodsService")
 public class GoodsServiceImpl implements GoodsService {
@@ -18,9 +17,6 @@ public class GoodsServiceImpl implements GoodsService {
 	@Resource(name="goodsDAO")
 	private GoodsDAO goodsDAO;
 	
-	@Resource(name="fileUtils")
-	private FileUtils fileUtils;
-
 	@Override
 	public List<Map<String, Object>> maingoods(Map<String, Object> map) {
 		// TODO Auto-generated method stub
@@ -84,21 +80,52 @@ public class GoodsServiceImpl implements GoodsService {
 		return goodsDAO.bestGoodsList(map);
 	}
 	
-	/* 상품 추가 */
+	/* 상품 상세 정보 */
+	@Override
+	public Map<String, Object> goodsDetail(Map<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = goodsDAO.goodsDetail(map);
+		return resultMap;
+	}
+	
+	/* 상품 리뷰 리스트 (상품 상세) */
+	@Override
+	public List<Map<String, Object>> goodsReview(Map<String, Object> map) throws Exception {
+		return goodsDAO.goodsReview(map);
+	}
+
+	/* 상품 문의 리스트 (상품 상세) */
+	@Override
+	public List<Map<String, Object>> goodsQna(Map<String, Object> map) throws Exception {
+		return goodsDAO.goodsQna(map);
+	}
+	
+	/* 상품 등록 폼 */
 	@Override
 	public Map<String, Object> goodsWriteForm(Map<String, Object> map) {
 		return goodsDAO.goodsWriteForm(map);
 	}
-
+	
+	/* 상품 등록 */
 	@Override
-	public void goodsWrite(Map<String, Object> map, HttpServletRequest request) throws Exception {
+	public void goodsWrite(Map<String, Object> map, MultipartHttpServletRequest request) throws Exception {
 		goodsDAO.goodsWrite(map);
+	}
+	
+	/* 상품 마지막 번호 구하기 */
+	@Override
+	public int selectGD_GIDMax() throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, request);
-		for(int i=0, size=list.size(); i<size; i++){
-			goodsDAO.goodsWriteImage(list.get(i));
+		map = goodsDAO.selectGD_GIDMax();
+		
+		int maxGD_GID;
+		if(map == null) {
+			maxGD_GID = 0;
+		} else {
+			maxGD_GID = Integer.parseInt(String.valueOf(map.get("GD_GIDMAX")));	
 		}
 		
+		return maxGD_GID;
 	}
-
+	
 }

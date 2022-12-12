@@ -34,7 +34,6 @@ public class GoodsDAO extends AbstractDAO {
 	public List<Map<String, Object>> saleDetail(Map<String, Object> map){
 		return (List<Map<String, Object>>) selectList("goods.SaleDetail",map);
 	}
-	
 
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> review(Map<String, Object> map){
@@ -80,20 +79,39 @@ public class GoodsDAO extends AbstractDAO {
 		return (List<Map<String, Object>>) selectList ("goods.bestGoodsList", map);
 	}
 	
-	/* 상품 추가 폼*/
+	/* 상품 상세 정보 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> goodsDetail(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>) selectOne ("goods.goodsDetail", map);
+	}
+	
+	/* 상품 리뷰 리스트 (상품 상세) */
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> goodsReview(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("goods.goodsReview",map);
+	}
+	
+	/* 상품 문의 리스트 (상품 상세) */
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> goodsQna(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("goods.goodsQna",map);
+	}
+	
+	/* 상품 등록 폼*/
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> goodsWriteForm(Map<String, Object> map){
 		return (Map<String, Object>) selectList("goods.goodsWrite",map);
 	}
 	
-	@SuppressWarnings("unchecked")
+	/* 상품 등록 */
 	public void goodsWrite(Map<String, Object> map) throws Exception {
 		insert("goods.goodsWrite", map);
 	}
 	
+	/* 상품 마지막 번호 구하기 */
 	@SuppressWarnings("unchecked")
-	public void goodsWriteImage(Map<String, Object> map) throws Exception{
-		insert("goods.goodsWriteImage", map);
+	public Map<String, Object> selectGD_GIDMax() throws Exception{
+		return (Map<String, Object>)selectOne("goods.selectGD_GIDMax");
 	}
 	
 //	subList()구독판매페이지

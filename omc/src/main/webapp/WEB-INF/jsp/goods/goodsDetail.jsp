@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>주모</title>
+<title>오늘의 메뉴 추천, 오메추</title>
 <script>
 function getCount() {
 	var count = document.getElementById('BCOUNT').value;
@@ -20,7 +20,7 @@ function getCount() {
 	return count;
 }
 
-function putBasket() {
+function insertCart() {
 	if(confirm("장바구니에 넣으시겠습니까?") == true) {
 		var pId = document.getElementById('PID').value;
 		var count = document.getElementById('BCOUNT').value;		
@@ -30,7 +30,7 @@ function putBasket() {
 	}
 }
 
-function pOrderForm() {
+function orderForm() {
 	var pId = document.getElementById('PID').value;
 	var count = Number(document.getElementById('BCOUNT').value);
 	var stock = Number(document.getElementById('PSTOCK').value);
@@ -58,14 +58,14 @@ window.onload = function() {
 			    	<div class="container">
 			    		<div class="row">
 			    			<div class="col-lg-6 mb-5">
-			    				<a href="img/${productBean.PIMAGE}" class="image-popup"><img src="img/${productBean.PIMAGE}" class="img-fluid" alt="이미지 없음"></a>
+			    				<a href="resources/img/goods/${goods.GD_IMAGE}" class="image-popup"><img src="resources/img/goods/${goods.GD_IMAGE}" class="img-fluid" alt="이미지 없음"></a>
 			    			</div>
 			    			<div class="col-lg-6 product-details pl-md-5" style="text-align:right">
-			    				<h3>${productBean.PNAME}&nbsp;</h3>
-			    				<input type="hidden" id="PID" name="PID" value="${productBean.PID}">
+			    				<h3>${goods.GD_GNAME}&nbsp;</h3>
+			    				<input type="hidden" id="GD_GID" name="GD_GID" value="${goods.GD_GID}">
 							<div class="col-md-12">
 				          		<table style="width:80%; margin-left:auto">
-				          			<tr>
+				          			<%-- <tr>
 				          				<td style="text-align:left">
 				          				<b>정가</b>
 				          				</td>
@@ -87,8 +87,20 @@ window.onload = function() {
 				          				<fmt:formatNumber value="${salePrice}" pattern="#.#" />원
 				          				<input type="hidden" id="PPRICE" name="PPRICE" value="${productBean.PPRICE}">
 				          				</td>
+				          			</tr> --%>
+				          			<tr>
+				          				<td style="text-align: left">
+				          				<b>정가</b>
+				          				<td style="text-align: right; width: 50%">${goods.GD_PRICE} 원</td>
 				          			</tr>
-									<tr>
+				          			<tr>
+				          				<td style="text-align: left">
+				          				<b>할인가</b>
+				          				<td style="text-align: right; width: 50%">${goods.GD_DCPRICE} 원
+				          				<input type="hidden" id="GD_PRICE" name="GD_PRICE" value="${goods.GD_PRICE}">
+				          				</td>
+				          			</tr>
+									<%-- <tr>
 				          				<td style="text-align:left;">
 				          				<b>할인률</b>
 				          				</td>
@@ -96,50 +108,14 @@ window.onload = function() {
 				          				${productBean.PSALE}%
 				          				<input type="hidden" id="PSALE" name="PSALE" value="${productBean.PSALE}">
 				          				</td>
-				          			</tr>
-				          			<c:if test="${productBean.PDEGREE!=-1}" >
-									<tr>
-				          				<td style="text-align:left;">
-				          				<b>도수</b>
-				          				</td>
-				          				<td style="text-align:right; width:50%">
-				          				${productBean.PDEGREE}%
-				          				</td>
-				          			</tr>
-				          			</c:if>
-				          			<c:if test="${! empty productBean.PKIND}" >
-									<tr>
-				          				<td style="text-align:left;">
-				          				<b>주종</b>
-				          				</td>
-				          				<td style="text-align:right; width:50%">
-				          				${productBean.PKIND}
-				          				</td>
-				          			</tr>
-				          			</c:if>
-									<tr>
-				          				<td style="text-align:left;">
-				          				<b>제조사</b>
-				          				</td>
-				          				<td style="text-align:right; width:50%">
-				          				${productBean.PCOM}
-				          				</td>
-				          			</tr>
-									<tr>
-				          				<td style="text-align:left;">
-				          				<b>원산지</b>
-				          				</td>
-				          				<td style="text-align:right; width:50%">
-				          				${productBean.PLOC}
-				          				</td>
-				          			</tr>
+				          			</tr> --%>
 									<tr>
 				          				<td style="text-align:left;">
 				          				<b>수량</b>
 				          				</td>
 				          				<td style="text-align:right; width:50%">
-				          					<input type="number" min="0" max="${productBean.PSTOCK}" id="BCOUNT" value="1" onChange="getCount()">
-				          					<input type="hidden" id="PSTOCK" value="${productBean.PSTOCK}">
+				          					<input type="number" min="0" max="${goods.GD_STOCK}" id="CT_COUNT" value="1" onChange="getCount()">
+				          					<input type="hidden" id="GD_STOCK" value="${goods.GD_STOCK}">
 				          				</td>
 				          			</tr>
 									<tr>
@@ -154,8 +130,8 @@ window.onload = function() {
 				          			</tr>
 				          			<tr>
 				          				<td colspan="2" style="text-align:right;">
-				          					<p><input type="button" class="btn btn-primary py-2 px-4" onClick="putBasket()" value="장바구니">
-				          					<input type="button" class="btn btn-black py-2 px-4" onClick="pOrderForm()" value="구&emsp;&emsp;매"></p>
+				          					<p><input type="button" class="btn btn-primary py-2 px-4" onClick="insertCart()" value="장바구니">
+				          					<input type="button" class="btn btn-black py-2 px-4" onClick="orderForm()" value="구&emsp;&emsp;매"></p>
 				          				</td>
 				          			</tr>				          			
 				          		</table>
@@ -172,12 +148,12 @@ window.onload = function() {
 		<div>
 			<div>
 				<section>
-					<c:set var="pid" value="${productBean.PID}" />
+					<c:set var="GD_GID" value="${goods.GD_GID}" />
 					<%
-						String imgDir1 = "/img/product-" + pageContext.getAttribute("pid").toString() + "-detail1.png";
-						String imgDir2 = "/img/product-" + pageContext.getAttribute("pid").toString() + "-detail2.png";
-						String imgDir3 = "/img/product-" + pageContext.getAttribute("pid").toString() + "-detail3.png";
-						String imgDir4 = "/img/product-" + pageContext.getAttribute("pid").toString() + "-detail4.png";
+						String imgDir1 = "resources/img/goods/goods-" + pageContext.getAttribute("GD_GID").toString() + "-detail1.png";
+						String imgDir2 = "resources/img/goods/goods-" + pageContext.getAttribute("GD_GID").toString() + "-detail2.png";
+						String imgDir3 = "resources/img/goods/goods-" + pageContext.getAttribute("GD_GID").toString() + "-detail3.png";
+						String imgDir4 = "resources/img/goods/goods-" + pageContext.getAttribute("GD_GID").toString() + "-detail4.png";
 						
 						String imgRealDir1 = request.getSession().getServletContext().getRealPath(imgDir1);
 						String imgRealDir2 = request.getSession().getServletContext().getRealPath(imgDir2);
@@ -191,16 +167,16 @@ window.onload = function() {
 					%>
 
 					<% if(file1.exists()) { %>
-					<p style="text-align:center;"><img src="img/product-${productBean.PID}-detail1.png" /></p>
+					<p style="text-align:center;"><img src="resources/img/goods/goods-${goods.GD_GID}-detail1.png" /></p>
 					<% } %>
 					<% if(file2.exists()) { %>
-					<p style="text-align:center;"><img src="img/product-${productBean.PID}-detail2.png" /></p>
+					<p style="text-align:center;"><img src="resources/img/goods/goods-${goods.GD_GID}-detail2.png" /></p>
 					<% } %>
 					<% if(file3.exists()) { %>
-					<p style="text-align:center;"><img src="img/product-${productBean.PID}-detail3.png" /></p>
+					<p style="text-align:center;"><img src="resources/img/goods/goods-${goods.GD_GID}-detail3.png" /></p>
 					<% } %>
 					<% if(file4.exists()) { %>
-					<p style="text-align:center;"><img src="img/product-${productBean.PID}-detail4.png" /></p>
+					<p style="text-align:center;"><img src="resources/img/goods/goods-${goods.GD_GID}-detail4.png" /></p>
 					<% } %>
 				</section>			
 			</div>
@@ -211,40 +187,77 @@ window.onload = function() {
 	<div class="container">
 		<div class="row slider-text justify-content-center align-items-center">
 			<div class="col-lg-10 mb-5">
-
-					<table style="text-align:center; margin-left:auto; margin-right:auto; width:80%;">
-						<tr>
-							<td style="width:80%; text-align:right" colspan="2">
-				   				<ul class="product-category">
-				   					<li><a href="pReviewForm.al?PID=${pid}">글쓰기</a></li>
-				   				</ul>
-							</td>
-						</tr>
-						<c:forEach var="review" items="${reviewBeanList}">
-						<tr bgcolor="#E4F7BA">
-							<td style="width:80%; text-align:left;">
-							<h3 class="heading"><b>${review.CTITLE}</b></h3>
-							</td>
-							<td style="width:20%; text-align:right;">
-							<h3 class="heading"><b>${review.CWRITER}</b></h3>
-							</td>
-						</tr>
-						<tr>
-							<td style="width:80%; text-align:left" colspan="2">
-							<p>${review.CCONTENT}</p>
-							</td>
-						</tr>
-						<tr><td colspan="2"><hr></td></tr>
-						</c:forEach>
-
-					</table>
-					<hr>				
-				
+				<table style="text-align:center; margin-left:auto; margin-right:auto; width:80%;">
+					<tr>
+						<td style="width:80%; text-align:right" colspan="2">
+			   				<ul class="product-category">
+			   					<li><a href="goodsReviewForm.omc?GD_GID=${GD_GID}">상품 후기 글쓰기</a></li>
+			   				</ul>
+						</td>
+					</tr>
+					<c:forEach var="review" items="${reviewList}">
+					<tr bgcolor="#E4F7BA">
+						<td style="width:60%; text-align:left;">
+						<h3 class="heading"><b>${review.BD_TITLE}</b></h3>
+						</td>
+						<td style="width:20%; text-align:right;">
+						<h3 class="heading"><b>${review.BD_ID}</b></h3>
+						</td>
+						<td style="width:20%; text-align:right;">
+						<h3 class="heading"><b>${review.BD_REGDATE}</b></h3>
+						</td>
+					</tr>
+					<tr>
+						<td style="width:80%; text-align:left" colspan="2">
+						<p>${review.BD_CONTENT}</p>
+						</td>
+					</tr>
+					<tr><td colspan="2"><hr></td></tr>
+					</c:forEach>
+				</table>
+				<hr>				
 			</div>
 		</div>
 	</div>
+	<div class="container">
+		<div class="row slider-text justify-content-center align-items-center">
+			<div class="col-lg-10 mb-5">
+				<table style="text-align:center; margin-left:auto; margin-right:auto; width:80%;">
+					<tr>
+						<td style="width:80%; text-align:right" colspan="2">
+			   				<ul class="product-category">
+			   					<li><a href="goodsQnaForm.omc?GD_GID=${GD_GID}">상품 문의 글쓰기</a></li>
+			   				</ul>
+						</td>
+					</tr>
+					<c:forEach var="qna" items="${qnaList}">
+					<tr bgcolor="#E4F7BA">
+						<td style="width:60%; text-align:left;">
+						<h3 class="heading"><b>${qna.BD_TITLE}</b></h3>
+						</td>
+						<td style="width:20%; text-align:right;">
+						<h3 class="heading"><b>${qna.BD_ID}</b></h3>
+						</td>
+						<td style="width:20%; text-align:right;">
+						<h3 class="heading"><b>${qna.BD_REGDATE}</b></h3>
+						</td>
+					</tr>
+					<tr>
+						<td style="width:80%; text-align:left" colspan="2">
+						<p>${qna.BD_CONTENT}</p>
+						</td>
+					</tr>
+					<tr><td colspan="2"><hr></td></tr>
+					</c:forEach>
+				</table>
+				<hr>				
+			</div>
+		</div>
+	</div>
+	<!-- 상품 추가 임시 버튼 -->
+    <div>
+		<input type="button" value="상품 수정" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='goodsModifyForm.omc'">
+    </div>
 	</section>
-
-	
 </body>
 </html>
