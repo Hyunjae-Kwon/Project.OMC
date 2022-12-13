@@ -49,7 +49,7 @@ public class GoodsController {
 		List<Map<String, Object>> list = goodsService.newGoodsList(commandMap);
 		mv.addObject("newGoodsList", list);
 	
-		return mv;
+		 return mv;
 	}
 	
 	/* 베스트 상품 리스트 */
@@ -61,7 +61,7 @@ public class GoodsController {
 		System.out.println(list);
 		mv.addObject("bestGoodsList", list);
 	
-		return mv;
+		 return mv;
 	}
 	
 	/* 카테고리 상품 리스트 */
@@ -77,20 +77,6 @@ public class GoodsController {
 		
 		return mv;
 	}
-	
-	/* 카테고리 상품 리스트 */
-//	@RequestMapping(value="/allGoodsListCategory.omc", method=RequestMethod.GET)
-//	public ModelAndView categoryGoodsList(CommandMap commandMap, HttpServletRequest request) throws Exception{
-//		ModelAndView mv = new ModelAndView("goods/categoryGoodsList");
-//	
-//		String goodsMax = goodsService.goodsMax();
-//		String category = goodsService.goodsCategory(goodsMax);
-//		List<Map<String, Object>> list = goodsService.categoryGoodsList(commandMap.getMap());
-//		mv.addObject("category", category);
-//		mv.addObject("categoryGoodsList", list);
-//		
-//		return mv;
-//	}
 	
 	/* 상품 상세 페이지 */
 	@RequestMapping(value = "/goodsDetail.omc") // , method = RequestMethod.POST
@@ -127,7 +113,7 @@ public class GoodsController {
 		ModelAndView mv = new ModelAndView("redirect:/main.omc");
 		
 		// 상품 이미지를 입력할 폴더 설정
-		String path = "/Users/felix/Java/Project.OMC/omc/src/main/webapp/resources/img/goods/";
+		String path = "C:\\java\\stsApp\\omc\\src\\main\\webapp\\resources\\img\\goods\\";
 		
 		// 상품 수정이기 때문에 GD_GID 값은 폼에서 입력받음
 		String newGD_GID = commandMap.get("GD_GID").toString();
@@ -194,7 +180,7 @@ public class GoodsController {
 		
 		String GD_GID = (String)commandMap.get("GD_GID");
 		
-		String path = "/Users/felix/Java/Project.OMC/omc/src/main/webapp/resources/img/goods/";
+		String path = "C:\\java\\stsApp\\omc\\src\\main\\webapp\\resources\\img\\goods\\";
 		File file = new File(path + "goods-" + GD_GID + ".png");
 		if(file.exists()) {
 			file.delete();
@@ -224,97 +210,7 @@ public class GoodsController {
 		goodsService.goodsDelete(commandMap.getMap(), request);
 		
 		return mv;
-		
-//		String newGD_GID = commandMap.get("GD_GID").toString();
-//		String folder = "/Users/felix/Java/Project.OMC/omc/src/main/webapp/resources/img/goods/";
-//		String fileName = "goods-" + newGD_GID + ".png";
-//		String path = folder + fileName;
-//		File file = new File(path);
-//		file.delete();
-		
-//		String detailFileName1 = "goods-" + newGD_GID + "-detail1.png";
-//		String path1 = folder + detailFileName1;
-//		File file1 = new File(path1);
-//		file1.delete();
-//		
-//		String detailFileName2 = "goods-" + newGD_GID + "-detail2.png";
-//		String path2 = folder + detailFileName2;
-//		File file2 = new File(path2);
-//		file2.delete();
-//		
-//		String detailFileName3 = "goods-" + newGD_GID + "-detail3.png";
-//		String path3 = folder + detailFileName3;
-//		File file3 = new File(path3);
-//		file3.delete();
-//		
-//		String detailFileName4 = "goods-" + newGD_GID + "-detail4.png";
-//		String path4 = folder + detailFileName4;
-//		File file4 = new File(path4);
-//		file4.delete();
-		
-		// DB에 상품 정보 삭제
-//		goodsService.goodsDelete(commandMap.getMap(), request);
-//		
-//		return mv;
 	}
-	
-	/* 상품 삭제 */
-//	@RequestMapping(value="/goodsDelete.omc")
-//	public ModelAndView goodsDelete(CommandMap commandMap, MultipartHttpServletRequest request) throws Exception {
-//		ModelAndView mv = new ModelAndView("goods/goodsDelete");
-//		
-//		// 상품 이미지를 입력할 폴더 설정
-//		String path = "/Users/felix/Java/Project.OMC/omc/src/main/webapp/resources/img/goods/";
-//		
-//		// 상품 수정이기 때문에 GD_GID 값은 폼에서 입력받음
-//		String newGD_GID = commandMap.get("GD_GID").toString();
-//				
-//		// 상품번호를 사용해 메인 이미지를 등록
-//		String uploadMainImageName = "goods-" + newGD_GID +".png";
-//				
-//		// 메인 이미지 이름을 goods의 GD_IMAGE에 입력
-//		commandMap.put("GD_IMAGE", uploadMainImageName);
-//		
-//		MultipartFile main_imageFile = request.getFile("main_image");
-//		MultipartFile detail_imageFile1 = request.getFile("image1");
-//		MultipartFile detail_imageFile2 = request.getFile("image2");
-//		MultipartFile detail_imageFile3 = request.getFile("image3");
-//		MultipartFile detail_imageFile4 = request.getFile("image4");
-//		
-//		// 만약 삭제할 이미지 파일이 있으면 삭제
-//		if(! main_imageFile.isEmpty()) {
-//			String delMainPath = path + uploadMainImageName;
-//			File delMainFile = new File(delMainPath);	
-//			delMainFile.delete();
-//		}
-//		
-//		// 만약 삭제할 상세 이미지가 있으면 삭제
-//		if(! detail_imageFile1.isEmpty()) {
-//			String delPath = path + "/" + "goods-" + newGD_GID + "-detail1.png";
-//			File delFile = new File(delPath);
-//			delFile.delete();
-//		} 
-//		if(! detail_imageFile2.isEmpty()) {
-//			String delPath = path + "/" + "goods-" + newGD_GID + "-detail2.png";
-//			File delFile = new File(delPath);
-//			delFile.delete();
-//		} 
-//		if(! detail_imageFile3.isEmpty()) {
-//			String delPath = path + "/" + "goods-" + newGD_GID + "-detail3.png";
-//			File delFile = new File(delPath);
-//			delFile.delete();
-//		}
-//		if(! detail_imageFile4.isEmpty()) {
-//			String delPath = path + "/" + "goods-" + newGD_GID + "-detail4.png";
-//			File delFile = new File(delPath);
-//			delFile.delete();
-//		}
-//		
-//		// DB에 상품 정보 삭제
-//		goodsService.goodsDelete(commandMap.getMap(), request);
-//		
-//		return mv;
-//	}
 	
 	/* 상품 추가 폼 */
 	@RequestMapping(value = "/goodsWriteForm.omc")

@@ -15,6 +15,16 @@
 	]]>	
 	</select>
 
+<!--   id중복확인 -->
+ <select id="selectMemberIdCk" parameterType="String" resultType="int">
+<![CDATA[
+	SELECT
+		COUNT(*)
+	FROM
+		MEMBER WHERE MEM_ID=#{MEM_ID}
+]]>
+</select> 
+	
 <!-- 아이디 찾기 -->	
 <select id="findId" parameterType="hashmap" resultType="hashmap">
 <![CDATA[
@@ -38,42 +48,33 @@
 		MEM_ID = #{MEM_ID} AND MEM_PHONE = #{MEM_PHONE} AND MEM_NAME = #{MEM_NAME}
 ]]>
 </select>	
-
+	
 <!-- insertMember(회원가입 성공) -->
-   <insert id="insertMember" parameterType="hashmap">   
-   <![CDATA[   
-      INSERT INTO
-      MEMBER
-         (MEM_ID,
-         MEM_PW,
-         MEM_NAME,
-         MEM_REGDATE,
-         MEM_ADD1,
-         MEM_ADD2,
-         MEM_ZIPCODE,
-         MEM_PHONE)
-      VALUES
-         (#{MEM_ID},
-         #{MEM_PW},
-         #{MEM_NAME},
-         SYSDATE,
-         #{MEM_ADD1},
-         #{MEM_ADD2},
-         #{MEM_ZIPCODE},
-         #{MEM_PHONE}
-         )
-   ]]>   
-   </insert>   
-
-<!--   id중복확인 -->
- <select id="selectMemberIdCk" parameterType="String" resultType="int">
-<![CDATA[
-   SELECT
-      COUNT(*)
-   FROM
-      MEMBER WHERE MEM_ID=#{MEM_ID}
-]]>
-</select> 
+	<insert id="insertMember" parameterType="hashmap">	
+	<![CDATA[	
+		INSERT INTO
+		MEMBER
+			(MEM_ID,
+			MEM_PW,
+			MEM_NAME,
+			MEM_REGDATE,
+			MEM_ADD1,
+			MEM_ADD2,
+			MEM_ZIPCODE,
+			MEM_PHONE)
+		VALUES
+			(#{MEM_ID},
+			#{MEM_PW},
+			#{MEM_NAME},
+			SYSDATE,
+			#{MEM_ADD1},
+			#{MEM_ADD2},
+			#{MEM_ZIPCODE},
+			#{MEM_PHONE}
+			)
+	]]>	
+	</insert>	
+	
 
 <!-- deleteMember(회원탈퇴기능) -->
 	<delete id="deleteMember" parameterType="hashmap">	

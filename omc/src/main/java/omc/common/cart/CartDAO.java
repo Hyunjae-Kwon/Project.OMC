@@ -24,5 +24,10 @@ public class CartDAO  extends AbstractDAO{
 	public void cartDelete(Map<String, Object> map){
 	 insert("cart.cartDelete",map);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectCartGID(Map<String, Object> map) {
+		return (List<Map<String, Object>>) selectList("cart.selectCartGID", map);
+	}
 
 }

@@ -63,7 +63,7 @@ function logoutCheck() {
 			                <a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=ASIAN" >아시아</a>
 			                <a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=SNACKBAR" >분식</a>
 			                <a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=HEALTHY" >건강식</a>
-		              </div>
+						</div>
            	  		</li>
 					<li class="nav-item active"><a href="/allGoodsListBest.omc" class="nav-link" style="font-size:x-large; color:#82ae46;">베스트 상품</a></li>
 					<li class="nav-item active"><a href="/allGoodsListNew.omc" class="nav-link" style="font-size:x-large; color:#82ae46;">신상품</a></li>

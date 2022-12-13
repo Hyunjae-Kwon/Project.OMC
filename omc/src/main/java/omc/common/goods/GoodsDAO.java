@@ -3,8 +3,6 @@ package omc.common.goods;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Repository;
 
 import omc.common.common.AbstractDAO;
@@ -84,20 +82,6 @@ public class GoodsDAO extends AbstractDAO {
 	public List<Map<String, Object>> categoryGoodsList(Map<String, Object> map) throws Exception {
 		return (List<Map<String, Object>>) selectList ("goods.categoryGoodsList", map);
 	}
-	
-//	/* 상품 카테고리 내 최대 상품 번호 */
-//	@SuppressWarnings("unchecked")
-//	public String goodsMax() throws Exception {
-//		String result = (String) selectOne ("goods.selectGoodsMax");
-//		return result;
-//	}
-//	
-//	/* 상품 카테고리 */
-//	@SuppressWarnings("unchecked")
-//	public String goodsCategory(String goodsMax) throws Exception {
-//		String result = (String) selectOne ("goods.selectGoodsCategory");
-//		return result;
-//	}
 	
 	/* 상품 상세 정보 */
 	@SuppressWarnings("unchecked")

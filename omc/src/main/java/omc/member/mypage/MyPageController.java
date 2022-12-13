@@ -40,11 +40,6 @@ public class MyPageController {
 		session.setAttribute("MEM_ID", MEM_ID);
 		if(request.getSession().getAttribute("MEM_ID")==null){
 			 response.sendRedirect("/loginForm.omc"); 
-		} else {
-		
-		//마이페이지에서 바로 주문리스트 출력할 때 사용
-//		List<Map<String, Object>> orderList = myPageService.orderList(commandMap.getMap());
-//		mv.addObject("orderList", orderList);
 		}
 		
 		return mv;

@@ -10,11 +10,12 @@
 <title>오늘의 메뉴 추천, 오메추</title>
 <script>
 function getCount() {
-	var count = document.getElementById('BCOUNT').value;
-	var price = document.getElementById('PPRICE').value;
-	var sale = document.getElementById('PSALE').value;
+	var count = document.getElementById('CT_COUNT').value;
+	var price = document.getElementById('GD_PRICE').value;
+	var sale = document.getElementById('GD_DCPRICE').value;
 	var salePrice = price * (100-sale) / 100;
-	var totalPrice = salePrice * count;
+	/* var totalPrice = salePrice * count; */
+	var totalPrice = sale
 	
 	document.getElementById("totalPrice").innerText = totalPrice + '원';
 	return count;
@@ -22,25 +23,25 @@ function getCount() {
 
 function insertCart() {
 	if(confirm("장바구니에 넣으시겠습니까?") == true) {
-		var pId = document.getElementById('PID').value;
-		var count = document.getElementById('BCOUNT').value;		
-		location.href="putBasket.al?BID=" + pId + "&BCOUNT=" + count;
+		var goodsId = document.getElementById('GD_GID').value;
+		var count = document.getElementById('CT_COUNT').value;		
+		location.href="insertCart.omc?GD_GID=" + goodsId + "&CT_COUNT=" + count;
 	} else {
 		return;
 	}
 }
 
 function orderForm() {
-	var pId = document.getElementById('PID').value;
-	var count = Number(document.getElementById('BCOUNT').value);
-	var stock = Number(document.getElementById('PSTOCK').value);
+	var goodsId = document.getElementById('GD_GID').value;
+	var count = Number(document.getElementById('orderCount').value);
+	var stock = Number(document.getElementById('GD_STOCK').value);
 	// 구매수량이 상품 재고보다 많을 경우 구매 정지
 	
 	if(count>stock) {
 		alert("상품의 재고 수량보다 많은 양을 살 수 없습니다. 재고 :" + stock + "개");
 		return false;		
 	}
-	location.href="pOrderForm.al?PID=" + pId + "&PCOUNT=" + count;	
+	location.href="orderForm.omc?GD_GID=" + goodsId + "&orderCount="+ count;	
 }
 
 window.onload = function() {
@@ -114,7 +115,7 @@ window.onload = function() {
 				          				<b>수량</b>
 				          				</td>
 				          				<td style="text-align:right; width:50%">
-				          					<input type="number" min="0" max="${goods.GD_STOCK}" id="CT_COUNT" value="1" onChange="getCount()">
+				          					<input type="number" min="0" max="${goods.GD_STOCK}" id="orderCount" name="orderCount" value="1" onChange="getCount()">
 				          					<input type="hidden" id="GD_STOCK" value="${goods.GD_STOCK}">
 				          				</td>
 				          			</tr>

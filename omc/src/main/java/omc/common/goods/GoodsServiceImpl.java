@@ -92,20 +92,6 @@ public class GoodsServiceImpl implements GoodsService {
 		
 		return resultMap; 
 	}
-
-//	/* 상품 카테고리 내 최대 상품 번호 */
-//	@Override
-//	public String goodsMax() throws Exception {
-//		String result = goodsDAO.goodsMax();
-//		return result;
-//	}
-//	
-//	/* 상품 카테고리 */
-//	@Override
-//	public String goodsCategory(String goodsMax) throws Exception {
-//		String category = goodsDAO.goodsCategory(goodsMax);
-//		return category;
-//	}
 	
 	/* 상품 상세 정보 */
 	@Override
@@ -152,5 +138,5 @@ public class GoodsServiceImpl implements GoodsService {
 		Map<String,Object> map1 = fileUtils.parseInsertFileInfo(map, request);
 		goodsDAO.updateImg(map1);
 	}
-
+	
 }

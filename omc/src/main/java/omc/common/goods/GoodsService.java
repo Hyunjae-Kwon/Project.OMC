@@ -36,12 +36,6 @@ public interface GoodsService {
 	
 	/* 카테고리 상품 리스트 */
 	List<Map<String, Object>> categoryGoodsList(Map<String, Object> map) throws Exception; //카테고리
-
-//	/* 상품 카테고리 내 최대 상품 번호 */
-//	String goodsMax() throws Exception;
-//	
-//	/* 상품 카테고리 */
-//	String goodsCategory(String goodsMax) throws Exception;
 	
 	/* 상품 상세 정보 */
 	Map<String, Object> goodsDetail(Map<String, Object> map) throws Exception;
@@ -64,6 +58,7 @@ public interface GoodsService {
 	/* 상품 등록 */
 	void goodsWrite(Map<String, Object> map, MultipartHttpServletRequest request) throws Exception;
 
+	
 //	subList()구독판매페이지
 //	saleList()일반판매페이지
 //	subDetail()구독판매상세페이지

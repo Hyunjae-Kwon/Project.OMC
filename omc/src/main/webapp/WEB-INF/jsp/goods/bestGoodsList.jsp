@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui" %>
+<%@ include file="/WEB-INF/include/include-header.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="/WEB-INF/include/include-header.jspf" %>
 <meta charset="UTF-8">
-<title>오늘 메뉴 추천, 오메추</title>
+<title>Insert title here</title>
 </head>
 <body>
     <section class="ftco-section">
@@ -51,11 +50,6 @@
     	</div>
     </div>
     </form>
-    <c:if test="${not empty paginationInfo}">
-		<ui:pagination paginationInfo = "${paginationInfo}" type="text" jsFunction="fn_search" />
-	</c:if>
-	<input type="hidden" id="currentPageNo" name="currentPageNo"/>
-	<%@ include file="/WEB-INF/include/include-body.jspf" %>
 </section>
 </body>
 </html>

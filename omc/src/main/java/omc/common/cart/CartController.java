@@ -19,10 +19,10 @@ public class CartController {
 	@Resource(name = "cartService")
 	CartService cartService;
 
-	@RequestMapping(value = "/cart.omc")
+	@RequestMapping(value = "/cartList.omc")
 	@ResponseBody
 	public ModelAndView cartList(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("goods/cart");// jsonView 동작안함
+		ModelAndView mv = new ModelAndView("goods/cartList");// jsonView 동작안함
 		List<Map<String, Object>> cartList = cartService.cartList(commandMap.getMap());
 		HttpSession session = request.getSession();// 세션 값 불러오고
 		String MEM_ID = (String) session.getValue("MEM_ID");// 값을 String 저장하고
@@ -33,6 +33,8 @@ public class CartController {
 
 	}
 
+	
+	
 	@RequestMapping(value = "/cart/cartPut.omc")
 	@ResponseBody
 	public ModelAndView cartPut(CommandMap commandMap, HttpServletRequest request) throws Exception {

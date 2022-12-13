@@ -27,5 +27,11 @@ public class CartServiceImpl implements CartService{
 	public void cartDelete(Map<String, Object> map) {
 		cartDAO.cartDelete(map);
 	}
+	
+	@Override
+	public List<Map<String, Object>> selectCartGID(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return cartDAO.selectCartGID(map);
+	}
 
 }

@@ -71,8 +71,7 @@ window.onload = function() {
 </script>
 </head>
 <body>
-<form action="goodsWrite.omc" method="post" encType="multipart/form-data"
-	id="goodsWriteForm">
+<form action="/goodsWrite.omc" method="post" encType="multipart/form-data" id="goodsWriteForm">
 	
 <section class="ftco-section ftco-cart">
 	<div style="text-align:center"><h2>상품 등록</h2></div>
@@ -128,7 +127,7 @@ window.onload = function() {
 												id="preview-image">
 											<script>
 												// input file에 change 이벤트 부여
-												const inputImage = document.getElementById("GD_IMAGE");
+												const inputImage = document.getElementById("main_image");
 												inputImage.addEventListener("change", e=> {
 													readImage(e.target)	
 												});
@@ -208,6 +207,7 @@ window.onload = function() {
 								</tbody>
 							</table>
 						</div>
+						
 						${paging.pageHtml}
 					</div>			
 				</div>

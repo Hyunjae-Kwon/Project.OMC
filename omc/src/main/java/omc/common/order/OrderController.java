@@ -6,83 +6,102 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.maven.model.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import omc.common.cart.CartService;
 import omc.common.common.CommandMap;
 import omc.common.goods.GoodsService;
+import omc.member.login.LoginService;
 
 @Controller
 public class OrderController {
-	@Resource(name = "orderService")
-	OrderService orderService;
 	
-	@Resource(name = "cartService")
-	CartService basketService;
+	@Resource(name="orderService")
+	private OrderService orderService;
 	
-	@Resource(name = "goodsService")
-	GoodsService goodsService;
+	@Resource(name="goodsService")
+	private GoodsService goodsService;
+	
+	@Resource(name="loginService")
+	private LoginService loginService;
+	
+	@Resource(name="cartService")
+	private CartService cartService;
 
-//	결제 페이지
-	@RequestMapping(value = "/order/PayPage")
+	@RequestMapping(value="/orderForm.omc", method = RequestMethod.GET)
+	public ModelAndView orderForm (HttpServletRequest request, CommandMap commandMap) throws Exception {
+		/* PID를 넘겨받아 상품 정보를 읽어옴 */
+		ModelAndView mv = new ModelAndView("order/orderForm");
+		
+		String orderCount = (String)commandMap.get("orderCount");
+		String loginId = (String) request.getSession().getAttribute("MEM_ID");
+		
+		Map<String,Object> memInfo = loginService.selectMember(loginId);
+        Map<String,Object> goodsInfo = goodsService.goodsDetail(commandMap.getMap());
+        
+		mv.addObject("orderCount", orderCount);
+		mv.addObject("goodsInfo",goodsInfo);
+		mv.addObject("memInfo", memInfo);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "/order.omc")
+	public ModelAndView order(CommandMap commandMap, HttpServletRequest request, Model model) throws Exception {
+		ModelAndView mv = new ModelAndView("order/order");
+	
+		int OID = orderService.selectOIDMax();
+		model.addAttribute("msg", "주문을 완료했습니다.");
+		String urlParam = "/orderResult.omc?OID=" + OID;
+		model.addAttribute("url", urlParam);
+		
+		return mv;
+
+	}
+	
+	@RequestMapping(value = "/orderResult.omc")
+	public ModelAndView orderResult(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("order/orderResult");
+		
+		List<Map<String, Object>> orderInfo = orderService.selectOrderOId(commandMap.getMap());	
+		Map<String,Object> memInfo = loginService.selectMemberId(commandMap.getMap());
+		
+		mv.addObject("orderResult", orderInfo);
+		mv.addObject("memInfo", memInfo);
+		
+		System.out.println(orderInfo);
+		System.out.println(memInfo);
+		
+		return mv;
+
+	}
+
+	
+	
+	@RequestMapping(value = "/cartOrderForm.omc")
 	@ResponseBody
- 	public ModelAndView orderPayPage( Model model,CommandMap commandMap, HttpServletRequest request, String GOODS_PRICE ,String GOODS_OP2,String GOODS_OP3,String GOODS_OP4 ) throws Exception {
-
-		ModelAndView mv = new ModelAndView("userPayPage");
-		List<Map<String, Object>> orderPayPage = orderService.orderPayPage(commandMap.getMap());
-		List<Map<String, Object>> orderMember = orderService.orderMember(commandMap.getMap());
-
-	// 보낸 값 받아서 저장하고
-		String goodsprice = request.getParameter("GOODS_PRICE");
-		String op2 = request.getParameter("GOODS_OP2");
-		String op3 = request.getParameter("GOODS_OP3");
-		String op4 = request.getParameter("GOODS_OP4");
-	
-	// jsp로 뿌리기
-		mv.addObject("op4", op4);
-		mv.addObject("op3", op3);
-		mv.addObject("op2", op2);
-		mv.addObject("goodsprice",goodsprice);
-		mv.addObject("orderPayPage", orderPayPage);
-		mv.addObject("orderMember", orderMember);
-		
-		return mv;
-	}
-
-	@RequestMapping(value = "/order/Pay")
-
-	public ModelAndView orderPay(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("userPayPage");
-		List<Map<String, Object>> orderPay = orderService.orderPay(commandMap.getMap());		
-		mv.addObject("orderPay", orderPay);	
-		
+	public ModelAndView cartOrderForm(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("cartOrderForm");
+		List<Map<String, Object>> cartInfo = cartService.selectCartGID(commandMap.getMap());
+		Map<String,Object> memInfo = loginService.selectMemberId(commandMap.getMap());
+		mv.addObject("cartInfo", cartInfo);
+		mv.addObject("memInfo", memInfo);
 		return mv;
 	}
 	
-	@RequestMapping(value = "/order/PayPage2")
-	@ResponseBody
-	public ModelAndView orderPayPage2(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("basketPayPage");
-		List<Map<String, Object>> orderPayPage2 = orderService.orderPayPage2(commandMap.getMap());
-		List<Map<String, Object>> orderMember = orderService.orderMember(commandMap.getMap());
-		mv.addObject("orderPayPage2", orderPayPage2);
-		mv.addObject("orderMember", orderMember);
-		
+	@RequestMapping(value = "/cartOrder.omc")
+	public ModelAndView cartOrder(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("orderResult");
+		List<Map<String, Object>> cartPay = orderService.insertOrderCart(commandMap.getMap());		
+		mv.addObject("cartPay", cartPay);	
 		return mv;
+
 	}
 
-	@RequestMapping(value = "/order/Pay2")
 
-	public ModelAndView orderPay2(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("basketPayPage");
-		List<Map<String, Object>> orderPay2 = orderService.orderPay2(commandMap.getMap());		
-		mv.addObject("orderPay2", orderPay2);
-
-		return mv;
-	}
-	
 }

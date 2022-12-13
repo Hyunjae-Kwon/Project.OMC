@@ -9,32 +9,15 @@ import omc.common.common.AbstractDAO;
 
 @Repository("orderDAO")
 public class OrderDAO extends AbstractDAO {
-
-	// 장바구니에서 결제페이지 가는거니까 바스킷리스트 불러와서 꺼내와서 ?
 	
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> orderPage(Map<String, Object> map) {
-		return (List<Map<String, Object>>) selectList("order.orderPage", map);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> orderPay(Map<String, Object> map) {
-		return (List<Map<String, Object>>) selectList("order.orderPay", map);
+	public List<Map<String, Object>> insertOrderDirect(Map<String, Object> map) {
+		return (List<Map<String, Object>>) selectList("order.insertOrderDirect", map);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> orderMember(Map<String, Object> map) {
-		return (List<Map<String, Object>>) selectList("order.orderMember", map);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> orderPage2(Map<String, Object> map) {
-		return (List<Map<String, Object>>) selectList("order.orderPage2", map);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> orderPay2(Map<String, Object> map) {
-		return (List<Map<String, Object>>) selectList("order.orderPay2", map);
+	public List<Map<String, Object>> insertOrderCart(Map<String, Object> map) {
+		return (List<Map<String, Object>>) selectList("order.basketOrder", map);
 	}
 	
 	/* 마이페이지 주문조회 */
@@ -42,4 +25,18 @@ public class OrderDAO extends AbstractDAO {
 	public List<Map<String, Object>> myOrderList(Map<String, Object> map) {
 		return (List<Map<String, Object>>) selectList("order.selectOrderMemberId", map);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectOrderOId(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return (List<Map<String, Object>>) selectList("order.selectOrderOId", map);
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectOIDMax() throws Exception {
+		// TODO Auto-generated method stub
+		return (Map<String, Object>) selectOne("order.selectOIDMax");
+	}
+	
 }
