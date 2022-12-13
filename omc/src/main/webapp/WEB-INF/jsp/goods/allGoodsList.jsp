@@ -1,15 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui" %>
-<%@ include file="/WEB-INF/include/include-header.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/WEB-INF/include/include-header.jspf" %>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
+<title>오늘 메뉴 추천, 오메추</title>
 </head>
 <script>
 	function fn_search(pageNo){
@@ -21,20 +18,17 @@
 	</script>
 <body>
     <section class="ftco-section">
-
     	<div class="container">
-				<div class="row justify-content-center mb-3 pb-3">
-          <div class="col-md-12 heading-section text-center ftco-animate">
-          	<span class="subheading">판매중인 상품</span>
-            <h2 class="mb-4">전체 상품</h2>
-            </div>
-        </div>   		
+			<div class="row justify-content-center mb-3 pb-3">
+		        <div class="col-md-12 heading-section text-center ftco-animate">
+			    	<span class="subheading">판매중인 상품</span>
+			    	<h2 class="mb-4">전체 상품</h2>	
+			    </div>
+	        </div>   		
         </div>
     	<form action="allGoodsList.omc" method="GET">
-    	
     	<div class="container">
     	<div class="row">
-    		
     		<div class="container" align="center">
 	    		<div class="row">
 	    			<c:forEach var="goods" items="${allGoodsList}">
@@ -50,34 +44,21 @@
 	    								<p class="dcPrice"><span>할인가 : ${goods.GD_DCPRICE}원</span></p>
 			    						<p class="price"><span>판매가 : ${goods.GD_PRICE}원</span></p>
 			    					</div>
-		    					</div>
+			    					<div align="center">
+			    						<a href="/goodsDelete.omc?GD_GID=${goods.GD_GID}">상품 삭제</a>
+			    					</div>
+	    						</div>
 	    					</div>
-	    					
 	    				</div>
-	  
 	    			</div>
-	    		
-    		
 	    			</c:forEach>
-			</div>
+				</div>
     		</div>    		
     	</div>
     </div>
     </form>
-    <form id="commonForm" name="commonForm"></form> <!-- ***** -->
-      	<c:if test="${not empty paginationInfo}">
-		<ui:pagination paginationInfo = "${paginationInfo}" type="text" jsFunction="fn_search" />
-	</c:if>
-	<input type="hidden" id="currentPageNo" name="currentPageNo"/>
-	
-	<br/>
-   
-
+    <%@ include file="/WEB-INF/include/include-body.jspf" %>
 </section>
-	
-	
 </body>
-
-	
 </html>
 

@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>주모</title>
+<title>오늘의 메뉴 추천, 오메추</title>
 </head>
 <body>
    <script>

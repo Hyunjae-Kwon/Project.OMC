@@ -21,7 +21,7 @@
          from GOODS
          ) AA
             ) AAA
-            WHERE AAA.RNUM BETWEEN 0 AND 8
+            WHERE AAA.RNUM BETWEEN #{START} AND #{END}
       ]]>
    </select>
    
@@ -43,7 +43,7 @@
          from GOODS
          ) AA
             ) AAA
-            WHERE AAA.RNUM BETWEEN 0 AND 8
+            WHERE AAA.RNUM BETWEEN #{START} AND #{END}
       ]]>
    </select>
 
@@ -167,19 +167,41 @@
 	</select>
 	
 	<!-- [goodsCategoryList] 카테고리별 상품 리스트-->
-	<select id="goodsCategoryList" parameterType="hashmap" resultType="hashmap">
+	<select id="categoryGoodsList" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
-		SELECT * 
-		FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY, ROWNUM R
-		    FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY
-		        FROM GOODS
-		        WHERE GD_CATEGORY=#{GD_CATEGORY}
-		        ORDER BY GD_GID
-		        ) ORDER BY R
-		    )
-		WHERE R BETWEEN #{START} AND #{END} 
+		SELECT *
+		FROM(
+			SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_REGDATE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY, ROWNUM R
+			FROM(
+				SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_REGDATE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY
+				FROM GOODS	
+				WHERE GD_CATEGORY=#{GD_CATEGORY}
+				ORDER BY GD_GID DESC
+			)
+			ORDER BY R
+		) WHERE R BETWEEN 0 AND 8
 	]]>
 	</select> 
+	
+	<!-- [selectGoodsMax] 카테고리 내 최대 상품 번호 -->
+	<!-- <select id="selectGoodsMax" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+	 	SELECT MAX(GD_GID) GIDMAX 
+		FROM GOODS
+		WHERE GD_CATEGORY=#{GD_CATEGORY}
+		]]>
+	</select> -->
+	
+	<!-- [selectGoodsCategory] 상품 카테고리 -->
+	<!-- <select id="selectGoodsCategory" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+	 	SELECT GD_CATEGORY
+		FROM GOODS
+		WHERE GD_GID = (SELECT MAX(GD_GID) GIDMAX
+					    FROM GOODS
+					    WHERE GD_CATEGORY=#{GD_CATEGORY}
+		]]>
+	</select> -->
 	
 	<!-- [allGoodsCount] 전체상품 수량 -->
 	<select id="allGoodsCount" resultType="hashmap">
@@ -235,41 +257,49 @@
 	</select> 
 	
 	<!-- [goodsWrite] 상품 입력 -->
-	<insert id="goodsWrite" parameterType="hashmap">
+	<insert id="goodsWrite" parameterType="hashmap" useGeneratedKeys="true" keyProperty="GD_GID">
+	<selectKey keyProperty="GD_GID" resultType="string" order="BEFORE">
+		SELECT GD_GID_SEQ.NEXTVAL FROM DUAL
+	</selectKey>
 	<![CDATA[
-		INSERT INTO GOODS
+		INSERT INTO GOODS(
+			GD_GID,
+			GD_GNAME,
+			GD_PRICE,
+			GD_DCPRICE,
+			GD_STOCK,
+			GD_CATEGORY
+		)						
 		VALUES(
-			GD_GID_SEQ.NEXTVAL,
+			#{GD_GID},
 			#{GD_GNAME},
-			#{GD_IMAGE},
-			SYSDATE,
 			#{GD_PRICE},
 			#{GD_DCPRICE},
 			#{GD_STOCK},
-			0,
 			#{GD_CATEGORY}
 		)
 	]]>
 	</insert>
 	
-	<!-- [selectPIDMax] 상품 테이블의 PID 최대값 -->
-	<select id="selectGD_GIDMax" resultType="hashmap">
-		SELECT
-			MAX(GD_GID) GD_GIDMAX
-		FROM
-			GOODS
-	</select>
+	<!-- [updateImg] 상품 입력 (이미지만 업데이트) -->
+	<insert id="updateImg" parameterType="hashmap">
+		<![CDATA[
+			UPDATE GOODS
+			SET GD_IMAGE=#{GD_IMAGE}
+			WHERE GD_GID=#{GD_GID}
+		]]>
+	</insert>
 	
-	<!-- [updateGoods] 상품 수정 -->
-	<update id="updateGoods" parameterType="hashmap">
+	<!-- [goodsModify] 상품 수정 -->
+	<update id="goodsModify" parameterType="hashmap">
 		UPDATE GOODS
 		SET GD_GNAME=#{GD_GNAME}, GD_IMAGE=#{GD_IMAGE}, GD_PRICE=#{GD_PRICE}, GD_DCPRICE=#{GD_DCPRICE}, 
-			GD_STOCK=#{GD_STOCK}, GD_SELL=#{GD_SELL}, GD_CATEGORY=#{GD_CATEGORY}
+			GD_STOCK=#{GD_STOCK}, GD_CATEGORY=#{GD_CATEGORY}
 		WHERE GD_GID=#{GD_GID}
 	</update>
 	
-	<!-- [deleteGoods] 상품 삭제 -->
-	<delete id="deleteGoods" parameterType="hashmap">
+	<!-- [goodsDelete] 상품 삭제 -->
+	<delete id="goodsDelete" parameterType="hashmap">
 	<![CDATA[
 		DELETE FROM GOODS
 		WHERE GD_GID=#{GD_GID}

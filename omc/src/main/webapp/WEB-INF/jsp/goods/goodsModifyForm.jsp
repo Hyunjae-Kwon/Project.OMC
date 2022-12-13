@@ -72,8 +72,7 @@ window.onload = function() {
 </script>
 </head>
 <body>
-<form action="goodsModify.omc" method="post" encType="multipart/form-data"
-	id="goodsWriteForm">
+<form action="goodsModify.omc" method="post" encType="multipart/form-data" id="goodsWriteForm">
 	
 <input type="hidden" id="GD_GID" name="GD_GID" value="${goods.GD_GID}">
 	
@@ -128,7 +127,7 @@ window.onload = function() {
 											<b><label style="color:slategray">상품 이미지 미리보기</label></b>
 										</td>
 										<td>
-											<img src="resources/img/goods-${goods.GD_GID}.png" width="300" border="0"
+											<img src="resources/img/goods/goods-${goods.GD_GID}.png" width="300" border="0"
 												id="preview-image">
 											<script>
 												// input file에 change 이벤트 부여
@@ -144,7 +143,7 @@ window.onload = function() {
 											<b><label for="GD_STOCK">상품 수량</label></b>
 										</td>
 										<td>
-											<input type="number" maxlength="20" id="GD_STOCK" name="GD_STOCK" class="form-control" value="${productBean.PSTOCK}"
+											<input type="number" maxlength="20" id="GD_STOCK" name="GD_STOCK" class="form-control" value="${goods.GD_STOCK}"
 												onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
 										</td>
 									</tr>
@@ -203,8 +202,10 @@ window.onload = function() {
 										<td colspan="2">
 											<input type="button" value="수정" class="btn btn-dark py-2 px-3"
 												onClick="return formCheck()">
+											<input type="button" value="삭제" class="btn btn-primary py-2 px-3"
+												onClick="location.href='goodsDelete.omc'">
 											<input type="button" value="메뉴" class="btn btn-primary py-2 px-3"
-												onClick="javascrpit:loaction.href='main.omc'">
+												onClick="location.href='main.omc'">
 										</td>
 									</tr>
 								</tbody>

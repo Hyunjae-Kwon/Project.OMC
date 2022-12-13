@@ -58,15 +58,12 @@ function checkId() {
 		var MEM_ADD2 = document.getElementById("MEM_ADD2");
 		var MEM_ZIPCODE = document.getElementById("MEM_ZIPCODE");
 		var MEM_PHONE = document.getElementById("MEM_PHONE");
-	
-		
 		
 		if(MEM_ID.value.trim() == ""){
 			alert("아이디를 입력해주세요.");
 			MEM_ID.focus();
 			return false;
 		}
-
 		
 		if(MEM_PW.value.trim() == ""){
 			alert("비밀번호를 입력해주세요.");
@@ -187,8 +184,7 @@ window.onload = function() {
 			<form id="joinForm" name="joinForm" method="POST" action="/joinSuccess.omc" class="billing-form" >
 			<h2 class="mb-4 billing-heading">회원가입</h2>
 				<div class="row align-items-end" style="padding-left:150px;">
-					
-					<!-- 이메일 -->
+					<!-- 아이디 -->
 					<h6 class="mb-4" style="text-align:left;">아이디</h6>
 					<div class="w-100"></div>
 					<div class="form-group d-flex">
@@ -198,7 +194,6 @@ window.onload = function() {
 						onClick="checkId()">
 					</div>
 					<div class="w-100"></div>
-           
 					<!-- 비밀번호 -->
 					<div class="form-group">
 						<h6 class="mb-4" style="text-align:left;">비밀번호</h6>
@@ -206,7 +201,6 @@ window.onload = function() {
 							maxlength="10" noBlank>
 					</div>
 					<div class="w-100"></div>
-					
 					<!-- 비밀번호 확인 -->
 					<div class="form-group">
 						<h6 class="mb-4" style="text-align:left;">비밀번호 확인</h6>
@@ -215,7 +209,6 @@ window.onload = function() {
 					</div>
 					<div class="w-100"></div>
 					<br/><br/>
-		
 					<!-- 이름 -->
 					<div class="form-group">
 						<h6 class="mb-4" style="text-align:left;">이름</h6>
@@ -223,7 +216,6 @@ window.onload = function() {
 							maxlength="8" noBlank>
 					</div>
 					<div class="w-100"></div>
-					
 					<!-- 주소 -->
 					<div class="w-100"></div>
 					<div class="form-group">
@@ -246,7 +238,6 @@ window.onload = function() {
 						<input type="button" class="submit px-3" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 					</div>
 					<br/><br/>
-
 					<!-- 핸드폰 번호 -->
 					<div class="form-group">
 						<h6 class="mb-4" style="text-align:left;">핸드폰 번호</h6>
@@ -258,18 +249,13 @@ window.onload = function() {
 					<div class="w-100"></div>
 					<br/><br/><br/><br/>
 					</div>
-
-					
 				<!-- 버튼 -->
 					<div class="form-group" align="center">
 						 <button type="button" class="btn btn-primary py-3 px-5" onClick="checks(this.form)">회원가입</button>
-				            
 				          &emsp;&emsp;
 				          <button type="reset" class="btn btn-black py-3 px-5">다시 입력</button>
-				
 				          &emsp;&emsp;
 				          <button type="button" class="btn btn-black py-3 px-5" onclick="location.href='loginForm.al'">취소</button>
-				     
 					</div>
 			</form>
 		</div>

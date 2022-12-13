@@ -68,14 +68,13 @@ public class JoinController {
         return "redirect:/";
     }
 	
-	/* 회원가입완료 */
-	@RequestMapping(value = "/joinSuccess.omc", method = RequestMethod.POST)
-	public ModelAndView insertMember(CommandMap commandMap) throws Exception {
-		ModelAndView mv = new ModelAndView("/main");
-	
-		joinService.insertMember(commandMap.getMap());
-		return mv;
-	}
+   /* 회원가입완료 */
+   @RequestMapping(value = "/joinSuccess.omc", method = RequestMethod.POST)
+   public ModelAndView insertMember(CommandMap commandMap) throws Exception {
+      ModelAndView mv = new ModelAndView("/login/loginForm");
+      joinService.insertMember(commandMap.getMap());
+      return mv;
+   }
 
 	/* id 중복 체크 */
 	@RequestMapping(value = "/confirmId.omc", method = RequestMethod.POST)

@@ -255,8 +255,8 @@ window.onload = function() {
 		</div>
 	</div>
 	<!-- 상품 추가 임시 버튼 -->
-    <div>
-		<input type="button" value="상품 수정" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='goodsModifyForm.omc'">
+    <div align="center">
+		<input type="button" value="상품 수정" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='goodsModifyForm.omc?GD_GID=${GD_GID}'">
     </div>
 	</section>
 </body>
