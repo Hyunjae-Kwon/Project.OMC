@@ -113,7 +113,7 @@ public class GoodsController {
 		ModelAndView mv = new ModelAndView("redirect:/main.omc");
 		
 		// 상품 이미지를 입력할 폴더 설정
-		String path = "C:\\java\\stsApp\\omc\\src\\main\\webapp\\resources\\img\\goods\\";
+		String path = "/Users/felix/Java/Project.OMC/omc/src/main/webapp/resources/img/goods/";
 		
 		// 상품 수정이기 때문에 GD_GID 값은 폼에서 입력받음
 		String newGD_GID = commandMap.get("GD_GID").toString();
@@ -174,13 +174,14 @@ public class GoodsController {
 		return mv;
 	}
 	
+	/* 상품 삭제 */
 	@RequestMapping(value="/goodsDelete.omc")
 	public ModelAndView goodsDelete(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("goods/goodsDelete");
 		
 		String GD_GID = (String)commandMap.get("GD_GID");
 		
-		String path = "C:\\java\\stsApp\\omc\\src\\main\\webapp\\resources\\img\\goods\\";
+		String path = "/Users/felix/Java/Project.OMC/omc/src/main/webapp/resources/img/goods/";
 		File file = new File(path + "goods-" + GD_GID + ".png");
 		if(file.exists()) {
 			file.delete();

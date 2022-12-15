@@ -10,54 +10,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <script>
-function getCount() {
+function getCount(){
 	
-	var size = document.getElementById('listSize').value;
+	var size = ${cartList.size()};
 	var sum = 0; //원가의 전체 합
 	var saleSum = 0; //할인된 총 전체 합
 	for(var i=0;i<size;i++){
 		var count = 0;
 		count = document.getElementById('CT_COUNT'+i).value;
-		var price = document.getElementById('CT_PRICE'+i).value;
-		var sale = document.getElementById('CT_DCPRICE'+i).value;
-		var salePrice = price * (100-sale) / 100;
-		var totalPrice = salePrice * count; // 할인된 상품 가격
 		
-		sum += price * count;
-		saleSum += (price*sale/100)*count;// 상품이 할인받은 가격
-		document.getElementById("totalPrice"+i).innerText = totalPrice + '원';
-		document.getElementById("saled"+i).innerText = (price*sale/100)*count + '원';
+		var price = document.getElementById('CT_PRICE'+i).value; //원가
+		var sale = document.getElementById('CT_DCPRICE'+i).value; //할인가
+		
+		var salePrice = sale; //원가- 할인가 = 할인금액 */
+		var totalPrice = sale * count; // 할인된 상품 가격 
+		
+		sum += price * count; //원가총금액
+		
+		saleSum += (price-sale) * count;// 상품 총 할인받은 가격
+		
+		//document.getElementById("totalPrice"+i).innerText = totalPrice + '원';
+		//document.getElementById("saled"+i).innerText = (price-sale)*count + '원'; 
 	}
+
 	document.getElementById("originalSum").innerText = sum + '원'; // 페이지의 sum값 출력
 	document.getElementById("saleSum").innerText = saleSum + '원'; // 페이지의 saleSum값 출력
 	
 	var finalSum = sum - saleSum + 3000;
 	document.getElementById("finalSum").innerText = finalSum + '원'; // 페이지의 finalSum값 출력
 	
-	return;
 }
 
-function basketModify(i) {
-	var CT_CID = document.getElementById('CT_CID'+i).value;
-	var CT_COUNT = document.getElementById('CT_COUNT'+i).value;		
-	location.href="cartModify.omc?CT_CID=" + CT_CID + "&CT_COUNT=" + count;
+function cartUpdate() {
+	var cid = document.getElementById('CT_CID').value;
+	var count = document.getElementById('CT_COUNT').value;		
+	location.href="updateMyCart.omc?CT_CID" + cid + "&CT_COUNT=" + count;
 }
-
-function basketDelete(i) {
-if(confirm("정말 삭제하시겠습니까?")==true){
-		var CT_CID = document.getElementById('CT_CID'+i).value;
-		location.href="cartDelete.omc?CT_CID=" + CT_CID;
-}	
-return;
-}
-/* function basketDelete(i) {
-	var bIdx = document.getElementById('BIDX'+i).value;
-	location.href="basketDelete.al?BIDX=" + bIdx;
-} */
 
 function basketOrderForm(i) {
-	var CT_CID = document.getElementById('CT_CID'+i).value;
-	var CT_COUNT = document.getElementById('CT_COUNT'+i).value;		
+	var CT_CID = document.getElementById('CT_CID').value;
+	var CT_COUNT = document.getElementById('CT_COUNT').value;		
 	location.href="cartOrderForm.omc?CT_CID=" + CT_CID + "&CT_COUNT=" + CT_COUNT;	
 }
 
@@ -72,6 +64,18 @@ function orderConfirm(){
 		location.href="/cartOrderForm.omc?CT_CID=" + MEM_ID;
 	}
 	return;
+}
+
+function chkAll(){
+	 if( $("#chkAll").is(':checked') ){
+	     $("input[name=checkRow]").prop("checked", true);
+	 }else{
+	     $("input[name=checkRow]").prop("checked", false);
+	 }	 	 
+}
+
+function chkAll2(){
+    $("input[name=checkRow]").prop("checked", true);
 }
 </script>
 <script>
@@ -104,57 +108,57 @@ window.onload = function() {
 					<thead class="thead-primary">
 						<tr>
 						    <!-- <th>&nbsp;</th> -->
+						    <th scope="col" style="font-size:10px;">
+			        			<input type="checkbox" id="chkAll" onclick="chkAll();">
+			        		</th>
 							<th colspan="2">상품명</th>
 							<th>수량</th>
 							<th>정가</th>
 							<th>할인가</th>
 							<th>주문 금액</th>
-							<th>수정/삭제</th>
 						</tr>
 					</thead>
 							<c:forEach var="goods" items="${cartList}">
-							<tbody>
+							<tbody id="tbody">
 						      <tr class="text-center">
-						        <td class="image-prod"><div class="img" style="background-image:url(resources/img/goods/goods-${memInfo.MEM_ID}.png);"></div></td>
+						      	<td>
+			        				<input type="checkbox" class="checkbox" id="checkRow" name="checkRow">
+			        			</td>
+						        <td class="image-prod"><div class="img" style="background-image:url(resources/img/goods/goods-${goods.CT_GID}.png);"></div></td>
 						        <!-- 상품명 -->
 						        <td class="product-name">
-						        	<a href="goodsDetail.omc?GD_GID=${cartList.CT_GID}">${cartList.CT_NAME}</a>
-				          			<h3>${basketBeanList[i].BSALE}%</h3>
-				          			<input type="hidden" id="CT_CID" name="CT_CID" value="${cartList.CT_CID}">
-				          			<input type="hidden" id="CT_GID" name="CT_GID" value="${cartList.CT_GID}">
-				          			<input type="hidden" id="CT_DCPRICE" name="CT_DCPRICE" value="${cartList.CT_DCPRICE}">
+						        	<a href="goodsDetail.omc?GD_GID=${goods.CT_GID}">${goods.CT_NAME}</a>
+				          			<input type="hidden" id="CT_CID" name="CT_CID" value="${goods.CT_CID}">
+				          			<input type="hidden" id="CT_GID" name="CT_GID" value="${goods.CT_GID}">
+				          			<input type="hidden" id="CT_DCPRICE" name="CT_DCPRICE" value="${goods.CT_DCPRICE}">
 						        	
 						        </td>
 						        
 						        <!-- 수량 -->
 						        <td>
-						        	<input type="number" style="width: 3em;" maxlength="2" oninput="numberMaxLength(this);" id="CT_COUNT" value="${cartList.CT_COUNT}" onChange="getCount()">
+						        	<span class="minus">-</span>
+		            				<input type="number" class="count" style="width: 3em;" maxlength="2" oninput="numberMaxLength(this);" id="CT_COUNT" name="CT_COUNT" value="${goods.CT_COUNT}" readonly>
+									<span class="plus">+</span>
 					          	</td>
 					          	
 					          	<!-- 정가 -->
-						        <td class="price">${cartList.CT_PRICE}원
-						        	<input type="hidden" id="CT_PRICE" name="CT_PRICE" value="${cartList.CT_PRICE}">
+						        <td class="price">${goods.CT_PRICE}원
+						        	<input type="hidden" id="CT_PRICE" name="CT_PRICE" value="${goods.CT_PRICE}">
 						        </td>
 						        
 						        <!-- 할인가 -->
-						        <td>
-							        <c:set var="salePrice" value="${cartList.CT_DCPRICE}" />
-			    					<b><fmt:formatNumber value="${salePrice}" pattern="#.#" />원</b>
-			    					
-			    					<input type="hidden" id="CT_DCPRICE" name="CT_DCPRICE" value="${cartList.CT_DCPRICE}">
+						        <td class="saleprice">${goods.CT_DCPRICE}원
+							        <%-- <c:set var="salePrice" value="${goods.CT_DCPRICE}" />
+			    					<b><fmt:formatNumber value="${salePrice}" pattern="#.#" />원</b> --%>
+			    					<input type="hidden" id="salePrice" name="salePrice" value="${goods.CT_DCPRICE}">
+			    					<input type="hidden" id="CT_DCPRICE" name="CT_DCPRICE" value="${goods.CT_DCPRICE}">
 				          		</td>
 						        
 						        <!-- 주문 금액 -->
-						        <td id="totalPrice" style="font-weight : bold;">
-						        	<c:set var="total" value="${salePrice * cartList.CT_COUNT}" />
+						        <td id="totalPrice" style="font-weight : bold;" value="${totalPrice}">
+						        	<c:set var="total" value="${salePrice * goods.CT_COUNT}" />
 						        	<fmt:parseNumber var="totalPrice" integerOnly="true" value="${total}" />
 						        	<b><fmt:formatNumber value="${totalPrice}" pattern="#.#" />원</b>
-						        </td>
-						    	
-						    	<!-- 수정/삭제 -->
-						        <td>
-								<input type="button" class="btn btn-primary py-1 px-2" onClick="cartModify()" value="수정">
-						        <input type="button" class="btn btn-dark py-1 px-2" onClick="cartDelete()" value="삭제">
 						        </td>
 						      </tr>
 							</c:forEach>
@@ -165,7 +169,16 @@ window.onload = function() {
 		</table>
 			
 					</div> <!-- end cart-list div -->
-		<br>				  						  
+		<br>		
+		<div align="center">
+			<button type="button" class="btn btn-primary" onclick="chkAll2();">전체선택</button>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" class="btn btn-primary" id="deleteChk">선택삭제</button>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" class="btn btn-primary" onclick="buyItem()">선택주문</button>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" class="btn btn-primary" onclick="location.href='<c:url value='/main.omc'/>';">메인으로</button>
+		</div>		  						  
 	<!-- 쇼핑계속버튼 -->		  
 		<div style='float: right;'>
 			<input type="button" class="btn btn-dark py-2 px-3" value="쇼핑 계속하기" onclick="location.href='/allGoodsList.omc'"/>
@@ -206,7 +219,115 @@ window.onload = function() {
     				<!-- <a href="/Jumo/basketOrderForm.al" class="btn btn-primary py-3 px-4">선택 상품 주문</a> -->
     				</div>
     			</div>
-    			
-    			
+<script>
+$(document).ready(function(){
+
+	/* 상품 수량 수정 시 화면에서 금액 변경 (상품 수량 추가) */
+    $(document).on('click','.plus',function(){
+    	
+    	$(this).prev('.count').val(parseInt($(this).prev('.count').val()) + 1 );
+		
+    	var tr = $(".plus").index(this);
+		var cid = $("#tbody tr").eq(tr).find("#CT_CID").val();
+    	var cnt = parseInt($(this).prev('.count').val());
+    	
+    	var price = parseInt($(this).closest("td").find('.salePrice').val());
+    	var sum = cnt*price;
+    	
+    	$(this).closest("tr").find('#totalPrice').val(sum);
+    	var num = parseInt($(this).parent().siblings("#CT_CID").val());
+    	
+    	$.ajax({
+			type: "POST",
+			url:"<c:url value='updateMyCart.omc'/>",
+			data:{CT_COUNT:cnt, CT_CID:cid},
+			success: function(data){
+				}	
+        	});
+    	var sum = cnt*price;	
+ 	});
+ 	
+    /* 상품 수량 수정 시 화면에서 금액 변경 (상품 수량 감소) */
+ 	$(document).on('click','.minus',function(){
+   		 $(this).next('.count').val(parseInt($(this).next('.count').val()) - 1 );
+   		var cnt = parseInt($(this).next('.count').val());
+    	var price =parseInt($(this).closest("tr").find('.price').val());
+    	var sum = cnt*price;
+    	$(this).closest("tr").find('#sum').val(sum);
+   		 
+       	 if ($(this).next('.count').val() == 0) {
+          	$(this).next('.count').val(1);
+          	cnt = parseInt($(this).next('.count').val());
+        	price = parseInt($(this).closest("tr").find('.price').val());
+        	sum = cnt*price; 
+        	$(this).closest("tr").find('#sum').val(sum);
+        	
+         	return;
+    	 }   
+	       	var num = parseInt($(this).parent().siblings("#num").val());
+	    	$.ajax({
+				type: "POST",
+				url:"<c:url value='/myPage/myCartUpdate'/>",
+				data:{CART_NUM:num, CART_CNT:cnt},
+				success: function(data){
+						
+					}	
+	        });	 
+	});
+
+    /* 장바구니 상품 삭제 */
+	$(document).on('click','#deleteChk', function(){
+ 		if($("input:checkbox[name=checkRow]:checked").length == 0){
+ 			alert("삭제할 상품을 선택해주세요.");
+ 			return false;
+ 	 	} else if(confirm("선택하신 상품을 삭제하시겠습니까?")== true){
+ 	 		$("input:checkbox[name=checkRow]:checked").each(function(index, item){
+ 	 	 		
+ 	 			var tr = $(".checkbox").index(this);
+ 				var num = $("#tbody tr").eq(tr).find("#CT_CID").val();
+ 				$.ajax({
+ 	 				type: "POST",
+ 	 				url:"<c:url value='delSelectMyCart.omc'/>",
+ 	 				data:{CT_CID:num},
+ 	 				success: function(data){
+ 	 						location.reload();
+ 	 				}	
+ 	 	        });
+ 	 		});
+ 	 	}
+ 	});
+});
+
+/* 선택 상품 구매 */
+function buyItem(){
+
+	if($("input:checkbox[name=checkRow]:checked").length == 0){
+			alert("구매하실 상품을 체크해주세요.");
+			return false;
+ 	} else if(confirm("선택하신 상품을 주문하시겠습니까?")== true){
+ 		$.ajax({
+		      type : "POST",
+		      url : '<c:url value="/item/delBuyItemCart"/>',
+		      async: false,
+		      success : function(data){
+		      }
+		   }); 
+ 		$("input:checkbox[name=checkRow]:checked").each(function(){
+ 			
+ 			var formOrder=$(this).closest("tr").find("form").serialize();
+ 			$.ajax({
+ 				type : "POST",
+ 				url : "<c:url value='/item/buyItemCart'/>",
+ 				data : formOrder,
+ 				async: false,
+ 				success : function(data){
+ 					
+ 				}
+ 			});
+	    });
+	    location.href="<c:url value='/item/qmember'/>";
+	}
+}
+</script>
   </body>
 </html>

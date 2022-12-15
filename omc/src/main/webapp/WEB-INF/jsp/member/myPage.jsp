@@ -29,25 +29,25 @@ function escapeCheck() {
 	
 	<p></p>
 	<c:if test="${MEM_ID != 'ADMIN'}">
-		<a href="/myInfoModify.omc" class="nav-link" style="font-size:large; color:#82ae46;">회원 정보 수정</a>
+		<a href="/myInfoModify.omc" class="nav-link" style="font-size:large; color:#fd7e14;">회원 정보 수정</a>
 	</c:if>
 		
 	<p></p>		
 
-	<a href="/myOrderList.omc" class="nav-link" style="font-size:large; color:#82ae46;">주문조회</a>
+	<a href="/myOrderList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">주문조회</a>
 
 	<p></p>
 	
-	<a href="/myReviewList.omc" class="nav-link" style="font-size:large; color:#82ae46;">후기</a>
+	<a href="/myReviewList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">후기</a>
 	
 	<p></p>
 	
-	<a href="/myQnaList.omc" class="nav-link" style="font-size:large; color:#82ae46;">문의내역</a>
+	<a href="/myQnaList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">문의내역</a>
 	
 	<p></p>
 		
 	<c:if test="${MEM_ID != 'ADMIN'}">	
-		<a href="javascript:escapeCheck()" class="nav-link" style="font-size:large; color:#82ae46;">회원탈퇴</a>
+		<a href="javascript:escapeCheck()" class="nav-link" style="font-size:large; color:#fd7e14;">회원탈퇴</a>
 	</c:if>
 	
 	<p></p>				

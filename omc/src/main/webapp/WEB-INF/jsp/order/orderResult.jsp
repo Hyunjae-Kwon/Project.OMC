@@ -16,7 +16,6 @@
 	
 	<form method="post" id="orderForm" action="order.omc">
 	<!-- 단일 주문일 때의 결과 표시 -->
-
 	
 	<section class="ftco-section ftco-cart">
 		<div class="container">
@@ -48,22 +47,18 @@
 										<h3><b>${orderResult.OD_GNAME}</b></h3>
 									</td>
 									
-									<td class="count">${orderResult.OD_COUNT}</td>
+									<td class="count">${orderResult.OD_COUNT}개</td>
 									
 									<td class="price">${orderResult.OD_PRICE}원</td>
 									
 									<td class="price">
-				          				<c:set var="salePrice" value="${orderResult.OD_PRICE * (100-orderResult.OD_DCPRICE) / 100}" />
+				          				<c:set var="salePrice" value="${orderResult.OD_DCPRICE}" />
 				          				<fmt:formatNumber value="${salePrice}" pattern="#.#" />원
 									</td>
-									
-								<%-- 	<td id="saled${i}" style="color:Crimson">
-				          			<c:set var="salePrice" value="${basketBeanList[i].BPRICE * (100-basketBeanList[i].BSALE) * 0.01}" />
-				          			<input type="hidden" id="OPRICE${i}" name="OPRICE" value="${basketBeanList[i].BPRICE}"></td>
-						      		 --%>
+															      		
 						      		
 									<td class="saled" style="color:Crimson">
-									<c:set var="saled" value="${(orderResult.OD_PRICE-salePrice) * orderResult.OD_COUNT}" />
+									<c:set var="saled" value="${(orderResult.OD_PRICE-orderResult.OD_DCPRICE)*orderResult.OD_COUNT}" />
 									<fmt:formatNumber value="${saled}" pattern="#.#" />원</td>
 									
 						      		
@@ -214,24 +209,32 @@
 							<div class="cart-total mb-3">
 								<h5><b>배송 정보</b></h5><br>
 								<p class="d-flex total-price">
+									<span>이름</span>
+									<span>${orderResult.OD_NAME}</span>
+								</p>
+								<p class="d-flex total-price">
+									<span>휴대폰번호</span>
+									<span>${orderResult.OD_PHONE}</span>
+								</p>
+								<p class="d-flex total-price">
 									<span>우편번호</span>
-									<span>${memInfo.MEM_ZIPCODE}</span>
+									<span>${orderResult.OD_ZIPCODE}</span>
 								</p>
 								<p class="d-flex total-price">
 									<span>주소</span>
-									<span>${memInfo.MEM_ADD1}</span>
+									<span>${orderResult.OD_ADD1}</span>
 								</p>
 								<p class="d-flex total-price">
 									<span>상세주소</span>
-									<span>${memInfo.MEM_ADD2}</span>
+									<span>${orderResult.OD_ADD2}</span>
 								</p><br>
 								<p class="d-flex total-price"></p>
 							</div>
 						</div>
-<!-- 	 					<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+ 					<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
 							<div class="cart-total mb-3">
 								<h5><b>결제 정보</b></h5><br>
-								<p class="d-flex total-price">
+							<!--  	<p class="d-flex total-price">
 									<span>적립 포인트</span>
 									<span>${jumo_point.JUMO_POINT}&nbsp;Point</span>
 								</p> -->
@@ -243,7 +246,7 @@
 									무통장 입금
 								</p>
 								<p class="d-flex total-price">
-									&emsp;&emsp;<span><b>우리은행</b></span>
+									<span><b>우리은행</b></span>
 									<span>1222222-266</span>
 								</p>
 							</div>
@@ -317,9 +320,10 @@
 								onClick="location.href='main.omc'">
 						</td>
 					</div>
+			</div>
+	 </div>
+	</div>
 </section>
-	
-
 	
 	</form>	
 	

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로그인폼</title>
+<title>오늘의 메뉴 추천, 오메추</title>
 </head>
 <style>
 #MEM_ID {
@@ -83,7 +83,7 @@ $(document).on("keyup", "input[noBlank]", function() {$(this).val( $(this).val()
 
 <div style="text-align:center">
 	<br>
-	<span style="font-size:xx-large; color:#82ae46;"><b>로 그 인</b></span>
+	<span style="font-size:xx-large; color:#fd7e14;"><b>로 그 인</b></span>
 </div>
 <hr>
 <div style="text-align:center">
@@ -104,8 +104,8 @@ $(document).on("keyup", "input[noBlank]", function() {$(this).val( $(this).val()
 		<input type="button" value="회원가입" onClick="location.href='/joinForm.omc'" class="btn btn-primary py-2 px-4"><br>
 		
 		<p></p>
-		<a href="/findId.omc" class="nav-link" style="font-size:large; color:#82ae46;">아이디 찾기</a>
-		<a href="/findPw.omc" class="nav-link" style="font-size:large; color:#82ae46;">비밀번호 찾기</a>
+		<a href="/findId.omc" class="nav-link" style="font-size:large; color:#fd7e14;">아이디 찾기</a>
+		<a href="/findPw.omc" class="nav-link" style="font-size:large; color:#fd7e14;">비밀번호 찾기</a>
 
 	</form>
 </div>

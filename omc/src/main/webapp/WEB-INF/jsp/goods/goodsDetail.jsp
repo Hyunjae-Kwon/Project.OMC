@@ -77,26 +77,32 @@ function getCount() {
 } */
 
 function insertCart(){
-	var items=$("td[id=contain]").get();
-	   $.each(items,function(index,item){
-	      var goodsName=$("td[id=contain]:eq("+index+")").find('#GD_GNAME').val();
-	      var goodsID=$("td[id=contain]:eq("+index+")").find('#GD_GID').val();
-	      var goodsPrice=parseInt($("td[id=contain]:eq("+index+")").find('#GD_PRICE').val());
-	      var goodsDCPrice=parseInt($("td[id=contain]:eq("+index+")").find('#GD_DCPRICE').val());
-	      var count=parseInt($("td[id=contain]:eq("+index+")").find('#orderCount').val());
-	      
-	      $.ajax({
-	         type : "POST",
-	         url : '<c:url value="insertCart.omc"/>',
-	         data : {CT_NAME:goodsName,CT_GID:goodsID,CT_PRICE:goodsPrice,CT_DCPRICE:goodsDCPrice,CT_COUNT:count},
-	         success : function(data){
-	             
-	         }
-	      });  
-	   })
-	   alert("장바구니에 담겼습니다!");
-	   location.href="<c:url value='myCart.omc'/>";
-	}
+	   var items=$("td[id=contain]").get();
+	   if(${MEM_ID ne null}){
+	      $.each(items,function(index,item){
+	         var goodsName=$("td[id=contain]:eq("+index+")").find('#GD_GNAME').val();
+	         var goodsID=$("td[id=contain]:eq("+index+")").find('#GD_GID').val();
+	         var goodsPrice=parseInt($("td[id=contain]:eq("+index+")").find('#GD_PRICE').val());
+	         var goodsDCPrice=parseInt($("td[id=contain]:eq("+index+")").find('#GD_DCPRICE').val());
+	         var count=parseInt($("td[id=contain]:eq("+index+")").find('#orderCount').val());
+	         
+	         $.ajax({
+	            type : "POST",
+	            url : '<c:url value="insertCart.omc"/>',
+	            data : {CT_NAME:goodsName,CT_GID:goodsID,CT_PRICE:goodsPrice,CT_DCPRICE:goodsDCPrice,CT_COUNT:count},
+	            success : function(data){
+	                
+	            }
+	         });  
+	      })
+	      alert("장바구니에 담겼습니다!");
+	      location.href="<c:url value='myCart.omc'/>";
+	   } else {
+	      alert("로그인 후 이용해주세요.");
+	      location.href = "/loginForm.omc";
+	   }
+	   
+	   }
 
 function orderForm() {
 	var goodsId = document.getElementById('GD_GID').value;

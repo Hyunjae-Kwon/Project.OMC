@@ -84,7 +84,7 @@
 	</select>
 	
 	<!-- updateCart 장바구니 구매수량 변경 -->
-	<update id="updateCart" parameterType="hashmap">
+	<update id="updateMyCart" parameterType="hashmap">
 	<![CDATA[
 		UPDATE
 			CART
@@ -96,7 +96,7 @@
 	</update>
 
 	<!-- deleteCart 장바구니 삭제 -->
-	<delete id="deleteCart" parameterType="hashmap">
+	<delete id="deleteMyCart" parameterType="hashmap">
 	<![CDATA[
 		DELETE
 			FROM CART

@@ -56,5 +56,17 @@ public class CartServiceImpl implements CartService{
 	public List<Map<String, Object>> selectCartList(String loginId) throws Exception {
 		return cartDAO.selectCartList(loginId);
 	}
+
+	/* 선택상품 장바구니 삭제 */
+	@Override
+	public void delSelectMyCart(Map<String, Object> map) throws Exception {
+		cartDAO.delSelectMyCart(map);
+	}
+	
+	/* 장바구니 수량 변경 */
+	@Override
+	public void updateMyCart(Map<String, Object> map) throws Exception {
+		cartDAO.updateMyCart(map);
+	}
 	
 }

@@ -11,8 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUpload {
 	
-	public static void fileUpload(MultipartFile fileData,
-			String path, String fileName) throws IOException {
+	public static void fileUpload(MultipartFile fileData, String path, String fileName) throws IOException {
 		
 		long fileSize = fileData.getSize();
 		

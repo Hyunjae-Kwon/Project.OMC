@@ -86,6 +86,7 @@ public class CartController {
 //		return mv;
 //	}
 	
+	/* 상품 장바구니에 저장 */
 	@RequestMapping(value="insertCart.omc", method=RequestMethod.POST)
 	@ResponseBody
     public boolean addCart(CommandMap commandMap,HttpServletRequest request) throws Exception{
@@ -122,6 +123,26 @@ public class CartController {
         
         mv.addObject("cartList", list);
 		mv.addObject("memInfo", memInfo);
+		
+		return mv;
+	}
+	
+	/* 장바구니 상품 삭제 */
+	@RequestMapping(value = "/delSelectMyCart.omc")
+	public ModelAndView delSelectMyCart(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("cart/cartList");
+		
+		cartService.delSelectMyCart(commandMap.getMap());
+	 
+		return mv;
+	}
+	
+	/* 장바구니 수량 변경 */
+	@RequestMapping(value="/updateMyCart.omc", method=RequestMethod.POST)
+	public ModelAndView updateMyCart(CommandMap commandMap, HttpServletRequest request) throws Exception{
+		ModelAndView mv = new ModelAndView("cart/cartList");
+		
+		cartService.updateMyCart(commandMap.getMap());
 		
 		return mv;
 	}

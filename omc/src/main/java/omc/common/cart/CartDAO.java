@@ -52,4 +52,14 @@ public class CartDAO  extends AbstractDAO{
 		return (List<Map<String, Object>>) selectList ("cart.selectCartList", loginId);
 	}
 	
+	/* 선택상품 장바구니 삭제 */
+	public void delSelectMyCart(Map<String, Object> map) throws Exception {
+		delete("cart.deleteMyCart", map);
+	}
+	
+	/* 장바구니 수량 변경 */
+	public void updateMyCart(Map<String, Object> map) throws Exception {
+		update("cart.updateMyCart", map);
+	}
+	
 }

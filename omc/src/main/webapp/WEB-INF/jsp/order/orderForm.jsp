@@ -90,7 +90,7 @@ $(document).ready(function() {
 			MEM_ADD2.value = "";
 		}		
 	});
-	
+})	
 $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).val().replace(/[^0-9]/gi,"") );})
 
 </script>
@@ -173,8 +173,9 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 									<!-- <th>&nbsp;</th> -->
 									<th colspan="2">상품명</th>
 									<th>수량</th>
-									<th>정가</th>
-									<th>할인가</th>
+									<th>상품 금액</th>
+									<th>판매 금액</th>
+									<th>할인 금액</th>
 									<th>결제 금액</th>
 								</tr>
 							</thead>
@@ -185,21 +186,27 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 									<div class="img" id="GD_IMAGE" name="GD_IMAGE" style="background-image:url(resources/img/goods/${goodsInfo.GD_IMAGE});"></div></td>
 									
 									<!-- 상품명 -->
-									<td class="product-name" id="GD_GNAME" name="GD_GNAME">
+									<td class="product-name" id="OD_GNAME" name="OD_GNAME">
 										<h3><b>${goodsInfo.GD_GNAME}</b></h3>
 									</td>
 									
 									<!-- 수량 -->
 									<td class="count" id="OD_COUNT" name="OD_COUNT">${orderCount} 개</td>
 									
-									<!-- 정가 -->
-									<td class="price" id="GD_PRICE" name="GD_PRICE">${goodsInfo.GD_PRICE} 원</td>
+									<!-- 상품 금액 -->
+									<td class="price" id="OD_PRICE" name="OD_PRICE">${goodsInfo.GD_PRICE} 원</td>
 									
-									<!-- 할인가 -->
-									<td class="price" id="GD_DCPRICE" name="GD_DCPRICE">
+									<!-- 판매금액 -->
+									<td class="price">
 				          				<c:set var="salePrice" value="${goodsInfo.GD_DCPRICE}" />
 				          				<fmt:formatNumber value="${salePrice}" pattern="#.#" />원
 									</td>
+									
+									<!-- 할인금액 -->
+									<td class="price" id="OD_DCPRICE" name="OD_DCPRICE" style="color:Crimson">
+									<c:set var="sale" value="${(goodsInfo.GD_PRICE-goodsInfo.GD_DCPRICE)*orderCount}" />
+									<fmt:parseNumber var="saled" integerOnly="true" value="${sale}"/>
+									<fmt:formatNumber value="${saled}" pattern="#.#" />원</td> 
 									
 									<!-- 결제 금액 -->
 									<td class="total">
@@ -227,16 +234,16 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 <input type="hidden" name="OD_GNAME" value="${GD_GNAME}">
 <input type="hidden" name="OD_COUNT" value="${orderCount}">
 <input type="hidden" name="OD_PRICE" value="${GD_PRICE}">
-<input type="hidden" name="OD_DCPRICE" value="${GD_DCPRICE}">
+<input type="hidden" name="OD_DCPRICE" value="${(goodsInfo.GD_PRICE-goodsInfo.GD_DCPRICE)*orderCount}">
 <input type="hidden" id="OD_TOTAL" name="OD_TOTAL" value="${totalPrice}">
-
 <input type="hidden" name="OD_ID" value="${MEM_ID}">
+<input type="hidden" name="OD_NUM" value="${MEM_ID}">
 
-<input type="hidden" id="OD_NAME" value="${MEM_NAME}">
-<input type="hidden" id="OD_PHONE" value="${MEM_PHONE}">
-<input type="hidden" id="OD_ZIPCODE" value="${MEM_ZIPCODE}">
-<input type="hidden" id="OD_ADD1" value="${MEM_ADD1}">
-<input type="hidden" id="OD_ADD2" value="${MEM_ADD2}">
+<input type="hidden" id="OD_NAME" value="${memInfo.MEM_NAME}">
+<input type="hidden" id="OD_PHONE" value="${memInfo.MEM_PHONE}">
+<input type="hidden" id="OD_ZIPCODE" value="${memInfo.MEM_ZIPCODE}">
+<input type="hidden" id="OD_ADD1" value="${memInfo.MEM_ADD1}">
+<input type="hidden" id="OD_ADD2" value="${memInfo.MEM_ADD2}">
 	
 	<div class="col-md-12">
 	<section class="ftco-section">
@@ -385,8 +392,8 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 	    					<h2>결제 금액</h2><br>
 	    					<p class="d-flex">
 	    						<span>주문 금액</span>
-	    						<span id="originalSum">${goodsInfo.GD_PRICE*gCount}원</span>
-	    						<input type="hidden" id="totalPrice" name="totalPrice" value="${goodsInfo.GD_PRICE*gCount}">
+	    						<span id="originalSum">${goodsInfo.GD_PRICE*orderCount}원</span>
+	    						<input type="hidden" id="totalPrice" name="totalPrice" value="${goodsInfo.GD_PRICE*orderCount}">
 	    					</p>
 	    					<p class="d-flex">
 	    						<span>할인 금액</span>

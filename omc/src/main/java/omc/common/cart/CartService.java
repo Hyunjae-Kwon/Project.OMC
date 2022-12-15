@@ -27,4 +27,10 @@ public interface CartService {
 	/* 장바구니 리스트 */
 	List<Map<String, Object>> selectCartList(String loginId) throws Exception;
 	
+	/* 선택상품 장바구니 삭제 */
+	void delSelectMyCart(Map<String, Object> map) throws Exception;
+	
+	/* 장바구니 수량 변경 */
+	void updateMyCart(Map<String, Object> map) throws Exception;
+	
 }

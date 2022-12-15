@@ -89,6 +89,7 @@ public class OrderController {
 
 	}
 	
+	/* 장바구니 상품 주문하기 폼 */
 	@RequestMapping(value = "/cartOrderForm.omc")
 	@ResponseBody
 	public ModelAndView cartOrderForm(CommandMap commandMap, HttpServletRequest request) throws Exception {
@@ -100,6 +101,7 @@ public class OrderController {
 		return mv;
 	}
 	
+	/* 장바구니 상품 주문하기 */
 	@RequestMapping(value = "/cartOrder.omc")
 	public ModelAndView cartOrder(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("orderResult");

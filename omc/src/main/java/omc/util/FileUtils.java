@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @Component("fileUtils")
 public class FileUtils {
 	public Map<String,Object> parseInsertFileInfo(Map<String,Object> map, MultipartHttpServletRequest request) throws Exception{
+		
 		MultipartFile main_imageFile = request.getFile("main_image");
 		MultipartFile detail_imageFile1 = request.getFile("image1");
 		MultipartFile detail_imageFile2 = request.getFile("image2");
@@ -25,7 +26,7 @@ public class FileUtils {
 		map.put("GD_IMAGE", uploadMainImageName);
 		
 		// 상품 이미지를 입력할 폴더 설정
-		String path = "C:\\java\\stsApp\\omc\\src\\main\\webapp\\resources\\img\\goods\\";
+		String path = "/Users/felix/Java/Project.OMC/omc/src/main/webapp/resources/img/goods/";
 				
 		FileUpload.fileUpload(main_imageFile, path, uploadMainImageName);
 		
