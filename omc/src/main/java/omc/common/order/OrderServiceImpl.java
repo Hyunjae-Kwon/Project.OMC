@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
@@ -19,10 +20,16 @@ public class OrderServiceImpl implements OrderService {
 	@Resource(name="goodsDAO")
 	private GoodsDAO goodsDAO;
 
+	/* 주문하기 (상품 상세 -> 주문하기) */
 	@Override
-	public List<Map<String, Object>> insertOrderDirect(Map<String, Object> map) {
-		// TODO Auto-generated method stub
+	public Map<String, Object> insertOrderDirect(Map<String, Object> map, HttpServletRequest request) {
 		return orderDAO.insertOrderDirect(map);
+	}
+
+	/* 주문 결과 확인 */
+	@Override
+	public Map<String, Object> selectOrderOID(Map<String, Object> map, HttpServletRequest request) {
+		return orderDAO.selectOrderOID(map);
 	}
 
 	@Override
@@ -39,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectOrderOId(Map<String, Object> map) {
+	public List<Map<String, Object>> selectOrderOid(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return orderDAO.selectOrderOId(map);
 	}

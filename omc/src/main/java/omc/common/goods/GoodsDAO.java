@@ -89,6 +89,12 @@ public class GoodsDAO extends AbstractDAO {
 		return (Map<String, Object>) selectOne ("goods.goodsDetail", map);
 	}
 	
+	/* 상품 상세 정보에서 장바구니로 넘어갈 때 같이 전송하는 상품 정보 */
+//	@SuppressWarnings("unchecked")
+//	public Map<String, Object> selectGoods(String memberId) throws Exception {
+//		return (Map<String, Object>) selectOne("goods.selectGoodsId", memberId);
+//	}
+	
 	/* 상품 리뷰 리스트 (상품 상세) */
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> goodsReview(Map<String, Object> map) throws Exception {

@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
+
+import omc.common.common.CommandMap;
 
 @Service ("cartService")
 public class CartServiceImpl implements CartService{
@@ -33,5 +36,25 @@ public class CartServiceImpl implements CartService{
 		// TODO Auto-generated method stub
 		return cartDAO.selectCartGID(map);
 	}
+	
+	/* 상품 장바구니에 저장 */
+	@Override
+	public void insertCart(Map<String, Object> map, HttpServletRequest request) throws Exception {
+		cartDAO.insertCart(map);
+	}
 
+	@Override
+	public int insertCart(Map<String, Object> map) {
+		if(0 < cartDAO.findCart(map)) {
+			return 0;
+		}
+		return cartDAO.addCart(map);
+	}
+
+	/* 장바구니 리스트 */
+	@Override
+	public List<Map<String, Object>> selectCartList(String loginId) throws Exception {
+		return cartDAO.selectCartList(loginId);
+	}
+	
 }

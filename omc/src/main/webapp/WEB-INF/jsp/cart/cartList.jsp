@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <title>오메추</title>
+    <title>오늘의 메뉴 추천, 오메추</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <script>
@@ -105,62 +105,62 @@ window.onload = function() {
 						<tr>
 						    <!-- <th>&nbsp;</th> -->
 							<th colspan="2">상품명</th>
-							<th>상품 금액</th>
-							<th>판매 금액</th>
 							<th>수량</th>
-							<th>할인 금액</th>
+							<th>정가</th>
+							<th>할인가</th>
 							<th>주문 금액</th>
 							<th>수정/삭제</th>
 						</tr>
 					</thead>
-						<c:if test="${Size>=1}">
-							<c:forEach var="i" begin="0" end="${Size-1}">
+							<c:forEach var="goods" items="${cartList}">
 							<tbody>
 						      <tr class="text-center">
-						     
-						       <!--  <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td> -->
-						        
-						        <td class="image-prod"><div id="CT_CID" class="img" style="background-image:url(img/product-${basketBeanList[i].CT_CID}.png);"></div></td>
-    						
+						        <td class="image-prod"><div class="img" style="background-image:url(resources/img/goods/goods-${memInfo.MEM_ID}.png);"></div></td>
+						        <!-- 상품명 -->
 						        <td class="product-name">
-						        	<a href="goodsDetail.omc?GD_GID=${basketBeanList[i].CT_CID}">${basketBeanList[i].CT_NAME}</a>
-				          			<%-- <h3>${basketBeanList[i].BSALE}%</h3> --%>
-				          			<input type="hidden" id="CT_CID${i}" name="CT_CID${i}" value="${basketBeanList[i].CT_CID}">
-				          			<input type="hidden" id="CT_DCPRICE${i}" name="CT_DCPRICE${i}" value="${basketBeanList[i].CT_DCPRICE}">
+						        	<a href="goodsDetail.omc?GD_GID=${cartList.CT_GID}">${cartList.CT_NAME}</a>
+				          			<h3>${basketBeanList[i].BSALE}%</h3>
+				          			<input type="hidden" id="CT_CID" name="CT_CID" value="${cartList.CT_CID}">
+				          			<input type="hidden" id="CT_GID" name="CT_GID" value="${cartList.CT_GID}">
+				          			<input type="hidden" id="CT_DCPRICE" name="CT_DCPRICE" value="${cartList.CT_DCPRICE}">
 						        	
 						        </td>
 						        
-						        <td class="price" >${basketBeanList[i].CT_PRICE}원</td>
-						        
+						        <!-- 수량 -->
 						        <td>
-						        <c:set var="salePrice" value="${basketBeanList[i].CT_PRICE * (100-basketBeanList[i].CT_DCPRICE) * 0.01}" />
-		    					<b><fmt:formatNumber value="${salePrice}" pattern="#.#" />원</b>
-		    					<input type="hidden" id="CT_PRICE${i}" name="CT_PRICE${i}" value="${basketBeanList[i].CT_PRICE}">
-				          		</td>
-				          		
-						        <td>
-						        	<input type="number" style="width: 3em;" maxlength="2" oninput="numberMaxLength(this);"
-						        		min="0" max="${proInfoList[i].GD_STOCK}" id="GD_STOCK${i}" value="${basketBeanList[i].CT_COUNT}" onChange="getCount()">
+						        	<input type="number" style="width: 3em;" maxlength="2" oninput="numberMaxLength(this);" id="CT_COUNT" value="${cartList.CT_COUNT}" onChange="getCount()">
 					          	</td>
-					          
-								<td id="saled${i}" style="color:Crimson">
-
+					          	
+					          	<!-- 정가 -->
+						        <td class="price">${cartList.CT_PRICE}원
+						        	<input type="hidden" id="CT_PRICE" name="CT_PRICE" value="${cartList.CT_PRICE}">
+						        </td>
+						        
+						        <!-- 할인가 -->
+						        <td>
+							        <c:set var="salePrice" value="${cartList.CT_DCPRICE}" />
+			    					<b><fmt:formatNumber value="${salePrice}" pattern="#.#" />원</b>
+			    					
+			    					<input type="hidden" id="CT_DCPRICE" name="CT_DCPRICE" value="${cartList.CT_DCPRICE}">
 				          		</td>
 						        
-						        <td id="totalPrice${i}" style="font-weight : bold;">
-
+						        <!-- 주문 금액 -->
+						        <td id="totalPrice" style="font-weight : bold;">
+						        	<c:set var="total" value="${salePrice * cartList.CT_COUNT}" />
+						        	<fmt:parseNumber var="totalPrice" integerOnly="true" value="${total}" />
+						        	<b><fmt:formatNumber value="${totalPrice}" pattern="#.#" />원</b>
 						        </td>
-						    
+						    	
+						    	<!-- 수정/삭제 -->
 						        <td>
-								<input type="button" class="btn btn-primary py-1 px-2" onClick="cartModify(${i})" value="수정">
-						        <input type="button" class="btn btn-dark py-1 px-2" onClick="cartDelete(${i})" value="삭제">
+								<input type="button" class="btn btn-primary py-1 px-2" onClick="cartModify()" value="수정">
+						        <input type="button" class="btn btn-dark py-1 px-2" onClick="cartDelete()" value="삭제">
 						        </td>
 						      </tr>
 							</c:forEach>
-							</c:if>
-					<c:if test="${Size<=0}">
+					<%-- <c:if test="${Size<=0}">
 						<tr><td style="text-align:center" colspan="8">장바구니에 상품이 없습니다.</td></tr>
-					</c:if>
+					</c:if> --%>
 			 </tbody>
 		</table>
 			
@@ -168,7 +168,7 @@ window.onload = function() {
 		<br>				  						  
 	<!-- 쇼핑계속버튼 -->		  
 		<div style='float: right;'>
-			<input type="button" class="btn btn-dark py-2 px-3" value="쇼핑 계속하기" onclick="location.href='/allList.omc'"/>
+			<input type="button" class="btn btn-dark py-2 px-3" value="쇼핑 계속하기" onclick="location.href='/allGoodsList.omc'"/>
     	</div>
     	
 	</div>

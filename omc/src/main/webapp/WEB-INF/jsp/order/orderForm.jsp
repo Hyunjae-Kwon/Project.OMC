@@ -17,7 +17,7 @@ input[type="number"]::-webkit-inner-spin-button {
 </style>
 <script>
 function orderCheck() {
-	var OrderForm = document.getElementById("OrderForm");
+	var OrderForm = document.getElementById("orderForm");
 	
 	var MEM_NAME = document.getElementById("MEM_NAME");
 	var MEM_ADD1 = document.getElementById("MEM_ADD1");
@@ -55,9 +55,11 @@ function orderCheck() {
 			return false;
 		}
 
-		pOrderForm.submit();
+		OrderForm.submit();
 	}
 }
+</script>
+<script>
 
 /* 체크박스 체크 여부에 따라 값 입력/지우기 */
 $(document).ready(function() {
@@ -156,7 +158,7 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 		<h1> 주문 페이지 </h1>
 	</div>
 	
-	<form method="post" id="pOrderForm" action="order.omc">
+	<form method="post" id="orderForm" action="order.omc">
 	
 	<section class="ftco-section ftco-cart">
 		<div class="container">
@@ -180,21 +182,21 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 							
 								<tr class="text-center">
 									<td class="image-prod">
-									<div class="img" style="background-image:url(resources/img/goods/${goodsInfo.GD_IMAGE});"></div></td>
+									<div class="img" id="GD_IMAGE" name="GD_IMAGE" style="background-image:url(resources/img/goods/${goodsInfo.GD_IMAGE});"></div></td>
 									
 									<!-- 상품명 -->
-									<td class="product-name">
+									<td class="product-name" id="GD_GNAME" name="GD_GNAME">
 										<h3><b>${goodsInfo.GD_GNAME}</b></h3>
 									</td>
 									
 									<!-- 수량 -->
-									<td class="count">${orderCount} 개</td>
+									<td class="count" id="OD_COUNT" name="OD_COUNT">${orderCount} 개</td>
 									
 									<!-- 정가 -->
-									<td class="price">${goodsInfo.GD_PRICE} 원</td>
+									<td class="price" id="GD_PRICE" name="GD_PRICE">${goodsInfo.GD_PRICE} 원</td>
 									
 									<!-- 할인가 -->
-									<td class="price">
+									<td class="price" id="GD_DCPRICE" name="GD_DCPRICE">
 				          				<c:set var="salePrice" value="${goodsInfo.GD_DCPRICE}" />
 				          				<fmt:formatNumber value="${salePrice}" pattern="#.#" />원
 									</td>
@@ -216,10 +218,14 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 			</div>
 		</div>
 	</section>
-	
+<input type="hidden" id="GD_GID" name="GD_GID" value="${goodsInfo.GD_GID}">
+<input type="hidden" id="GD_GNAME" name="GD_GNAME" value="${goodsInfo.GD_GNAME}">
+<input type="hidden" id="GD_PRICE" name="GD_PRICE" value="${goodsInfo.GD_PRICE}">
+<input type="hidden" id="GD_DCPRICE" name="GD_DCPRICE" value="${goodsInfo.GD_DCPRICE}">
+
 <input type="hidden" name="OD_GID" value="${GD_GID}">
 <input type="hidden" name="OD_GNAME" value="${GD_GNAME}">
-<input type="hidden" name="OD_COUNT" value="${gCount}">
+<input type="hidden" name="OD_COUNT" value="${orderCount}">
 <input type="hidden" name="OD_PRICE" value="${GD_PRICE}">
 <input type="hidden" name="OD_DCPRICE" value="${GD_DCPRICE}">
 <input type="hidden" id="OD_TOTAL" name="OD_TOTAL" value="${totalPrice}">
@@ -378,12 +384,12 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 						<div class="cart-total mb-3" style="text-align:center">
 	    					<h2>결제 금액</h2><br>
 	    					<p class="d-flex">
-	    						<span>주문금액</span>
+	    						<span>주문 금액</span>
 	    						<span id="originalSum">${goodsInfo.GD_PRICE*gCount}원</span>
 	    						<input type="hidden" id="totalPrice" name="totalPrice" value="${goodsInfo.GD_PRICE*gCount}">
 	    					</p>
 	    					<p class="d-flex">
-	    						<span>할인금액</span>
+	    						<span>할인 금액</span>
 	    						<span id="saleSum" style="color:Crimson"><fmt:formatNumber value="${saled}" pattern="#.#" />원</span>
 	    						<input type="hidden" id="saled" name="saled" value="${saled}">
 	    					</p>
@@ -394,7 +400,7 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 	    					<hr>
 	    					<p class="d-flex total-price">
 	    						<span>총 금액</span>
-	    						<span id="finalSum"> <fmt:formatNumber value="${total+3000}" pattern="#.#" />원</span>
+	    						<span id="finalSum"> <fmt:formatNumber value="${totalPrice+3000}" pattern="#.#" />원</span>
 	    					</p>
 	    				</div>
 	    			</div>
@@ -427,15 +433,11 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 					</div>
 					<br>
 					<br>
-		
-
 				</div>
 			</div>
 		</div>
 	</section>
 	</div>
-
 	</form>	
-	
 </body>
 </html>

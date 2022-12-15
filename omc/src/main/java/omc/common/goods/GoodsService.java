@@ -40,6 +40,9 @@ public interface GoodsService {
 	/* 상품 상세 정보 */
 	Map<String, Object> goodsDetail(Map<String, Object> map) throws Exception;
 	
+	/* 상품 상세 정보에서 장바구니로 넘어갈 때 같이 전송하는 상품 정보 */
+//	public Map<String, Object> selectGoods(String memberId) throws Exception;
+	
 	/* 상품 리뷰 리스트 (상품 상세) */
 	List<Map<String, Object>> goodsReview(Map<String, Object> map) throws Exception;
 	

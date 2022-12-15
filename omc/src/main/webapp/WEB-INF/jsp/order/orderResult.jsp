@@ -7,14 +7,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>오메추</title>
+<title>오늘의 메뉴 추천, 오메추</title>
 </head>
 <body>
 	<div style="text-align:center">
 		<h1> 주문 결과 </h1>
 	</div>
 	
-	<form method="post" id="pOrderForm" action="order.omc">
+	<form method="post" id="orderForm" action="order.omc">
 	<!-- 단일 주문일 때의 결과 표시 -->
 
 	
@@ -26,7 +26,7 @@
 					<div class="cart-list">
 
 						<!-- 단독 주문일 경우 주문 리스트 출력 -->
-						<c:if test="${result=='direct'}">	
+						<%-- <c:if test="${result=='direct'}">	 --%>
 				
 						<table class="table">
 							<thead class="thead-primary">
@@ -42,18 +42,18 @@
 							<tbody>
 							
 								<tr class="text-center">
-									<td class="image-prod"><div class="img" style="background-image:url(resources/img/goods-${orderResult.OD_GID}.png);"></div></td>
+									<td class="image-prod"><div class="img" style="background-image:url(resources/img/goods/goods-${orderResult.OD_GID}.png);"></div></td>
 									
 									<td class="product-name">
-										<h3><b>${orderInfo.OD_GNAME}</b></h3>
+										<h3><b>${orderResult.OD_GNAME}</b></h3>
 									</td>
 									
-									<td class="count">${orderInfo.OD_COUNT}</td>
+									<td class="count">${orderResult.OD_COUNT}</td>
 									
-									<td class="price">${orderInfo.OD_PRICE}원</td>
+									<td class="price">${orderResult.OD_PRICE}원</td>
 									
 									<td class="price">
-				          				<c:set var="salePrice" value="${orderInfo.OD_PRICE * (100-orderInfo.OD_DCPRICE) / 100}" />
+				          				<c:set var="salePrice" value="${orderResult.OD_PRICE * (100-orderResult.OD_DCPRICE) / 100}" />
 				          				<fmt:formatNumber value="${salePrice}" pattern="#.#" />원
 									</td>
 									
@@ -63,12 +63,12 @@
 						      		 --%>
 						      		
 									<td class="saled" style="color:Crimson">
-									<c:set var="saled" value="${(orderInfo.OD_PRICE-salePrice) * orderInfo.OD_COUNT}" />
+									<c:set var="saled" value="${(orderResult.OD_PRICE-salePrice) * orderResult.OD_COUNT}" />
 									<fmt:formatNumber value="${saled}" pattern="#.#" />원</td>
 									
 						      		
 									<td class="total">
-										<b>${orderInfo.OD_TOTAL}원</b>
+										<b>${orderResult.OD_TOTAL}원</b>
 									</td>
 								</tr><!-- END TR-->
 							
@@ -137,7 +137,7 @@
 							</tbody>
 						</table> --%>
 						
-						</c:if>
+						<%-- </c:if> --%>
 						
 						<!-- 장바구니일 경우 주문 리스트 출력 -->
 						<c:if test="${result=='cart'}">	
@@ -193,7 +193,7 @@
 					</div> <!-- end cart-list div -->
 					
 					<!-- 직접 구매 -->
-					<c:if test="${result=='direct'}">
+					<%-- <c:if test="${result=='direct'}"> --%>
 									
 					<div class="row justify-content-end">
 						<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
@@ -215,15 +215,15 @@
 								<h5><b>배송 정보</b></h5><br>
 								<p class="d-flex total-price">
 									<span>우편번호</span>
-									<span>${orderInfo.OD_ZIPCODE}</span>
+									<span>${memInfo.MEM_ZIPCODE}</span>
 								</p>
 								<p class="d-flex total-price">
 									<span>주소</span>
-									<span>${orderInfo.OD_ADD1}</span>
+									<span>${memInfo.MEM_ADD1}</span>
 								</p>
 								<p class="d-flex total-price">
 									<span>상세주소</span>
-									<span>${orderInfo.OD_ADD2}</span>
+									<span>${memInfo.MEM_ADD2}</span>
 								</p><br>
 								<p class="d-flex total-price"></p>
 							</div>
@@ -237,7 +237,7 @@
 								</p> -->
 								<p class="d-flex total-price">
 									<span>총 결제 금액</span>
-									<span>${orderInfo.OD_TOTAL}&nbsp;원</span>
+									<span>${orderResult.OD_TOTAL}&nbsp;원</span>
 								</p>
 								<p class="d-flex total-price">
 									무통장 입금
@@ -250,7 +250,7 @@
 						</div>
 					</div>				
 					
-					</c:if>	
+					<%-- </c:if>	 --%>
 					
 					<!-- 장바구니 -->
 					<c:if test="${result=='cart'}">
@@ -311,10 +311,12 @@
 					</div>
 					
 					</c:if>
-
-			</div>
-		</div>
-	</div>
+					<div align="center">
+						<td>
+							<input type="button" value="메인" class="btn btn-primary py-2 px-3"
+								onClick="location.href='main.omc'">
+						</td>
+					</div>
 </section>
 	
 

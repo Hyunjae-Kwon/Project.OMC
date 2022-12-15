@@ -101,22 +101,22 @@
 		INSERT INTO
 			ORDERCOMMAND
 		VALUES(
-			OID_SEQ.NEXTVAL,
-			NULL,
+			OD_OID_SEQ.NEXTVAL,
+			'',
 			#{OD_ID},
 			#{OD_NAME},
 			SYSDATE,
-			#{OD_GID},
-			#{OD_GNAME},
+			#{GD_GID},
+			#{GD_GNAME},
 			#{OD_COUNT},
-			#{OD_PRICE},
-			#{OD_DCPRICE},
+			#{GD_PRICE},
+			#{GD_DCPRICE},
 			#{OD_TOTAL},
 			#{OD_PHONE},
-			#{OD_STATUS},
+			#{OD_ZIPCODE},
 			#{OD_ADD1},
 			#{OD_ADD2},
-			'배송전',
+			'',
 			'100254889564'
 		)
 	]]>

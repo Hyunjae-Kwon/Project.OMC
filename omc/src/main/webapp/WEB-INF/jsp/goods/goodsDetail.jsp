@@ -21,15 +21,82 @@ function getCount() {
 	return count;
 }
 
-function insertCart() {
+/* function insertCart() {
+	var goodsId = document.getElementById('GD_GID').value;
+	var count = Number(document.getElementById('orderCount').value);
+	var stock = Number(document.getElementById('GD_STOCK').value);
+	
 	if(confirm("장바구니에 넣으시겠습니까?") == true) {
-		var goodsId = document.getElementById('GD_GID').value;
-		var count = document.getElementById('CT_COUNT').value;		
-		location.href="insertCart.omc?GD_GID=" + goodsId + "&CT_COUNT=" + count;
+		if(count>stock) {
+			alert("상품의 재고 수량보다 많은 양을 장바구니에 넣을 수 없습니다. 재고 :" + stock + "개");
+			return false;
+		}
+		location.href="insertCart.omc?GD_GID=" + goodsId + "&orderCount=" + count;
 	} else {
 		return;
 	}
-}
+} */
+
+/* function insertCart() {
+	if(confirm("장바구니에 넣으시겠습니까?") == true) {
+		//서버로 전송할 데이터
+		const form = {
+				GD_GNAME : '${goods.GD_GNAME}',
+				GD_GID : '${goods.GD_GID}',
+				GD_PRICE : '${goods.GD_PRICE}',
+				GD_DCPRICE : '${goods.GD_DCPRICE}',
+				orderCount : '${orderCount}'
+		}
+
+		$(".btn_cart").on("click", function(e){
+			$.ajax({
+				url: 'insertCart.omc',
+				type: 'GET',
+				data: form,
+				success: function (result){
+					cartAlert(result);
+				}
+			})
+		});
+
+		function cartAlert(result){
+			if(result == '0'){
+				alert("장바구니에 추가를 하지 못하였습니다.");
+			} else if(result == '1'){
+				alert("장바구니에 추가되었습니다.");
+			} else if(result == '2'){
+				alert("장바구니에 이미 추가되어져 있습니다.");
+			} else if(result == '5'){
+				alert("로그인이 필요합니다.");	
+			}
+		}
+		location.href="insertCart.omc";
+	} else {
+		return;
+	}
+} */
+
+function insertCart(){
+	var items=$("td[id=contain]").get();
+	   $.each(items,function(index,item){
+	      var goodsName=$("td[id=contain]:eq("+index+")").find('#GD_GNAME').val();
+	      var goodsID=$("td[id=contain]:eq("+index+")").find('#GD_GID').val();
+	      var goodsPrice=parseInt($("td[id=contain]:eq("+index+")").find('#GD_PRICE').val());
+	      var goodsDCPrice=parseInt($("td[id=contain]:eq("+index+")").find('#GD_DCPRICE').val());
+	      var count=parseInt($("td[id=contain]:eq("+index+")").find('#orderCount').val());
+	      
+	      $.ajax({
+	         type : "POST",
+	         url : '<c:url value="insertCart.omc"/>',
+	         data : {CT_NAME:goodsName,CT_GID:goodsID,CT_PRICE:goodsPrice,CT_DCPRICE:goodsDCPrice,CT_COUNT:count},
+	         success : function(data){
+	             
+	         }
+	      });  
+	   })
+	   alert("장바구니에 담겼습니다!");
+	   location.href="<c:url value='myCart.omc'/>";
+	}
 
 function orderForm() {
 	var goodsId = document.getElementById('GD_GID').value;
@@ -63,6 +130,7 @@ window.onload = function() {
 			    			</div>
 			    			<div class="col-lg-6 product-details pl-md-5" style="text-align:right">
 			    				<h3>${goods.GD_GNAME}&nbsp;</h3>
+			    				<input type="hidden" id="GD_GNAME" name="GD_GNAME" value="${goods.GD_GNAME}">
 			    				<input type="hidden" id="GD_GID" name="GD_GID" value="${goods.GD_GID}">
 							<div class="col-md-12">
 				          		<table style="width:80%; margin-left:auto">
@@ -99,6 +167,7 @@ window.onload = function() {
 				          				<b>할인가</b>
 				          				<td style="text-align: right; width: 50%">${goods.GD_DCPRICE} 원
 				          				<input type="hidden" id="GD_PRICE" name="GD_PRICE" value="${goods.GD_PRICE}">
+				          				<input type="hidden" id="GD_DCPRICE" name="GD_DCPRICE" value="${goods.GD_DCPRICE}">
 				          				</td>
 				          			</tr>
 									<%-- <tr>
@@ -114,8 +183,12 @@ window.onload = function() {
 				          				<td style="text-align:left;">
 				          				<b>수량</b>
 				          				</td>
-				          				<td style="text-align:right; width:50%">
+				          				<td id="contain" style="text-align:right; width:50%">
 				          					<input type="number" min="0" max="${goods.GD_STOCK}" id="orderCount" name="orderCount" value="1" onChange="getCount()">
+				          					<input type="hidden" id="GD_GNAME" name="GD_GNAME" value="${goods.GD_GNAME}">
+			    							<input type="hidden" id="GD_GID" name="GD_GID" value="${goods.GD_GID}">
+			    							<input type="hidden" id="GD_PRICE" name="GD_PRICE" value="${goods.GD_PRICE}">
+			    							<input type="hidden" id="GD_DCPRICE" name="GD_DCPRICE" value="${goods.GD_DCPRICE}">
 				          					<input type="hidden" id="GD_STOCK" value="${goods.GD_STOCK}">
 				          				</td>
 				          			</tr>
@@ -125,7 +198,11 @@ window.onload = function() {
 				          				</td>
 				          				<td style="text-align:right; width:50%">
 				          				<div id="totalPrice" style="font-weight:bold; font-size:25px; color:#82AE46">
-
+											<%-- <input type="hidden" id="GD_GNAME" name="GD_GNAME" value="${goods.GD_GNAME}">
+			    							<input type="hidden" id="GD_GID" name="GD_GID" value="${goods.GD_GID}">
+			    							<input type="hidden" id="GD_PRICE" name="GD_PRICE" value="${goods.GD_PRICE}">
+				          					<input type="hidden" id="GD_DCPRICE" name="GD_DCPRICE" value="${goods.GD_DCPRICE}">
+				          					<input type="hidden" id="GD_STOCK" name="GD_STOCK" value="${goods.GD_STOCK}"> --%>
 				          				</div>
 				          				</td>
 				          			</tr>

@@ -65,10 +65,10 @@ function logoutCheck() {
 			                <a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=HEALTHY" >건강식</a>
 						</div>
            	  		</li>
-					<li class="nav-item active"><a href="/allGoodsListBest.omc" class="nav-link" style="font-size:x-large; color:#82ae46;">베스트 상품</a></li>
-					<li class="nav-item active"><a href="/allGoodsListNew.omc" class="nav-link" style="font-size:x-large; color:#82ae46;">신상품</a></li>
-					<li class="nav-item active"><a href="/event.omc" class="nav-link" style="font-size:x-large; color:#82ae46;">이벤트</a></li>
-					<li class="nav-item active"><a href="/board.omc" class="nav-link" style="font-size:x-large; color:#82ae46;">커뮤니티</a></li>
+					<li class="nav-item active"><a href="/allGoodsListBest.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">베스트 상품</a></li>
+					<li class="nav-item active"><a href="/allGoodsListNew.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">신상품</a></li>
+					<li class="nav-item active"><a href="/event.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">이벤트</a></li>
+					<li class="nav-item active"><a href="/board.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">커뮤니티</a></li>
 				</ul>
 				</div>
 

@@ -14,6 +14,7 @@ import omc.util.FileUtils;
 
 @Service("goodsService")
 public class GoodsServiceImpl implements GoodsService {
+
 	Logger log = Logger.getLogger(this.getClass());
 
 	@Resource(name="goodsDAO")
@@ -99,6 +100,12 @@ public class GoodsServiceImpl implements GoodsService {
 		Map<String, Object> resultMap = goodsDAO.goodsDetail(map);
 		return resultMap;
 	}
+	
+	/* 상품 상세 정보에서 장바구니로 넘어갈 때 같이 전송하는 상품 정보 */
+//	@Override
+//	public Map<String, Object> selectGoods(String memberId) throws Exception {
+//		return goodsDAO.selectGoods(memberId);
+//	}
 	
 	/* 상품 리뷰 리스트 (상품 상세) */
 	@Override

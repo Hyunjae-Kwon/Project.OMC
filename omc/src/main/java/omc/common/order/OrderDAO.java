@@ -10,10 +10,22 @@ import omc.common.common.AbstractDAO;
 @Repository("orderDAO")
 public class OrderDAO extends AbstractDAO {
 	
+	/* 주문하기 (상품 상세 -> 주문하기) */
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> insertOrderDirect(Map<String, Object> map) {
-		return (List<Map<String, Object>>) selectList("order.insertOrderDirect", map);
+	public Map<String, Object> insertOrderDirect(Map<String, Object> map) {
+		return (Map<String, Object>) selectOne("order.insertOrderDirect", map);
 	}
+	
+	/* 주문 결과 확인 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectOrderOID(Map<String, Object> map) {
+		return (Map<String, Object>) selectOne("order.selectOrderOId", map);
+	}
+	
+//	@SuppressWarnings("unchecked")
+//	public List<Map<String, Object>> insertOrderDirect(Map<String, Object> map) {
+//		return (List<Map<String, Object>>) selectList("order.insertOrderDirect", map);
+//	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> insertOrderCart(Map<String, Object> map) {

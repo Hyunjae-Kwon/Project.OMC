@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import omc.common.cart.CartService;
@@ -33,9 +34,9 @@ public class OrderController {
 	@Resource(name="cartService")
 	private CartService cartService;
 
+	/* 주문하기 폼으로 상품 정보 전송 */
 	@RequestMapping(value="/orderForm.omc", method = RequestMethod.GET)
 	public ModelAndView orderForm (HttpServletRequest request, CommandMap commandMap) throws Exception {
-		/* PID를 넘겨받아 상품 정보를 읽어옴 */
 		ModelAndView mv = new ModelAndView("order/orderForm");
 		
 		String orderCount = (String)commandMap.get("orderCount");
@@ -51,25 +52,32 @@ public class OrderController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/order.omc")
+	/* 주문하기 기능 */
+	@RequestMapping(value = "/order.omc", method = RequestMethod.POST)
 	public ModelAndView order(CommandMap commandMap, HttpServletRequest request, Model model) throws Exception {
 		ModelAndView mv = new ModelAndView("order/order");
+		
+		// DB에 주문 정보 입력
+		orderService.insertOrderDirect(commandMap.getMap(), request);
 	
 		int OID = orderService.selectOIDMax();
 		model.addAttribute("msg", "주문을 완료했습니다.");
-		String urlParam = "/orderResult.omc?OID=" + OID;
+		String urlParam = "/orderResult.omc?OD_OID=" + OID;
 		model.addAttribute("url", urlParam);
 		
 		return mv;
 
 	}
 	
+	/* 주문완료 */
 	@RequestMapping(value = "/orderResult.omc")
 	public ModelAndView orderResult(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("order/orderResult");
 		
-		List<Map<String, Object>> orderInfo = orderService.selectOrderOId(commandMap.getMap());	
-		Map<String,Object> memInfo = loginService.selectMemberId(commandMap.getMap());
+		String loginId = (String) request.getSession().getAttribute("MEM_ID");
+		
+		Map<String, Object> orderInfo = orderService.selectOrderOID(commandMap.getMap(), request);	
+		Map<String,Object> memInfo = loginService.selectMember(loginId);
 		
 		mv.addObject("orderResult", orderInfo);
 		mv.addObject("memInfo", memInfo);
@@ -80,8 +88,6 @@ public class OrderController {
 		return mv;
 
 	}
-
-	
 	
 	@RequestMapping(value = "/cartOrderForm.omc")
 	@ResponseBody
