@@ -40,12 +40,19 @@ public class BoardServiceImpl implements BoardService {
 //	@Resource(name = "fileUtils")
 //	private FileUtils fileUtils;
 
-	// 리뷰 작성
-	/*
-	 * @Override public void reviewUserWrite(Map<String, Object> map) throws
-	 * Exception { boardDAO.reviewUserWrite(map);
-	 * 
-	 * 
+	// 커뮤니티작성
+
+	  @Override 
+	  public void insertBoard(Map<String, Object> map) throws Exception { 
+		  boardDAO.insertBoard(map);
+	  }
+	 
+	  
+	   @Override
+	   public Map<String, Object> boardListPaging(Map<String,Object> map) throws Exception{
+	      return boardDAO.boardListPaging(map);
+	   }
+	 /* 
 	 * List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, request);
 	 * for(int i=0, size=list.size(); i<size; i++){
 	 * boardDAO.reviewUserWrite(list.get(i)); }
@@ -54,8 +61,8 @@ public class BoardServiceImpl implements BoardService {
 	 * }
 	 */
 	//리뷰작성
-	@Override
-	public void reviewUserWrite(Map<String, Object> map, HttpServletRequest request) throws Exception {
+//	@Override
+	//public void reviewUserWrite(Map<String, Object> map, HttpServletRequest request) throws Exception {
 //		List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(map, request);
 //		for (int i = 0; i < list.size(); i++) {
 //			Map<String, Object> vo = list.get(i);
@@ -75,7 +82,7 @@ public class BoardServiceImpl implements BoardService {
 //				log.debug("---------- file end ----------\n");
 //			}
 //		}
-	}
+//	}
 
 	// 관리자 답변 작성
 	@Override
@@ -167,5 +174,45 @@ public class BoardServiceImpl implements BoardService {
 	public List<Map<String, Object>> myQnaList(Map<String, Object> map) {
 		return boardDAO.myQnaList(map);
 	}
+	
+	
+	//공지리스트
+	@Override
+	public Map<String, Object> noticeListPaging(Map<String,Object> map) throws Exception{
+		return boardDAO.noticeListPaging(map);
+	}
+	//qna리스트
+	@Override
+	public Map<String, Object> faqListPaging(Map<String,Object> map) throws Exception{
+		return boardDAO.faqListPaging(map);
+	}
+    
+	//공지 디테일/조회수
+	@Override
+	public List<Map<String, Object>> selectNoticeId(Map<String,Object>map)  {
+		boardDAO.updateHitCnt(map);
+		return boardDAO.selectNoticeId(map);
+	}
 
+	@Override
+	public void reviewUserWrite(Map<String, Object> map, HttpServletRequest request) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+	//커뮤니티 수정
+	@Override
+	   public Map<String, Object> updateBoardForm(Map<String, Object> map)throws Exception{
+	     return boardDAO.updateBoardForm(map);
+	   }
+	   
+	   public void updateBoard(Map<String, Object> map)throws Exception{
+	      boardDAO.updateBoard(map);
+	   }
+
+	  //커뮤니티글삭제
+
+	   @Override
+	   public void deleteBoard(Map<String, Object> map) throws Exception {
+	      boardDAO.deleteBoard(map);
+	   }
 }

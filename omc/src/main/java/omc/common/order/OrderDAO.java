@@ -28,6 +28,12 @@ public class OrderDAO extends AbstractDAO {
 		return (Map<String, Object>) selectOne("order.selectOrderOId", map);
 	}
 	
+	/* 총 결제 금액 */
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectTotalPay(int orderNum) {
+		return (List<Map<String, Object>>) selectList("order.selectTotalPay", orderNum);
+	}
+	
 //	@SuppressWarnings("unchecked")
 //	public List<Map<String, Object>> insertOrderDirect(Map<String, Object> map) {
 //		return (List<Map<String, Object>>) selectList("order.insertOrderDirect", map);
@@ -62,4 +68,10 @@ public class OrderDAO extends AbstractDAO {
 	public Map<String, Object> insertPay(Map<String, Object> map) {
 		return (Map<String, Object>) selectOne("order.insertPay", map);
 	}
+	
+	/* 주문 결과 확인 (장바구니 -> 주문하기) */
+	@SuppressWarnings("unchecked")
+	   public List<Map<String, Object>> selectOrderODNum(int orderNum) throws Exception{
+	      return (List<Map<String, Object>>) selectList("order.selectOrderODNum", orderNum);
+	   }
 }

@@ -68,7 +68,8 @@ function logoutCheck() {
 					<li class="nav-item active"><a href="/allGoodsListBest.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">베스트 상품</a></li>
 					<li class="nav-item active"><a href="/allGoodsListNew.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">신상품</a></li>
 					<li class="nav-item active"><a href="/event.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">이벤트</a></li>
-					<li class="nav-item active"><a href="/board.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">커뮤니티</a></li>
+					<li class="nav-item active"><a href="/boardList.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">커뮤니티</a></li>
+					<li class="nav-item active"></li>
 				</ul>
 				</div>
 
@@ -80,6 +81,19 @@ function logoutCheck() {
 	          </c:if>
 			  
 	        </ul>
+	        
+	        <ul class="navbar-nav ml-auto">
+	        	<div class="input-group">
+				  <div class="form-outline">
+				    <input id="search-focus" type="search" id="form1" class="form-control" />
+				  </div>
+				  <span>&nbsp;</span>
+				  <button type="button" class="btn btn-primary py-2 px-2" style="height:52px;" onClick="">
+				    <i class="fas fa-search">검색</i>
+				  </button>
+				</div>
+	        </ul>
+						        
 	      </div>
 	    </div>
 	  </nav>

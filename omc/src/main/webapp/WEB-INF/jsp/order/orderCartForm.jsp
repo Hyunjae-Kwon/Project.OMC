@@ -117,12 +117,11 @@ function orderCheck() {
 				url : "<c:url value='/orderCart.omc'/>",
 				data :{OD_ID:id, OD_GID:gid, OD_GNAME:gname, OD_COUNT:count, OD_PRICE:price, OD_DCPRICE:dcprice, OD_TOTAL:total,
 					  OD_NUM:odnum, OD_NAME:name, OD_PHONE:phone, OD_ZIPCODE:zipcode, OD_ADD1:add1, OD_ADD2:add2, TOTALPAY:totalpay},
-				async: false,
 				success : function(data){
 				}
 			});
 		});
-		location.href="<c:url value='orderResult.omc'/>";
+		location.href="<c:url value='orderCartResult.omc'/>";
 		/* OrderForm.submit(); */
 	}
 }

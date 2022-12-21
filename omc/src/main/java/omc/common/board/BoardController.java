@@ -1,5 +1,6 @@
 package omc.common.board;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -7,14 +8,14 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import omc.common.comment.CommentService;
 import omc.common.common.CommandMap;
 //import omc.common.file.FileService;
 //import omc.common.file.FileUploadController;
@@ -25,19 +26,152 @@ public class BoardController {
 
 	@Resource(name = "boardService")
 	BoardService boardService;
+	
+	 @Resource(name="commentService")
+	   private CommentService commentService;
+	   
 //	@Autowired
 //	FileService fileService;
 
-	@RequestMapping(value = "/board.omc")
-	public ModelAndView board(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("board/board");
-		List<Map<String, Object>> board = boardService.board(commandMap.getMap());
+	@RequestMapping(value = "/noticeList.omc")
+	public ModelAndView noticeList(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("board/noticeList");
+		
+		Map<String, Object> resultMap = boardService.noticeListPaging(commandMap.getMap());
 		// HttpSession session = request.getSession(true);
-		mv.addObject("board", board);
-		// session.getAttribute("USER_ID");
-
+		mv.addObject("paginationInfo", (PaginationInfo)resultMap.get("paginationInfo"));
+		mv.addObject("noticeList", resultMap.get("result"));
+		
 		return mv;
 	}
+	
+
+	@RequestMapping(value = "/faqList.omc")
+	public ModelAndView faqList(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("board/faqList");
+		
+		Map<String, Object> resultMap = boardService.faqListPaging(commandMap.getMap());
+		// HttpSession session = request.getSession(true);
+		mv.addObject("paginationInfo", (PaginationInfo)resultMap.get("paginationInfo"));
+		mv.addObject("faqList", resultMap.get("result"));
+		
+		return mv;
+	}
+	
+	
+	   //커뮤니티
+	   @RequestMapping(value = "/boardList.omc")
+	   public ModelAndView boardList(CommandMap commandMap, HttpServletRequest request) throws Exception {
+	      ModelAndView mv = new ModelAndView("board/boardList");
+	      
+	      Map<String, Object> resultMap = boardService.boardListPaging(commandMap.getMap());
+	      // HttpSession session = request.getSession(true);
+	      mv.addObject("paginationInfo", (PaginationInfo)resultMap.get("paginationInfo"));
+	      mv.addObject("boardList", resultMap.get("result"));
+	      
+	      return mv;
+	   }
+
+	//공지, faq상세보기
+	@RequestMapping(value = "/boardDetail1.omc")
+	public ModelAndView boardDetail1(CommandMap commandMap, HttpServletRequest request) throws Exception{
+		ModelAndView mv = new ModelAndView("board/boardDetail1");
+		List<Map<String, Object>> boardDetail = boardService.selectNoticeId(commandMap.getMap());
+		
+		HttpSession session = request.getSession();
+		String MEM_ID = (String)session.getValue("MEM_ID");
+		mv.addObject("boardDetail", boardDetail);
+		session.setAttribute("MEM_ID", MEM_ID);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "/boardDetail.omc")
+	public ModelAndView boardDetail(CommandMap commandMap, Model model,HttpServletRequest request) throws Exception{
+		ModelAndView mv = new ModelAndView("board/boardDetail");
+		List<Map<String, Object>> boardDetail = boardService.selectNoticeId(commandMap.getMap());
+		commandMap.put("BC_NUM", commandMap.get("BD_NUM"));
+		List<Map<String, Object>> commentList = commentService.selectCommentList(commandMap.getMap());
+		List<Map<String, Object>> comList = new ArrayList<Map<String, Object>>();
+		for(Map<String, Object> mapObject : commentList) {
+			comList.add(mapObject);
+		}
+		HttpSession session = request.getSession();
+		String MEM_ID = (String)session.getValue("MEM_ID");
+		mv.addObject("boardDetail", boardDetail);
+		session.setAttribute("MEM_ID", MEM_ID);
+		model.addAttribute("comList", comList);	
+		model.addAttribute("commentList", commentList);			
+		
+		return mv;
+	}
+	
+
+	@RequestMapping(value="/boardWrite.omc")
+	public ModelAndView openBoardWrite(CommandMap commandMap , HttpServletRequest request) throws Exception{
+		ModelAndView mv = new ModelAndView("/board/boardWrite");
+//		
+//		HttpSession session = request.getSession();
+//		String MEM_ID = (String) session.getValue("MEM_ID");
+//		session.setAttribute("MEM_ID", MEM_ID);
+		return mv;
+	}
+	@RequestMapping(value="/insertBoard.omc", method = RequestMethod.POST)
+	public ModelAndView insertBoard(CommandMap commandMap, HttpServletRequest request) throws Exception{
+		ModelAndView mv = new ModelAndView("redirect:/boardList.omc");
+		
+		boardService.insertBoard(commandMap.getMap());
+		
+		HttpSession session = request.getSession();
+		String BD_ID = (String) session.getValue("MEM_ID");
+		session.setAttribute("BD_ID",BD_ID);
+		return mv;
+	}
+	
+//커뮤니티 수정
+	  @RequestMapping(value="/updateBoardForm.omc") //보드 수정폼
+	   public ModelAndView updateBoardForm(CommandMap commandMap) throws Exception{
+	      ModelAndView mv = new ModelAndView("/board/boardModify");
+	      Map<String, Object> map = boardService.updateBoardForm(commandMap.getMap());
+	      mv.addObject("board", map);
+	            
+	      return mv;
+	   }
+	   
+	   @RequestMapping(value="/updateBoard.omc") //수정 완성
+	   public ModelAndView updateBoard(CommandMap commandMap)throws Exception{
+	      ModelAndView mv = new ModelAndView("redirect:/boardList.omc");
+	      boardService.updateBoard(commandMap.getMap());
+	      return mv;
+	   }
+	   
+	   //커뮤니티 삭제
+	   @RequestMapping(value = "/boardDelete.omc")
+	   public ModelAndView boardDelete(CommandMap commandMap) throws Exception {
+	      ModelAndView mv = new ModelAndView("redirect:/boardList.omc");
+	      boardService.deleteBoard(commandMap.getMap());
+	      
+	      return mv;      
+	   }
+	
+//	   @RequestMapping(value="/boardWrite.omc")
+//	    public ModelAndView boardWrite(CommandMap commandMap)throws Exception{
+//	         ModelAndView mv = new ModelAndView("board/boardWrite");
+//	            
+//	         return mv;
+//	   }
+//	      
+//	   @RequestMapping(value="/insertBoard.omc") //글작성
+//	    public ModelAndView insertBoard(CommandMap commandMap, HttpServletRequest request) throws Exception{
+//	      ModelAndView mv = new ModelAndView("redirect:noticeList.omc");
+//	      commandMap.put("BOARD_IMAGE", request.getSession().getAttribute("GOODS_IMG_THUM"));
+//	      boardService.insertBoardWrite(commandMap.getMap(), request);
+//	      Map<String,Object> board = boardService.insertBoardWrite(commandMap.getMap(),request);
+//	         mv.addObject("board", board);   
+//	      mv.addObject("BD_NUM", commandMap.get("BD_NUM"));
+//	         
+//	      return mv;
+//	   }
 //
 //	@RequestMapping(value = "/board/boardWrite.omc", method = RequestMethod.GET)
 //	public ModelAndView boardWriteForm(CommandMap commandMap, HttpServletRequest request) throws Exception {
@@ -73,6 +207,7 @@ public class BoardController {
 //		return mv;
 //	}
 //	
+
 //	// 리뷰 상세 페이지 이동
 //	@RequestMapping(value = "/reviewDetail")
 //	public ModelAndView reviewDetail(CommandMap commandMap, HttpServletRequest request) throws Exception {

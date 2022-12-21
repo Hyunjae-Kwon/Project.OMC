@@ -62,4 +62,52 @@ public class BoardDAO extends AbstractDAO{
 	public List<Map<String, Object>> myQnaList(Map<String, Object> map) {
 		return (List<Map<String, Object>>) selectList("board.selectQnaMemberId", map);
 	}
+	///공지조회
+	@SuppressWarnings("unchecked") 
+	public Map<String, Object> noticeListPaging(Map<String, Object>map) throws Exception{
+		return (Map<String, Object>) selectPagingList("board.noticeListPaging", map);
+		
+		
+	}
+	//qna조회
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> faqListPaging(Map<String, Object>map) throws Exception{
+		return (Map<String, Object>) selectPagingList("board.faqListPaging", map);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectNoticeId(Map<String, Object>map) {
+		return (List<Map<String,Object>>) selectList("board.selectNoticeId",map);
+	}
+	
+	public void updateHitCnt(Map<String, Object> map){
+	      update("board.updateHitCnt", map);
+	   }
+	
+	public void insertBoard(Map<String, Object> map) throws Exception{
+		insert("board.insertBoard", map);
+	}
+	
+	 @SuppressWarnings("unchecked")
+	   public Map<String, Object> boardListPaging(Map<String, Object>map) throws Exception{
+	      return (Map<String, Object>) selectPagingList("board.boardListPaging", map);
+	   }
+//
+//	public void insertNotice(Map<String, Object> map) throws Exception{
+//	      insert("board.insertNotice", map);
+//	   }	
+	//커뮤니티 수정
+	   @SuppressWarnings("unchecked")
+	   public Map<String, Object> updateBoardForm(Map<String, Object> map)throws Exception{
+	      return (Map<String, Object>)selectOne("board.updateBoardForm", map); 
+	   }
+	   
+	   public void updateBoard(Map<String, Object> map)throws Exception{
+	      update("board.updateBoard", map);
+	   }
+	   
+	//커뮤니티 글삭제
+	   public void deleteBoard(Map<String, Object> map) throws Exception {
+	         delete("board.deleteBoard", map);
+	      }
 }

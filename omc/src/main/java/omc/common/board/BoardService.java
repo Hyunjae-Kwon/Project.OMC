@@ -38,4 +38,25 @@ public interface BoardService {
 	
 	/* 마이페이지 Qna 조회 */
 	List<Map<String, Object>> myQnaList(Map<String, Object> map);
+	
+//	공지리스트////
+	Map<String,Object> noticeListPaging(Map<String, Object>map) throws Exception;
+	//qna리스트
+	Map<String,Object> faqListPaging(Map<String, Object>map) throws Exception;
+	
+	//공지 상세보기
+	List<Map<String, Object>> selectNoticeId(Map<String, Object>map) ;
+	
+	//글쓰기
+	void insertBoard(Map<String, Object> map) throws Exception;
+	
+	//커뮤니티 리스트
+	 Map<String,Object> boardListPaging(Map<String, Object>map) throws Exception;
+
+	//커뮤니티수정
+	 Map<String, Object> updateBoardForm(Map<String, Object> map)throws Exception;
+	 void updateBoard(Map<String, Object> map)throws Exception;
+	 
+	 //커뮤니티글삭제
+	 void deleteBoard(Map<String, Object> map) throws Exception;
 }

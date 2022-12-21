@@ -64,7 +64,7 @@ public class OrderController {
 		/* 카트에서 업데이트된 CT_NUM을 이용해서 상품 정보 호출 */
 		List<Map<String, Object>> cartInfo = cartService.cartDetail(loginId);
 		/* OD_NUM 최대값 구해서 넘겨주기 */
-		int orderNum = orderService.selectODNumMax();
+		int orderNum = orderService.selectODNumMax() + 1;
 		
 		mv.addObject("orderNum", orderNum);
 		mv.addObject("cartInfo",cartInfo);
@@ -81,7 +81,7 @@ public class OrderController {
 		// DB에 주문 정보 입력
 		orderService.insertOrderDirect(commandMap.getMap(), request);
 	
-		int OID = orderService.selectODNumMax();
+		int OID = orderService.selectOIDMax();
 		model.addAttribute("msg", "주문을 완료했습니다.");
 		String urlParam = "/orderResult.omc?OD_OID=" + OID;
 		model.addAttribute("url", urlParam);
@@ -104,11 +104,10 @@ public class OrderController {
 		orderService.insertPay(commandMap.getMap());
 	
 		model.addAttribute("msg", "주문을 완료했습니다.");
-		String urlParam = "/orderResult.omc";
+		String urlParam = "/orderCartResult.omc";
 		model.addAttribute("url", urlParam);
 		
 		return mv;
-
 	}
 	
 	/* 주문완료 (상품 상세 -> 바로 주문) */
@@ -128,8 +127,26 @@ public class OrderController {
 		System.out.println(memInfo);
 		
 		return mv;
-
 	}
+	
+	/* 주문완료 (장바구니 -> 선택 상품 주문) */
+    @RequestMapping(value = "/orderCartResult.omc", method = RequestMethod.GET)
+    public ModelAndView orderCartResult(CommandMap commandMap, HttpServletRequest request) throws Exception {
+        ModelAndView mv = new ModelAndView("order/orderCartResult");
+      
+        String loginId = (String) request.getSession().getAttribute("MEM_ID");
+        int orderNum = orderService.selectODNumMax();
+        List<Map<String, Object>> totalpay = orderService.selectTotalPay(orderNum);
+            
+        List<Map<String, Object>> orderInfo = orderService.selectOrderODNum(orderNum);
+        Map<String,Object> memInfo = loginService.selectMember(loginId);
+      
+        mv.addObject("totalpay", totalpay);
+        mv.addObject("orderResult", orderInfo);
+        mv.addObject("memInfo", memInfo);
+         
+        return mv;
+    }
 
 
 }

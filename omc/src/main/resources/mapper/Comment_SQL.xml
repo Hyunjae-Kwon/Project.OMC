@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="comment">
+<!--  댓글 목록..? -->
+ <select id="selectCommentList" parameterType="hashmap" resultType="hashmap">
+      <![CDATA[
+          SELECT
+            C.BC_BCID,
+            C.BC_NUM,
+            C.BC_COMMENT,
+            C.BC_REGDATE,
+            C.BC_ID      
+         FROM 
+            MEMBER M, BOARD B, BOARDCOMMENT C
+            WHERE 
+              C.BC_NUM = #{BD_NUM} AND  B.BD_NUM = C.BC_NUM AND 
+               C.BC_ID = M.MEM_ID
+            ORDER BY C.BC_BCID DESC
+      ]]>
+   </select>
+   
+   
+ <!--  댓글 쓰기..? -->
+  <insert id="insertBoardComment" parameterType="hashmap">
+      INSERT INTO BOARDCOMMENT(
+            BC_BCID,
+           BC_NUM,
+               BC_ID,
+              BC_COMMENT,
+             BC_REGDATE
+			  )
+        VALUES
+         (
+            BC_BCID_SEQ.NEXTVAL,
+            #{BD_NUM},
+            #{MEM_ID},
+            #{BC_COMMENT},
+            SYSDATE
+          )
+   </insert> 
+   
+   <!--  댓삭.. -->
+ <delete id="deleteComment" parameterType="hashmap" >
+   <![CDATA[
+      
+     DELETE 
+			FROM BOARDCOMMENT
+			WHERE BC_BCID=#{BC_BCID}
+      
+   ]]>
+</delete>
+
+
+<!--  댓글 수정..  -->
+<update parameterType="hashmap" id="updateComment">
+<![CDATA[
+				UPDATE BOARDCOMMENT 
+					SET BC_COMMENT=#{BC_COMMENT} 
+				WHERE BC_BCID=#{BC_BCID}
+	   ]]>
+</update>
+   
+   
+</mapper>

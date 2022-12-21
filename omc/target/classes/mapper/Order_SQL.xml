@@ -15,18 +15,6 @@
 	]]>
 	</select>
 	
-	<!-- selectOrderOBNUMBER (장바구니번호로 주문 정보 조회) -->
-	<select id="selectOrderODNum" parameterType="hashmap" resultType="hashmap"> 
-	<![CDATA[
-		SELECT
-			* 
-		FROM
-			ORDERCOMMAND 
-		WHERE
-			OD_NUM = #{OD_NUM}
-	]]>
-	</select>
-	
 	<!-- 주문 테이블의 OBNUMBER 최대값 -->
 	<select id="selectOrderODNumMax" resultType="hashmap">
 	<![CDATA[
@@ -106,7 +94,7 @@
 			#{OD_ZIPCODE},
 			#{OD_ADD1},
 			#{OD_ADD2},
-			'',
+			'상품준비중',
 			'100254889564'
 		)
 	]]>
@@ -133,7 +121,7 @@
 			#{OD_ZIPCODE},
 			#{OD_ADD1},
 			#{OD_ADD2},
-			'',
+			'상품준비중',
 			'100254889564'
 		)
 	]]>
@@ -174,5 +162,26 @@
 		)
 	]]>
 	</insert>
+	
+	<!-- [selectOrderODNum] (장바구니번호로 주문 정보 조회) -->
+	<select id="selectOrderODNum" parameterType="hashmap" resultType="hashmap"> 
+	<![CDATA[
+		SELECT
+			* 
+		FROM
+			ORDERCOMMAND 
+		WHERE
+			OD_NUM = #{OD_NUM}
+	]]>
+	</select>
+	
+	<!-- [selectTotalPay] 총 결제 금액 -->
+	<select id="selectTotalPay" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT TOTALPAY
+		FROM PAYMENT
+		WHERE ODNUM = #{ODNUM}
+	]]>
+	</select>
 
 </mapper>
