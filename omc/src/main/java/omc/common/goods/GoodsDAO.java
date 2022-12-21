@@ -89,6 +89,12 @@ public class GoodsDAO extends AbstractDAO {
 		return (Map<String, Object>) selectOne ("goods.goodsDetail", map);
 	}
 	
+	/* 장바구니에서 주문하기로 넘어가는 상품 상세 정보 */
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> goodsDetailCart(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList ("goods.goodsDetailCart", map);
+	}
+	
 	/* 상품 상세 정보에서 장바구니로 넘어갈 때 같이 전송하는 상품 정보 */
 //	@SuppressWarnings("unchecked")
 //	public Map<String, Object> selectGoods(String memberId) throws Exception {
@@ -137,6 +143,11 @@ public class GoodsDAO extends AbstractDAO {
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> selectGD_GIDMax() throws Exception{
 		return (Map<String, Object>)selectOne("goods.selectGD_GIDMax");
+	}
+	
+	/* 상품 수정 */
+	public void sellCountUpdate(Map<String, Object> map) throws Exception {
+		update("goods.sellCountUpdate", map);
 	}
 	
 //	subList()구독판매페이지

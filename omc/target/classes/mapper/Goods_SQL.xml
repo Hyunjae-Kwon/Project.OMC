@@ -78,6 +78,15 @@
 		]]>
 	</select>
 	
+	<!-- [goodsDetailCart] 장바구니에서 넘어가는 상품 상세 정보 -->
+	<select id="goodsDetailCart" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+	 	SELECT * 
+		FROM GOODS
+		WHERE GD_GID=#{CT_GID}
+		]]>
+	</select>
+	
 	<!-- [goodsReview] 상품 리뷰 리스트 (상품 상세) -->
 	<select id="goodsReview" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
@@ -282,5 +291,12 @@
 		WHERE GD_GID=#{GD_GID}
 		]]>
 	</delete>	
+	
+	<!-- [sellCountUpdate] 구매 수량 재고 업데이트 -->
+	<update id="sellCountUpdate" parameterType="hashmap">
+		UPDATE GOODS
+		SET GD_STOCK = GD_STOCK - #{OD_COUNT}
+		WHERE GD_GID = #{OD_GID}
+	</update>
 	
 </mapper>

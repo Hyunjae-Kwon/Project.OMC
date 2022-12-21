@@ -29,64 +29,24 @@ public class CartController {
 	@Resource(name = "loginService")
 	LoginService loginService;
 
-	@RequestMapping(value = "/cartList.omc")
-	@ResponseBody
-	public ModelAndView cartList(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("goods/cartList");// jsonView 동작안함
-		List<Map<String, Object>> cartList = cartService.cartList(commandMap.getMap());
-		HttpSession session = request.getSession();// 세션 값 불러오고
-		String MEM_ID = (String) session.getValue("MEM_ID");// 값을 String 저장하고
-		mv.addObject("cartList", cartList);
-		session.setAttribute("MEM_ID", MEM_ID);// 세션정보를 user_id 에 담아 jsp로 리턴
+
+	/* 내 장바구니 리스트 */
+	@RequestMapping(value="/myCart.omc", method = RequestMethod.GET)
+	public ModelAndView myCart (CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("cart/cartList");
+		
+		String loginId = (String) request.getSession().getAttribute("MEM_ID");
+		
+		List<Map<String, Object>> list = cartService.selectCartList(loginId);
+        Map<String,Object> memInfo = loginService.selectMember(loginId);
+        
+        mv.addObject("cartList", list);
+		mv.addObject("memInfo", memInfo);
 		
 		return mv;
-
 	}
 	
-	@RequestMapping(value = "/cart/cartPut.omc")
-	@ResponseBody
-	public ModelAndView cartPut(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("goods/cartDetail");// .jsp
-		HttpSession session = request.getSession();// 세션 값 불러오고
-		String MEM_ID = (String) session.getValue("MEM_ID");// 값을 String 저장하고
-		cartService.cartPut(commandMap.getMap()); // 이게 맵으로 받아온 값을 cartPut으로 넣는다는
-		session.setAttribute("MEM_ID", MEM_ID);// 세션정보를 user_id 에 담아 jsp로 리턴
-		
-		return mv; // 리턴
-	}
-
-	@RequestMapping(value = "/cart/cartDelete.omc")
-	@ResponseBody
-	public ModelAndView cartDelete(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("goods/cart");// .jsp
-		cartService.cartDelete(commandMap.getMap()); // 이게 맵으로 받아온 값을 cartPut으로 넣는다는
-	 
-		return mv; // 리턴
-	}
-	
-	/* 상품 장바구니에 저장 */
-//	@RequestMapping(value="/insertCart.omc", method = RequestMethod.GET)
-//	public ModelAndView insertCart (HttpServletRequest request, CommandMap commandMap) throws Exception {
-//		ModelAndView mv = new ModelAndView("cart/cartList");
-//		
-//		String orderCount = (String)commandMap.get("orderCount");
-//		String goodsId = (String)commandMap.get("GD_GID");
-//		String loginId = (String) request.getSession().getAttribute("MEM_ID");
-//		
-//		Map<String,Object> memInfo = loginService.selectMember(loginId);
-////        Map<String,Object> goodsInfo = goodsService.selectGoods(goodsId);
-//        
-//		mv.addObject("orderCount", orderCount);
-////		mv.addObject("goodsInfo",goodsInfo);
-//		mv.addObject("memInfo", memInfo);
-//		
-//		// DB에 장바구니 정보 입력
-//		cartService.insertCart(commandMap.getMap(), request);
-//		
-//		return mv;
-//	}
-	
-	/* 상품 장바구니에 저장 */
+	/* 상품 장바구니에 추가 */
 	@RequestMapping(value="insertCart.omc", method=RequestMethod.POST)
 	@ResponseBody
     public boolean addCart(CommandMap commandMap,HttpServletRequest request) throws Exception{
@@ -111,18 +71,23 @@ public class CartController {
     	return true;
 	}
 	
-	/* 내 장바구니 리스트 */
-	@RequestMapping(value="/myCart.omc", method = RequestMethod.GET)
-	public ModelAndView myCart (CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("cart/cartList");
+	/* 장바구니 수량 변경 */
+	@RequestMapping(value="/updateMyCart.omc", method=RequestMethod.POST)
+	public ModelAndView updateMyCart(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		
-		String loginId = (String) request.getSession().getAttribute("MEM_ID");
+		ModelAndView mv = new ModelAndView("jsonView");
 		
-		List<Map<String, Object>> list = cartService.selectCartList(loginId);
-        Map<String,Object> memInfo = loginService.selectMember(loginId);
-        
-        mv.addObject("cartList", list);
-		mv.addObject("memInfo", memInfo);
+		cartService.updateMyCart(commandMap.getMap());
+		
+		return mv;
+	}
+	
+	/* 장바구니 구매 상품 카트 번호 업데이트 */
+	@RequestMapping(value="/updateNum.omc", method=RequestMethod.POST)
+	public ModelAndView updateNum(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		cartService.updateNum(commandMap.getMap());
 		
 		return mv;
 	}
@@ -134,16 +99,6 @@ public class CartController {
 		
 		cartService.delSelectMyCart(commandMap.getMap());
 	 
-		return mv;
-	}
-	
-	/* 장바구니 수량 변경 */
-	@RequestMapping(value="/updateMyCart.omc", method=RequestMethod.POST)
-	public ModelAndView updateMyCart(CommandMap commandMap, HttpServletRequest request) throws Exception{
-		ModelAndView mv = new ModelAndView("cart/cartList");
-		
-		cartService.updateMyCart(commandMap.getMap());
-		
 		return mv;
 	}
 

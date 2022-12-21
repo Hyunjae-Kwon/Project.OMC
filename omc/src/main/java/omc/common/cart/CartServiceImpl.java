@@ -56,6 +56,12 @@ public class CartServiceImpl implements CartService{
 	public List<Map<String, Object>> selectCartList(String loginId) throws Exception {
 		return cartDAO.selectCartList(loginId);
 	}
+	
+	/* 장바구니 구매 상품 리스트 */
+	@Override
+	public List<Map<String, Object>> cartDetail(String loginId) throws Exception {
+		return cartDAO.cartDetail(loginId);
+	}
 
 	/* 선택상품 장바구니 삭제 */
 	@Override
@@ -67,6 +73,18 @@ public class CartServiceImpl implements CartService{
 	@Override
 	public void updateMyCart(Map<String, Object> map) throws Exception {
 		cartDAO.updateMyCart(map);
+	}
+
+	/* 장바구니 구매 상품 카트 번호 부여 */
+	@Override
+	public void updateNum(Map<String, Object> map) throws Exception {
+		cartDAO.updateNum(map);
+	}
+
+	/* 장바구니 구매 상품 구매 완료 시 장바구니 삭제 */
+	@Override
+	public void delCartOrder(String loginId) throws Exception {
+		cartDAO.delCartOrder(loginId);
 	}
 	
 }

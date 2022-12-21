@@ -25,19 +25,19 @@ public class OrderServiceImpl implements OrderService {
 	public Map<String, Object> insertOrderDirect(Map<String, Object> map, HttpServletRequest request) {
 		return orderDAO.insertOrderDirect(map);
 	}
-
+	
+	/* 주문하기 (장바구니 -> 주문하기) */
+	@Override
+	public int insertOrderCart(Map<String, Object> map) {
+		return orderDAO.insertOrderCart(map);
+	}
+	
 	/* 주문 결과 확인 */
 	@Override
 	public Map<String, Object> selectOrderOID(Map<String, Object> map, HttpServletRequest request) {
 		return orderDAO.selectOrderOID(map);
 	}
 
-	@Override
-	public List<Map<String, Object>> insertOrderCart(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return orderDAO.insertOrderCart(map);
-	}
-	
 	/* 마이페이지 주문조회 */
 	@Override
 	public List<Map<String, Object>> myOrderList(Map<String, Object> map) {
@@ -63,8 +63,31 @@ public class OrderServiceImpl implements OrderService {
 			maxOID = Integer.parseInt(String.valueOf(maxMap.get("MAX")));
 		}
 				
-		return maxOID;
+		return maxOID + 1;
 	}
 
+	/* 주문번호 최대값 */
+	@Override
+	public int selectODNumMax() throws Exception {
+		Map<String, Object> maxMap = new HashMap<String, Object>();
+		maxMap = orderDAO.selectODNumMax();
+		
+		int maxODNum;
+		if(maxMap == null) {
+			maxODNum = 0;
+		} else {
+			maxODNum = Integer.parseInt(String.valueOf(maxMap.get("MAX")));
+		}
+				
+		return maxODNum + 1;
+	}
+
+	/* 결제 정보 입력 */
+	@Override
+	public Map<String, Object> insertPay(Map<String, Object> map) {
+		return orderDAO.insertPay(map);
+	}
+	
+	
 	
 }

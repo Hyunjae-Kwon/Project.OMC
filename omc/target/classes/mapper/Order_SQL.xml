@@ -37,16 +37,6 @@
 	]]>
 	</select>
 	
-	<!-- selectOIDMax (가장 마지막에 주문한 주문의 OID값) -->
-	<select id="selectOIDMax" resultType="hashmap">
-	<![CDATA[
-		SELECT
-			MAX(OD_OID) MAX
-		FROM
-			ORDERCOMMAND
-	]]>
-	</select>	
-
 	<!-- selectOrderMemberId (주문자:MEM_ID로 주문 정보 조회) -->
 	<select id="selectOrderMemberId" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
@@ -143,7 +133,7 @@
 			#{OD_ZIPCODE},
 			#{OD_ADD1},
 			#{OD_ADD2},
-			'배송전',
+			'',
 			'100254889564'
 		)
 	]]>
@@ -160,5 +150,29 @@
 			OD_OID=#{OD_OID}
 	]]>
 	</update>
+	
+	<!-- [selectODNumMax] 기존 주문번호의 최대값-->
+	<select id="selectODNumMax" resultType="hashmap">
+	<![CDATA[
+		SELECT 
+			MAX(OD_NUM) MAX 
+		FROM 
+			ORDERCOMMAND
+	]]>
+	</select>
+	
+	<!-- [insertPay] 결제 정보 입력 -->
+	<insert id="insertPay" parameterType="hashmap">
+	<![CDATA[
+		INSERT INTO
+			PAYMENT
+		VALUES(
+			PAY_SEQ.NEXTVAL,
+			#{OD_NUM},
+			#{TOTALPAY},
+			''
+		)
+	]]>
+	</insert>
 
 </mapper>

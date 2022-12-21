@@ -157,9 +157,7 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 	<div style="text-align:center">
 		<h1> 주문 페이지 </h1>
 	</div>
-	
 	<form method="post" id="orderForm" action="order.omc">
-	
 	<section class="ftco-section ftco-cart">
 		<div class="container">
 			<div class="row">
@@ -180,7 +178,6 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 								</tr>
 							</thead>
 							<tbody>
-							
 								<tr class="text-center">
 									<td class="image-prod">
 									<div class="img" id="GD_IMAGE" name="GD_IMAGE" style="background-image:url(resources/img/goods/${goodsInfo.GD_IMAGE});"></div></td>
@@ -215,7 +212,6 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 										<b><fmt:formatNumber value="${totalPrice}" pattern="#.#" />원</b>
 									</td>
 								</tr><!-- END TR-->
-							
 							</tbody>
 						</table>
 						
@@ -229,16 +225,12 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 <input type="hidden" id="GD_GNAME" name="GD_GNAME" value="${goodsInfo.GD_GNAME}">
 <input type="hidden" id="GD_PRICE" name="GD_PRICE" value="${goodsInfo.GD_PRICE}">
 <input type="hidden" id="GD_DCPRICE" name="GD_DCPRICE" value="${goodsInfo.GD_DCPRICE}">
+<input type="hidden" id="OD_COUNT" name="OD_COUNT" value="${orderCount}"> 
 
-<input type="hidden" name="OD_GID" value="${GD_GID}">
-<input type="hidden" name="OD_GNAME" value="${GD_GNAME}">
-<input type="hidden" name="OD_COUNT" value="${orderCount}">
-<input type="hidden" name="OD_PRICE" value="${GD_PRICE}">
-<input type="hidden" name="OD_DCPRICE" value="${(goodsInfo.GD_PRICE-goodsInfo.GD_DCPRICE)*orderCount}">
-<input type="hidden" id="OD_TOTAL" name="OD_TOTAL" value="${totalPrice}">
 <input type="hidden" name="OD_ID" value="${MEM_ID}">
-<input type="hidden" name="OD_NUM" value="${MEM_ID}">
+<input type="hidden" id="OD_TOTAL" name="OD_TOTAL" value="${totalPrice}">
 
+<input type="hidden" id="OD_ID" value="${memInfo.MEM_ID}">
 <input type="hidden" id="OD_NAME" value="${memInfo.MEM_NAME}">
 <input type="hidden" id="OD_PHONE" value="${memInfo.MEM_PHONE}">
 <input type="hidden" id="OD_ZIPCODE" value="${memInfo.MEM_ZIPCODE}">
@@ -339,53 +331,6 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 					</div>
 
 					<hr>
-<!-- 					<h2 class="mb-4 billing-heading">쿠폰/포인트</h2>
-					<div class="row slider-text justify-content-center align-items-center">
-					 -->
-						<!-- 쿠폰 -->
-<%-- 						<div class="form-group">
-							<h6 class="mb-4" style="text-align:left;">쿠폰</h6>
-								<div class="select-wrap">
-									<select name="coupon" id="coupon" class="form-control" style="width:400px;">			
-										<option value="---">---</option>
-										<c:if test="${eventBean.COUPON1K == 'Y' }">
-											<option id="1K" value="1K">1천원</option>
-										</c:if>
-										<c:if test="${eventBean.COUPON2K == 'Y' }">
-											<option id="2K" value="2K">2천원</option>
-										</c:if>
-										<c:if test="${eventBean.COUPON3K == 'Y' }">
-											<option id="3K" value="3K">3천원</option>
-										</c:if>
-										<c:if test="${eventBean.COUPON5K == 'Y' }">
-											<option id="5K" value="5K">5천원</option>
-										</c:if>
-										<c:if test="${eventBean.COUPON10K == 'Y' }">
-											<option id="10K" value="10K">1만원</option>
-										</c:if>
-									</select>
-								</div>
-						</div>
-						<div class="w-100"></div>
-	
-			 --%>			<!-- 포인트 -->
-<%-- 						<div class="form-group">
-							<h6 class="mb-4" style="text-align:left;">포인트</h6>
-							<p>현재 보유 포인트는 ${eventBean.JUMO_POINT} Point입니다.</p>
-							<input type="number" id="point" name="point" class="form-control"
-								size="24" style="width:400px;" numberOnly step="100" min="0" max="${eventBean.JUMO_POINT}"
-								placeholder="100단위 포인트를 입력해주세요. " maxlength="11" oninput="numberMaxLength(this);"> 
-							<input type="hidden" id="maxPoint" value="${eventBean.JUMO_POINT}">
-							<div class="w-100"></div>
-							<p class="mb-4" style="text-align:left;">포인트는 최대 10만까지 사용할 수 있습니다.<br>100이하는 계산되지 않습니다.</p>				
-						</div>
-						<div class="w-100"></div>
-						<br/><br/>
-					</div>
-					
-					<hr>
-					 --%>
-					
 					<br>	
 					<div class="container">  
 						<div class="cart-total mb-3" style="text-align:center">

@@ -101,6 +101,13 @@ public class GoodsServiceImpl implements GoodsService {
 		return resultMap;
 	}
 	
+	/* 장바구니에서 주문하기로 넘어가는 상품 상세 정보 */
+	@Override
+	public List<Map<String, Object>> goodsDetailCart(Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> resultMap = goodsDAO.goodsDetailCart(map);
+		return resultMap;
+	}
+	
 	/* 상품 상세 정보에서 장바구니로 넘어갈 때 같이 전송하는 상품 정보 */
 //	@Override
 //	public Map<String, Object> selectGoods(String memberId) throws Exception {
@@ -144,6 +151,12 @@ public class GoodsServiceImpl implements GoodsService {
 		
 		Map<String,Object> map1 = fileUtils.parseInsertFileInfo(map, request);
 		goodsDAO.updateImg(map1);
+	}
+
+	/* 구매 수량 재고 업데이트 */
+	@Override
+	public void sellCountUpdate(Map<String, Object> map) throws Exception {
+		goodsDAO.sellCountUpdate(map);
 	}
 	
 }
