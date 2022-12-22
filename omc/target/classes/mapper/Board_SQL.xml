@@ -3,36 +3,29 @@
 
 <mapper namespace="board">
 
-	<!-- selectNoticeId(공지 게시판 상세보기) -->
-     <select id="selectNoticeId" parameterType="hashmap" resultType="hashmap">
+	<!-- [selectNoticeId] 공지 게시판 상세보기 -->
+	<select id="selectNoticeId" parameterType="hashmap"
+		resultType="hashmap">
+     <![CDATA[
+     		SELECT * 
+				FROM BOARD
+				WHERE BD_TYPE = 'N' AND BD_NUM = #{BD_NUM}
+     ]]>
+	</select>
+
+	<!-- [selectBoardId] 게시판상세보기 멤버 -->
+	<select id="selectBoardId" parameterType="hashmap"
+		resultType="hashmap">
      <![CDATA[
      		SELECT * 
 				FROM BOARD
 				WHERE BD_NUM = #{BD_NUM}
      ]]>
 	</select>
-	<!-- qnaListPaging(고객센터 게시판 리스트 페이징) -->
-	<select id="qnaListPaging" parameterType="hashmap" resultType="hashmap">
-	<![CDATA[
-		SELECT *
-		FROM (
-			SELECT BD_NUM, BD_TITLE, BD_REGDATE, BD_ID, BD_GID, BD_COUNT, BD_CONTENT, ROWNUM R
-			FROM ( 	
-				SELECT BD_NUM, BD_TITLE, BD_REGDATE, BD_ID, BD_GID, BD_COUNT, BD_CONTENT 
-				FROM
-					BOARD
-				WHERE
-					BD_TYPE = 'Q'
-				ORDER BY BD_NUM DESC
-			)
-		)
-		WHERE
-			R BETWEEN #{START} AND #{END}
-	]]>
-	</select>
-	
-	<!-- selectQnaId(고객센터 게시판 상세보기) -->
-	<select id="selectQnaId" parameterType="hashmap" resultType="hashmap">
+
+	<!-- [selectQnaId] 고객센터 게시판 상세보기 -->
+	<select id="selectQnaId" parameterType="hashmap"
+		resultType="hashmap">
 		<![CDATA[
 			SELECT * 
 				FROM BOARD 
@@ -40,71 +33,9 @@
 		]]>
 	</select>
 
-
-	
-	  <!--  커뮤니티 -->
-      <select id ="boardListPaging" parameterType="hashmap" resultType="hashmap">
-        <include refid="common.pagingPre"/>
-        <![CDATA[
-           SELECT
-              ROW_NUMBER() OVER (ORDER BY BD_NUM DESC) RNUM,
-              BD_NUM,
-              BD_ID,
-              BD_TITLE,
-              BD_COUNT,
-              BD_REGDATE,
-              BD_TYPE
-           FROM
-              BOARD
-              WHERE BD_TYPE = 'C'
-           ]]>
-        <include refid="common.pagingPost"/>
-     
-     </select>
-	<!-- selectQnaId(고객센터 게시판 상세보기) 
-	<select id="selectQnaId" parameterType="hashmap" resultType="hashmap">
-		<![CDATA[
-			SELECT * 
-				FROM BOARD 
-				WHERE BD_TYPE = 'Q' AND BD_NUM = #{BD_NUM}
-		]]>
-	</select>
- -->
- 
- <!-- 커뮤니티 수정 --> 
-  <select id="updateBoardForm" parameterType="hashmap" resultType="hashmap">
-      <![CDATA[
-         SELECT
-            BD_NUM,
-            BD_TYPE,
-            BD_TITLE,
-            BD_CONTENT,
-            BD_REGDATE
-         FROM
-            BOARD
-         WHERE
-            BD_NUM = #{BD_NUM}
-      ]]>
-   </select>
-   
-    <update id="updateBoard" parameterType="hashmap">
-      <![CDATA[
-         UPDATE
-            BOARD
-         SET
-            BD_TYPE = #{BD_TYPE},
-            BD_TITLE = #{BD_TITLE},
-            BD_CONTENT = #{BD_CONTENT},
-            BD_REGDATE = sysdate
-         WHERE
-            BD_NUM = #{BD_NUM}                 
-      ]]>
-   </update>
-   
-   
-   
-	<!-- selectQnaMemberId(마이페이지 고객센터) -->
-	<select id="selectQnaMemberId" parameterType="hashmap" resultType="hashmap">
+	<!-- [selectQnaMemberId] 마이페이지 고객센터 -->
+	<select id="selectQnaMemberId" parameterType="hashmap"
+		resultType="hashmap">
 		<![CDATA[
 			SELECT * 
 				FROM BOARD 
@@ -112,26 +43,29 @@
 		]]>
 	</select>
 
-	<!-- selectReviewMemberId(마이페이지 후기) -->
-	<select id="selectReviewMemberId" parameterType="hashmap" resultType="hashmap">
+	<!-- [selectReviewMemberId] 마이페이지 후기 -->
+	<select id="selectReviewMemberId" parameterType="hashmap"
+		resultType="hashmap">
 		<![CDATA[
 				SELECT * 
 				FROM BOARD 
 				WHERE BD_TYPE = 'R' AND BD_ID=#{MEM_ID}
 		]]>
 	</select>
-	
-	<!-- selectReviewProduct(상품 후기 리스트) -->
-	<select id="selectReviewProduct" parameterType="hashmap" resultType="hashmap">
+
+	<!-- [selectReviewProduct] 상품 후기 리스트 -->
+	<select id="selectReviewProduct" parameterType="hashmap"
+		resultType="hashmap">
 	 <![CDATA[
 			SELECT * 
 			FROM BOARD 
 			WHERE BD_TYPE='R' AND BD_GID=#{BD_GID}
 	   ]]>
 	</select>
-	
-	<!--  noticeListPaging(공지 게시판 리스트 페이징)
-	<select id="noticeListPaging" parameterType="hashmap" resultType="hashmap">
+
+	<!-- [noticeListPaging] 공지 게시판 리스트 페이징 -->
+	<select id="noticeListPaging" parameterType="hashmap"
+		resultType="hashmap">
 	<![CDATA[
 		SELECT *
 		FROM (
@@ -148,50 +82,11 @@
 		WHERE
 			R BETWEEN #{START} AND #{END}
 	]]>
-     </select> -->
-     
-     <select id ="noticeListPaging" parameterType="hashmap" resultType="hashmap">
-     	<include refid="common.pagingPre"/>
-     	<![CDATA[
-     		SELECT
-     			ROW_NUMBER() OVER (ORDER BY BD_NUM DESC) RNUM,
-     			BD_NUM,
-     			BD_ID,
-     			BD_TITLE,
-     			BD_COUNT,
-     			BD_REGDATE,
-     			BD_TYPE
-     		FROM
-     			BOARD
-     		WHERE
-     			BD_TYPE='N'
-     		]]>
-     	<include refid="common.pagingPost"/>
-     
-     </select>
-      
-     <select id="faqListPaging" parameterType="hashmap" resultType="hashmap">
-     <include refid="common.pagingPre"/>
-     	<![CDATA[
-     		SELECT
-     			ROW_NUMBER() OVER (ORDER BY BD_NUM DESC) RNUM,
-     			BD_NUM,
-     			BD_ID,
-     			BD_TITLE,
-     			BD_COUNT,
-     			BD_REGDATE,
-     			BD_TYPE
-     		FROM
-     			BOARD
-     		WHERE
-     			BD_TYPE='Q'
-     		]]>
-     	<include refid="common.pagingPost"/>
-     
-     </select>
-      
-	<!--  qnaListPaging(고객센터 게시판 리스트 페이징) 
-	<select id="faqListPaging" parameterType="hashmap" resultType="hashmap">
+	</select>
+
+	<!-- [qnaListPaging] 고객센터 게시판 리스트 페이징 -->
+	<select id="qnaListPaging" parameterType="hashmap"
+		resultType="hashmap">
 	<![CDATA[
 		SELECT *
 		FROM (
@@ -208,10 +103,11 @@
 		WHERE
 			R BETWEEN #{START} AND #{END}
 	]]>
-	</select> -->
-	
-	<!-- reviewListPaging(후기 게시판 리스트 페이징) -->
-	<select id="reviewListPaging" parameterType="hashmap" resultType="hashmap">
+	</select>
+
+	<!-- [reviewListPaging] 후기 게시판 리스트 페이징 -->
+	<select id="reviewListPaging" parameterType="hashmap"
+		resultType="hashmap">
 	<![CDATA[
 		SELECT *
 		FROM (
@@ -229,8 +125,8 @@
 			R BETWEEN #{START} AND #{END}
 	]]>
 	</select>
-	
-	<!-- noticeListCount(공지 게시판 게시글수) -->
+
+	<!-- [noticeListCount] 공지 게시판 게시글수 -->
 	<select id="noticeListCount" resultType="hashmap">
         <![CDATA[
 				SELECT COUNT(*) COUNT
@@ -241,7 +137,7 @@
 	 	]]>
 	</select>
 
-	<!-- qnaListCount(고객센터 게시판 게시글수) -->
+	<!-- [qnaListCount] 고객센터 게시판 게시글수 -->
 	<select id="qnaListCount" resultType="hashmap">
         <![CDATA[
 				SELECT COUNT(*) COUNT
@@ -252,7 +148,7 @@
 	 	]]>
 	</select>
 
-	<!-- reviewListCount(후기 게시판 게시글수) -->
+	<!-- [reviewListCount] 후기 게시판 게시글수 -->
 	<select id="reviewListCount" resultType="hashmap">
         <![CDATA[
 				SELECT COUNT(*) COUNT 
@@ -262,27 +158,26 @@
 					BD_TYPE = 'R'
 	 	]]>
 	</select>
-	
-	<!-- insertBoard(커뮤니티 등록 기능) -->
-	<insert id="insertBoard" parameterType="hashmap">
+
+	<!-- [insertNotice] 공지사항 등록 기능 -->
+	<insert id="insertNotice" parameterType="hashmap">
 	<![CDATA[
-		INSERT
+		INSERT 
 		INTO BOARD
 		VALUES(
-			BD_NUM_SEQ.NEXTVAL,
-			#{BD_TITLE},
-			SYSDATE,
-			#{BD_ID},
-			NULL,
-			0,
-			#{BD_CONTENT},
-			#{BD_TYPE}
+			BD_NUM_SEQ.NEXTVAL, 
+			#{BD_TITLE}, 
+			SYSDATE, 
+			#{BD_ID}, 
+			'', 
+			0, 
+			#{BD_CONTENT}, 
+			'N'
 			)
 		]]>
 	</insert>
-	
-	
-	<!-- insertReview(후기 게시판 글 입력 기능) -->
+
+	<!-- [insertReview] 후기 게시판 글 입력 기능 -->
 	<insert id="insertReview" parameterType="hashmap">
 	<![CDATA[
 			INSERT 
@@ -299,8 +194,8 @@
 					)
 	]]>
 	</insert>
-	
-	<!-- insertQna(고객센터 게시판 글 입력 기능) -->
+
+	<!-- [insertQna] 고객센터 게시판 글 입력 기능 -->
 	<insert id="insertQna" parameterType="hashmap">
 	<![CDATA[
 		INSERT 
@@ -316,46 +211,38 @@
 				'Q'
 				)
 		]]>
-	</insert> 
-	
-	<!-- updateNoticeId(공지사항 수정 기능) -->
-	<update id="updateNoticeId" parameterType="hashmap" >
+	</insert>
+
+	<!-- [updateNoticeId] 공지사항 수정 기능 -->
+	<update id="updateNoticeId" parameterType="hashmap">
         <![CDATA[
 			UPDATE BOARD 
 				SET BD_TITLE=#{BD_TITLE}, 
 					BD_CONTENT=#{BD_CONTENT}
 				WHERE BD_NUM=#{BD_NUM}
 	   ]]>
-	</update>	
-	
-	<!--  커뮤니티 삭제 -->
-	<delete id="deleteBoard" parameterType="hashmap" >
+	</update>
+
+	<!-- [deleteCommunityId] 공지,후기 삭제 기능 -->
+	<delete id="deleteCommunityId" parameterType="hashmap">
 	<![CDATA[
 		DELETE 
 			FROM BOARD
 			WHERE BD_NUM=#{BD_NUM}
 	]]>
 	</delete>
-	
-	<!-- deleteCommunityId(공지,후기 삭제 기능) -->
-	<delete id="deleteCommunityId" parameterType="hashmap" >
-	<![CDATA[
-		DELETE 
-			FROM BOARD
-			WHERE BD_NUM=#{BD_NUM}
-	]]>
-	</delete>
-	
-	<!-- commentListId(고객센터 댓글 리스트) -->
-	<select id="commentListId" parameterType="hashmap" resultType="hashmap">
+
+	<!-- [commentListId] 고객센터 댓글 리스트 -->
+	<select id="commentListId" parameterType="hashmap"
+		resultType="hashmap">
 	 <![CDATA[
 		SELECT * 
 			FROM BOARDCOMMENT
 			WHERE BC_NUM=#{BC_NUM}
 	   ]]>
 	</select>
-	
-	<!-- insertComment(고객센터 댓글 입력기능) -->
+
+	<!-- [insertComment] 고객센터 댓글 입력기능 -->
 	<insert id="insertComment" parameterType="hashmap">
 	<![CDATA[
 		INSERT 
@@ -369,40 +256,36 @@
 				)
 	]]>
 	</insert>
-	
-	<!-- updateComment(고객센터 댓글 수정 기능) -->
-	<update id="updateComment" parameterType="hashmap" >
+
+	<!-- [updateComment] 고객센터 댓글 수정 기능 -->
+	<update id="updateComment" parameterType="hashmap">
         <![CDATA[
 				UPDATE BOARDCOMMENT 
-					SET 
-					BC_COMMENT=#{BC_COMMENT} 
+					SET BC_COMMENT=#{BC_COMMENT} 
 				WHERE BC_BCID=#{BC_BCID}
 	   ]]>
 	</update>
-	    
-	
-	<!-- deleteComment(고객센터 댓글 삭제기능) -->
-	<delete id="deleteComment" parameterType="hashmap" >
+
+
+	<!-- [deleteComment] 고객센터 댓글 삭제기능 -->
+	<delete id="deleteComment" parameterType="hashmap">
 	<![CDATA[
 		DELETE 
 			FROM BOARDCOMMENT
 			WHERE BC_BCID=#{BC_BCID}
 	]]>
 	</delete>
-	
-		
-   	<!-- 사용하지 않음 -->	
 
-	<!-- noticeList(공지 게시판 리스트) -->
+	<!-- [noticeList] 공지 게시판 리스트 -->
 	<select id="noticeList" resultType="hashmap">
         <![CDATA[
 				SELECT * 
 					FROM BOARD
 					WHERE BD_TYPE = 'N'
 	 	]]>
-     </select>
-	
-	<!-- qnaList(고객센터 게시판 리스트) -->
+	</select>
+
+	<!-- [qnaList] 고객센터 게시판 리스트 -->
 	<select id="qnaList" resultType="hashmap">
 	 <![CDATA[
 		SELECT *
@@ -411,7 +294,7 @@
 	   ]]>
 	</select>
 
-	<!-- reviewList(후기 게시판 리스트) -->
+	<!-- [reviewList] 후기 게시판 리스트 -->
 	<select id="reviewList" resultType="hashmap">
 	 <![CDATA[
 			SELECT * 
@@ -419,18 +302,136 @@
 				WHERE BD_TYPE='R'
 	   ]]>
 	</select>
+
+	<!-- [boardListPaging] 커뮤니티 상세보기 -->
+	<select id="boardListPaging" parameterType="hashmap"
+		resultType="hashmap">
+		<include refid="common.pagingPre" />
+        <![CDATA[
+           SELECT
+              ROW_NUMBER() OVER (ORDER BY BD_NUM DESC) RNUM,
+              BD_NUM,
+              BD_ID,
+              BD_TITLE,
+              BD_COUNT,
+              BD_REGDATE,
+              BD_TYPE
+           FROM
+              BOARD
+              WHERE BD_TYPE = 'C'
+           ]]>
+		<include refid="common.pagingPost" />
+	</select>
+
+	<!-- [updateBoardForm] 커뮤니티 수정 폼 -->
+	<select id="updateBoardForm" parameterType="hashmap"
+		resultType="hashmap">
+      <![CDATA[
+         SELECT
+            BD_NUM,
+            BD_TYPE,
+            BD_TITLE,
+            BD_CONTENT,
+            BD_REGDATE
+         FROM
+            BOARD
+         WHERE
+            BD_NUM = #{BD_NUM}
+      ]]>
+	</select>
+
+	<!-- [updateBoard] 커뮤니티 수정 -->
+	<update id="updateBoard" parameterType="hashmap">
+      <![CDATA[
+         UPDATE
+            BOARD
+         SET
+            BD_TYPE = #{BD_TYPE},
+            BD_TITLE = #{BD_TITLE},
+            BD_CONTENT = #{BD_CONTENT},
+            BD_REGDATE = sysdate
+         WHERE
+            BD_NUM = #{BD_NUM}                 
+      ]]>
+	</update>
+
+	<!-- [noticeListPagingm] 공지사항 리스트 페이징 -->
+	<select id="noticeListPagingm" parameterType="hashmap"
+		resultType="hashmap">
+		<include refid="common.pagingPre" />
+     	<![CDATA[
+     		SELECT
+     			ROW_NUMBER() OVER (ORDER BY BD_NUM DESC) RNUM,
+     			BD_NUM,
+     			BD_ID,
+     			BD_TITLE,
+     			BD_COUNT,
+     			BD_REGDATE,
+     			BD_TYPE
+     		FROM
+     			BOARD
+     		WHERE
+     			BD_TYPE='N'
+     		]]>
+		<include refid="common.pagingPost" />
+	</select>
+
+	<!-- [faqListPagingm] FAQ 리스트 페이징 -->
+	<select id="faqListPagingm" parameterType="hashmap"
+		resultType="hashmap">
+		<include refid="common.pagingPre" />
+     	<![CDATA[
+     		SELECT
+     			ROW_NUMBER() OVER (ORDER BY BD_NUM DESC) RNUM,
+     			BD_NUM,
+     			BD_ID,
+     			BD_TITLE,
+     			BD_COUNT,
+     			BD_REGDATE,
+     			BD_TYPE
+     		FROM
+     			BOARD
+     		WHERE
+     			BD_TYPE='Q'
+     		]]>
+		<include refid="common.pagingPost" />
+	</select>
 	
-	
+	<!-- [insertBoard] 커뮤니티 등록 기능 -->
+	<insert id="insertBoard" parameterType="hashmap">
+	<![CDATA[
+		INSERT
+		INTO BOARD
+		VALUES(
+			BD_NUM_SEQ.NEXTVAL,
+			#{BD_TITLE},
+			SYSDATE,
+			#{BD_ID},
+			NULL,
+			0,
+			#{BD_CONTENT},
+			#{BD_TYPE}
+			)
+		]]>
+	</insert>
+
+	<!-- [deleteBoard] 커뮤니티 삭제 -->
+	<delete id="deleteBoard" parameterType="hashmap">
+	<![CDATA[
+		DELETE 
+			FROM BOARD
+			WHERE BD_NUM=#{BD_NUM}
+	]]>
+	</delete>
+
+	<!-- [updateHitCnt] 조회수 증가 -->
 	<update id="updateHitCnt" parameterType="hashmap">
-   <![CDATA[
-UPDATE BOARD 
-      SET
-         BD_COUNT = NVL(BD_COUNT, 0) + 1
-      WHERE
-         BD_NUM = #{BD_NUM}   
-   ]]>
-</update>
-
-
-	
+    <![CDATA[
+		UPDATE BOARD 
+		      SET
+		         BD_COUNT = NVL(BD_COUNT, 0) + 1
+		      WHERE
+		         BD_NUM = #{BD_NUM}   
+    ]]>
+	</update>
 </mapper>

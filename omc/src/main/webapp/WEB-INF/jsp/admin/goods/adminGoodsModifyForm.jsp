@@ -10,10 +10,9 @@
 <title>오늘의 메뉴 추천, 오메추</title>
 <script>
  function formCheck() {
-	var form = document.getElementById("goodsWriteForm");
+	var form = document.getElementById("adminGoodsWriteForm");
 	var GD_CATEGORY = document.getElementById("GD_CATEGORY");
 	var GD_NAME = document.getElementById("GD_NAME");
-	var GD_IMAGE = document.getElementById("main_image");
 	var GD_STOCK = document.getElementById("GD_STOCK");
 	var GD_PRICE = document.getElementById("GD_PRICE");
 	var GD_DCPRICE = document.getElementById("GD_DCPRICE");
@@ -25,9 +24,6 @@
 		} else if(GD_GNAME.value.trim()=="") {
 			alert("상품 이름을 입력해주세요.");
 			GD_GNAME.focus();
-			return false;
-		} else if(GD_IMAGE.value.trim()=="") {
-			alert("상품 이미지를 넣어주세요.");
 			return false;
 		} else if(GD_STOCK.value.trim()=="") {
 			alert("상품 수량을 입력해주세요.");
@@ -65,14 +61,15 @@ function readImage(input) {
 		reader.readAsDataURL(input.files[0]);
 	}	
 }
-
+</script>
+<script>
 window.onload = function() {
 	document.getElementById("GD_NAME").focus();
 }
 </script>
 </head>
 <body>
-<form action="goodsModify.omc" method="post" encType="multipart/form-data" id="goodsWriteForm">
+<form action="adminGoodsModify.omc" method="post" encType="multipart/form-data" id="adminGoodsWriteForm">
 	
 <input type="hidden" id="GD_GID" name="GD_GID" value="${goods.GD_GID}">
 	
@@ -95,12 +92,12 @@ window.onload = function() {
 										</td>
 										<td>
 											<select id="GD_CATEGORY" name="GD_CATEGORY" class="form-control">
-												<option value="KOREAN">한식</option>
-												<option value="ITALIAN">양식</option>
-												<option value="CHIJAP">중식/일식</option>
-												<option value="ASIAN">아시안</option>
-												<option value="SNACKBAR">분식</option>
-												<option value="HEALTHY">건강식</option>
+												<option value="한식">한식</option>
+												<option value="양식">양식</option>
+												<option value="중식/일식">중식/일식</option>
+												<option value="아시안">아시안</option>
+												<option value="분식">분식</option>
+												<option value="건강식">건강식</option>
 											</select>
 										</td>
 									</tr>
@@ -203,9 +200,9 @@ window.onload = function() {
 											<input type="button" value="수정" class="btn btn-dark py-2 px-3"
 												onClick="return formCheck()">
 											<input type="button" value="삭제" class="btn btn-primary py-2 px-3"
-												onClick="location.href='goodsDelete.omc'">
+												onClick="location.href='adminGoodsDelete.omc'">
 											<input type="button" value="메뉴" class="btn btn-primary py-2 px-3"
-												onClick="location.href='main.omc'">
+												onClick="location.href='adminMain.omc'">
 										</td>
 									</tr>
 								</tbody>

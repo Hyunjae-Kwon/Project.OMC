@@ -20,6 +20,21 @@
 		comSubmit.addParam("currentPageNo", pageNo);
 		comSubmit.submit();
 	}
+	
+	
+	//로그인후 글쓰기
+	function fn_writeForm(){
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("/boardWrite.omc");
+		if(${MEM_ID ne null}){
+			comSubmit.submit();
+		} else {
+		      alert("로그인 후 이용해주세요.");
+		      location.href = "/loginForm.omc";
+		   }
+		
+	}
+	
 </script>
 <body>
 
@@ -31,7 +46,7 @@
   	     <div class="container">
   	    <!-- 글쓰기 버튼 -->
   	    <div style='width:100px; float: right;'>
-			<input type="button" class="btn btn-dark py-2 px-3" value="글쓰기" onclick="location.href='/boardWrite.omc'"/>
+			<input type="button" class="btn btn-dark py-2 px-3" value="글쓰기" onclick="return fn_writeForm()"/>
 			<!-- <a href="/Jumo/qnaForm.al">글쓰기</a> -->
 		</div>
 		<br>

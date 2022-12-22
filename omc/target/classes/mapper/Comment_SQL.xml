@@ -2,8 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="comment">
-<!--  댓글 목록..? -->
- <select id="selectCommentList" parameterType="hashmap" resultType="hashmap">
+
+	<!-- [selectCommentList] 게시판 댓글 목록 -->
+	<select id="selectCommentList" parameterType="hashmap" resultType="hashmap">
       <![CDATA[
           SELECT
             C.BC_BCID,
@@ -18,48 +19,43 @@
                C.BC_ID = M.MEM_ID
             ORDER BY C.BC_BCID DESC
       ]]>
-   </select>
-   
-   
- <!--  댓글 쓰기..? -->
-  <insert id="insertBoardComment" parameterType="hashmap">
-      INSERT INTO BOARDCOMMENT(
-            BC_BCID,
-           BC_NUM,
-               BC_ID,
-              BC_COMMENT,
-             BC_REGDATE
-			  )
-        VALUES
-         (
-            BC_BCID_SEQ.NEXTVAL,
-            #{BD_NUM},
-            #{MEM_ID},
-            #{BC_COMMENT},
-            SYSDATE
-          )
-   </insert> 
-   
-   <!--  댓삭.. -->
- <delete id="deleteComment" parameterType="hashmap" >
-   <![CDATA[
-      
-     DELETE 
+	</select>
+
+	<!-- [insertBoardComment] 게시판 댓글 작성 -->
+	<insert id="insertBoardComment" parameterType="hashmap">
+		INSERT INTO BOARDCOMMENT(
+		BC_BCID,
+		BC_NUM,
+		BC_ID,
+		BC_COMMENT,
+		BC_REGDATE
+		)
+		VALUES
+		(
+		BC_BCID_SEQ.NEXTVAL,
+		#{BD_NUM},
+		#{MEM_ID},
+		#{BC_COMMENT},
+		SYSDATE
+		)
+	</insert>
+
+	<!-- [deleteComment] 댓글 삭제 -->
+	<delete id="deleteComment" parameterType="hashmap">
+   	<![CDATA[
+     	DELETE 
 			FROM BOARDCOMMENT
 			WHERE BC_BCID=#{BC_BCID}
       
-   ]]>
-</delete>
+   	]]>
+	</delete>
 
-
-<!--  댓글 수정..  -->
-<update parameterType="hashmap" id="updateComment">
-<![CDATA[
-				UPDATE BOARDCOMMENT 
-					SET BC_COMMENT=#{BC_COMMENT} 
-				WHERE BC_BCID=#{BC_BCID}
-	   ]]>
-</update>
-   
-   
+	<!-- [updateComment] 댓글 수정 -->
+	<update id="updateComment" parameterType="hashmap">
+	<![CDATA[
+		UPDATE BOARDCOMMENT 
+			SET BC_COMMENT=#{BC_COMMENT} 
+		WHERE BC_BCID=#{BC_BCID}
+	]]>
+	</update>
 </mapper>

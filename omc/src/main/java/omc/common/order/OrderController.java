@@ -128,25 +128,23 @@ public class OrderController {
 		
 		return mv;
 	}
-	
-	/* 주문완료 (장바구니 -> 선택 상품 주문) */
+    
+    /* 주문완료 (장바구니 -> 선택 상품 주문) */
     @RequestMapping(value = "/orderCartResult.omc", method = RequestMethod.GET)
     public ModelAndView orderCartResult(CommandMap commandMap, HttpServletRequest request) throws Exception {
-        ModelAndView mv = new ModelAndView("order/orderCartResult");
-      
-        String loginId = (String) request.getSession().getAttribute("MEM_ID");
-        int orderNum = orderService.selectODNumMax();
-        List<Map<String, Object>> totalpay = orderService.selectTotalPay(orderNum);
-            
-        List<Map<String, Object>> orderInfo = orderService.selectOrderODNum(orderNum);
-        Map<String,Object> memInfo = loginService.selectMember(loginId);
-      
-        mv.addObject("totalpay", totalpay);
-        mv.addObject("orderResult", orderInfo);
-        mv.addObject("memInfo", memInfo);
-         
-        return mv;
+       ModelAndView mv = new ModelAndView("order/orderCartResult");
+       
+       String loginId = (String) request.getSession().getAttribute("MEM_ID");
+       int orderNum = orderService.selectODNumMax();
+             
+       List<Map<String, Object>> orderInfo = orderService.selectOrderODNum(orderNum);
+       Map<String, Object> payInfo = orderService.selectPayODNum(orderNum); //페이정보 불러오기 추가
+       Map<String,Object> memInfo = loginService.selectMember(loginId);
+       
+       mv.addObject("orderResult", orderInfo);
+       mv.addObject("payResult", payInfo); //페이정보 payResult넣기 추가
+       mv.addObject("memInfo", memInfo);
+          
+       return mv;
     }
-
-
 }

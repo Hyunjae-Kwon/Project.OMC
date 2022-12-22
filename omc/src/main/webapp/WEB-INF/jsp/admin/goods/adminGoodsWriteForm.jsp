@@ -71,7 +71,7 @@ window.onload = function() {
 </script>
 </head>
 <body>
-<form action="/goodsWrite.omc" method="post" encType="multipart/form-data" id="goodsWriteForm">
+<form action="/adminGoodsWrite.omc" method="post" encType="multipart/form-data" id="goodsWriteForm">
 	
 <section class="ftco-section ftco-cart">
 	<div style="text-align:center"><h2>상품 등록</h2></div>

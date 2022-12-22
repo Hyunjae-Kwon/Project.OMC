@@ -3,7 +3,7 @@
 
 <mapper namespace="order">
 
-	<!-- selectOrderOID (주문번호로 주문 정보 조회) -->
+	<!-- [selectOrderOID] 주문 고유 번호로 주문 정보 조회 -->
 	<select id="selectOrderOId" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
 		SELECT
@@ -15,7 +15,7 @@
 	]]>
 	</select>
 	
-	<!-- 주문 테이블의 OBNUMBER 최대값 -->
+	<!-- [selectOrderODNumMax] 주문 테이블의 OD_NUM 최대값 (같은 장바구니에서 구매한 상품) -->
 	<select id="selectOrderODNumMax" resultType="hashmap">
 	<![CDATA[
 		SELECT
@@ -25,7 +25,7 @@
 	]]>
 	</select>
 	
-	<!-- selectOrderMemberId (주문자:MEM_ID로 주문 정보 조회) -->
+	<!-- [selectOrderMemberId] 주문자의 MEM_ID로 주문 정보 조회 -->
 	<select id="selectOrderMemberId" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
 		SELECT
@@ -37,7 +37,7 @@
 	]]>
 	</select>
 
-	<!-- orderList (주문 정보 리스트) -->
+	<!-- [orderList] 주문 정보 리스트 -->
 	<select id="orderList" resultType="hashmap">
 	<![CDATA[
 		SELECT
@@ -49,7 +49,7 @@
 	]]>
 	</select>
 	
-	<!-- orderListSearch (주문 정보 리스트 검색) -->
+	<!-- [orderListSearch] 주문 정보 리스트 검색 -->
 	<select id="orderListSearch" parameterType="hashmap" resultType="hashmap">
 		SELECT
 			*
@@ -73,7 +73,7 @@
 		</where>		
 	</select>
 	
-	<!-- insertOrderDirect (상품 바로 구매정보 입력) -->
+	<!-- [insertOrderDirect] 상품 구매 정보 입력 (상품 상세 -> 바로 구매) -->
 	<insert id="insertOrderDirect" parameterType="hashmap">
 	<![CDATA[
 		INSERT INTO
@@ -100,7 +100,7 @@
 	]]>
 	</insert>
 
-	<!-- insertOrderBasket (장바구니 구매정보 입력) -->
+	<!-- [insertOrderBasket] 상품 구매 정보 입력 (장바구니 -> 선택 구매) -->
 	<insert id="insertOrderCart" parameterType="hashmap">
 	<![CDATA[
 		INSERT INTO
@@ -127,7 +127,7 @@
 	]]>
 	</insert>
 	
-	<!-- updateOrderId (주문 정보 수정) -->
+	<!-- [updateOrderId] 주문 정보 수정 -->
 	<update id="updateOrderDirect" parameterType="hashmap">
 	<![CDATA[
 		UPDATE
@@ -154,12 +154,15 @@
 	<![CDATA[
 		INSERT INTO
 			PAYMENT
-		VALUES(
+		SELECT
 			PAY_SEQ.NEXTVAL,
 			#{OD_NUM},
 			#{TOTALPAY},
 			''
-		)
+		FROM
+			DUAL
+		WHERE
+			NOT EXISTS(SELECT ODNUM FROM PAYMENT WHERE ODNUM = #{OD_NUM})
 	]]>
 	</insert>
 	
@@ -176,11 +179,23 @@
 	</select>
 	
 	<!-- [selectTotalPay] 총 결제 금액 -->
-	<select id="selectTotalPay" parameterType="hashmap" resultType="hashmap">
+	<!-- <select id="selectTotalPay" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
 		SELECT TOTALPAY
 		FROM PAYMENT
 		WHERE ODNUM = #{ODNUM}
+	]]>
+	</select> -->
+	
+	<!-- [selectPayODNum] (장바구니번호로 결제 정보 조회) -->
+	<select id="selectPayODNum" parameterType="hashmap" resultType="hashmap"> 
+	<![CDATA[
+		SELECT
+			* 
+		FROM
+			PAYMENT 
+		WHERE
+			ODNUM = #{OD_NUM}
 	]]>
 	</select>
 

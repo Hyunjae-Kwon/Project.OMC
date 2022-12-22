@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui" %>
 <%@ include file="/WEB-INF/include/include-header.jspf"%>
 <!DOCTYPE html>
 <html>
@@ -8,14 +9,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<!-- <script>
+<script>
 	function fn_search(pageNo) {
 		var comSubmit = new ComSubmit();
-		comSubmit.setUrl("<c:url value='/allGoodsListCategory.omc' />");
+		comSubmit.setUrl("<c:url value='/allGoodsListCategory.omc?GD_CATEGORY=${category}' />");
 		comSubmit.addParam("currentPageNo", pageNo);
 		comSubmit.submit();
 	}
-</script> -->
+</script>
 <body>
 	<section class="ftco-section">
 
@@ -66,7 +67,6 @@
 									</div>
 								</div>
 							</c:forEach>
-
 						</div>
 					</div>
 				</div>
@@ -74,11 +74,11 @@
 		</form>
 		<form id="commonForm" name="commonForm"></form>
 		<!-- ***** -->
-		<%-- 		<c:if test="${not empty paginationInfo}">
+		<c:if test="${not empty paginationInfo}">
 			<ui:pagination paginationInfo="${paginationInfo}" type="text"
 				jsFunction="fn_search" />
 		</c:if>
-		<input type="hidden" id="currentPageNo" name="currentPageNo" /> <br /> --%>
+		<input type="hidden" id="currentPageNo" name="currentPageNo" /> <br />
 	</section>
 </body>
 </html>

@@ -54,7 +54,7 @@ function logoutCheck() {
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active dropdown">
               		<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-              	  		style="font-size:large; color:dark;">카테고리</a>
+              	  		style="font-size:large; color:#fd7e14;">카테고리</a>
 	              		<div class="dropdown-menu" aria-labelledby="dropdown04">
 	              			<a class="dropdown-item" href="/allGoodsList.omc">전체 상품</a>
 	              			<a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=KOREAN" >한식</a>
@@ -65,39 +65,35 @@ function logoutCheck() {
 			                <a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=HEALTHY" >건강식</a>
 						</div>
            	  		</li>
-					<li class="nav-item active"><a href="/allGoodsListBest.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">베스트 상품</a></li>
-					<li class="nav-item active"><a href="/allGoodsListNew.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">신상품</a></li>
-					<li class="nav-item active"><a href="/event.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">이벤트</a></li>
-					<li class="nav-item active"><a href="/boardList.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">커뮤니티</a></li>
-					<li class="nav-item active"></li>
+					<li class="nav-item active"><a href="/allGoodsListBest.omc" class="nav-link" style="font-size:large; color:#fd7e14;">베스트 상품</a></li>
+					<li class="nav-item active"><a href="/allGoodsListNew.omc" class="nav-link" style="font-size:large; color:#fd7e14;">신상품</a></li>
+					<c:if test="${ MEM_ID != 'ADMIN' }">
+						<li class="nav-item active"><a href="/boardList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">커뮤니티</a></li>
+						<li class="nav-item active"><a href="/qnaList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">고객센터</a></li>
+						<li class="nav-item active"><a href="/faqList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">FAQ</a></li>
+						<li class="nav-item active"><a href="/noticeList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">공지사항</a></li>
+					</c:if>
+					<!-- 관리자용 메뉴 수정필 -->
+					<c:if test="${ MEM_ID == 'ADMIN' }">
+					<li class="nav-item active"><a href="/adminBoardList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">커뮤니티</a></li>
+					<li class="nav-item active"><a href="/adminQnaList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">고객센터</a></li>
+					<li class="nav-item active"><a href="/adminFaqList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">FAQ</a></li>
+					<li class="nav-item active"><a href="/adminNoticeList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">공지사항</a></li>
+					</c:if>
 				</ul>
 				</div>
-
-	        <ul class="navbar-nav ml-auto">
-	        
-	          <!-- 관리자일 경우 관리 탭 추가 -->
-	          <c:if test="${ MEM_ID == 'ADMIN' }">
-	        	<li class="nav-item"><a href="/adminMain.omc" class="nav-link" style="font-size:large; color:dark;">관리</a></li>
-	          </c:if>
-			  
-	        </ul>
-	        
-	        <ul class="navbar-nav ml-auto">
-	        	<div class="input-group">
-				  <div class="form-outline">
-				    <input id="search-focus" type="search" id="form1" class="form-control" />
-				  </div>
-				  <span>&nbsp;</span>
-				  <button type="button" class="btn btn-primary py-2 px-2" style="height:52px;" onClick="">
-				    <i class="fas fa-search">검색</i>
-				  </button>
-				</div>
-	        </ul>
-						        
+		        <ul class="navbar-nav ml-auto">
+		          <!-- 관리자일 경우 관리 탭 추가 -->
+		          <c:if test="${ MEM_ID == 'ADMIN' }">
+		        	<li class="nav-item active"><a href="/adminMain.omc" class="nav-link" style="font-size:large; color:#fd7e14;">관리</a></li>
+		          </c:if>
+		        </ul>
+		        <form action="searchGoodsList.omc" method="GET">
+		        	<input type="text" id="keyword" name="keyword" />
+		        	<span>&nbsp;</span>
+		        	<input type="button" class="btn btn-primary" style="height: 35px;" onClick="form.submit()" value="검색"/>
+		        </form>
 	      </div>
 	    </div>
 	  </nav>
-	 
-
-	 
 </body>

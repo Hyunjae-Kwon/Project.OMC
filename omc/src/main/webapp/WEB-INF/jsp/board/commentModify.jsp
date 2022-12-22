@@ -14,6 +14,6 @@
     location.href='${pageContext.request.contextPath}${url}';
     </script>
 <br>
-<a href="/board/boardList.omc">이동</a><br>
+<a href="/boardDetail.omc">고객센터 상세 페이지로 이동</a><br>
 </body>
 </html>

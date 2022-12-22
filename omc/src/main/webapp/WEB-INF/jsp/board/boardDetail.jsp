@@ -52,33 +52,26 @@
 			</tr>
 		
 	</table>
-<!--  댓글 시작 -->
+
 		<div class="col-md-12"><hr>
-		 	<form action="boardComWrite.omc?BD_NUM=${boardDetail.BD_NUM}" name="frm" id="frm" method="post" enctype="multipart/form-data">
-		
 		    <b>댓글</b><br><br>
-		    <div><button class="reply-content-toggle">댓글 열기</button></div>
 		    	<c:if test="${comListCount!=0}">
 		    	
-		<c:forEach var="comment" items="${comList}" varStatus="status">
-		<ul class="comment-list">
-		<li class="comment">
-		<div class="vcard bio">
-        <h5 style="color:#82ae46;">${comment.BC_ID }</h5><!-- COMMENTWRITER로 하면 ADMIN으로 떠서 OMC로 입력 -->
-        </div>
-		<div class="comment-body">
-		<div class="meta">${comment.BC_REGDATE}</div><!-- 답변 작성 날짜 -->
-		<p style="font-size:middle;">
-		 ${comment.BC_COMMENT}
-		<input type="hidden" id="BC_BCID" name="BC_BCID" value="${comment.BC_BCID }">
-		<input type="hidden" id="BC_NUM" name="BC_NUM" value="${comment.BC_NUM }">
-		</p>
-		<a onClick="javascript:if(confirm('삭제하시겠습니까?')==true){ location.href='commentDelete.omc?BC_BCID=${comment.BC_BCID}&BC_NUM=${comment.BC_NUM }' } else{ return false; }">
-		<span style="font-size:9pt; color:gray; padding-right:10px; float:left;">삭제</span></a>
-		<button type="button" id="modifyComment" name="modifyComment" onclick="modifyComment(this.id)"
-		style="font-size:9pt; color:gray; padding-right:10px; float:left;">수정</button>
-		</a>
-									
+					<c:forEach var="comment" items="${comList}" varStatus="status">
+					    <ul class="comment-list">
+							<li class="comment">
+								<div class="vcard bio">
+                    				<h5 style="color:#82ae46;">OMC</h5><!-- COMMENTWRITER로 하면 ADMIN으로 떠서 Jumo로 입력 -->
+                  				</div>
+								<div class="comment-body">
+									<div class="meta">${comment.BC_REGDATE}</div><!-- 답변 작성 날짜 -->
+									<p style="font-size:middle;">
+									 	${comment.BC_COMMENT}
+									 	<input type="hidden" id="BC_BCID" name="BC_BCID" value="${comment.BC_BCID }">
+										<input type="hidden" id="BC_NUM" name="BC_NUM" value="${comment.BC_NUM }">
+									 </p>
+									<p><a onClick="deleteCheck1()" class="reply">삭제</a>
+										<a onClick="commentWrite()" class="reply">수정</a></p>
 								</div>
 						
 						     </li>
@@ -88,7 +81,8 @@
 				</c:if>
 				
 			</div>
-
+	 
+ 	<form action="boardComWrite.omc?BD_NUM=${boardDetail.BD_NUM}" name="frm" id="frm" method="post" enctype="multipart/form-data">
    
    <input type="hidden" name="BC_NUM" id="BD_NUM" value="${boardDetail.BD_NUM}">
    <input type="hidden" id="MEM_ID" name="MEM_ID" value="${MEM_ID}"/>
@@ -96,13 +90,13 @@
    <textarea name="BC_COMMENT" id="BC_COMMENT" class="form-control" width="100%" placeholder="댓글을 입력해주세요."></textarea>
    </div>
    <div style="display:inline-block; float:right; width:10%;">
-	<input type="button" value="댓글쓰기" onclick="commentCheck()" class="btn btn-primary py-2 px-2" ></a> 
+	<input type="button" value="댓글쓰기" onclick="fn_commentCheck()" class="btn btn-primary py-2 px-2" ></a> 
    
    </div>
     </form> 
- <!--  댓글 끝 -->  
+  
    
-<!--  글 수정 /목록 버튼  -->
+
 	<br/>
 	<hr>
 	  <div align="center" style="height:100px;"> 
@@ -117,48 +111,19 @@
 </div>
 
 </body>
-<script type = "text/javascript">
+<script>
 
-$("#modifyComment").one("click", function(e){ //수정하기 버튼
-    e.preventDefault();
-    fn_modifyComment($(this));
- });
- 
-function fn_modifyComment(obj){
-	   var str = "<input type = 'text' name='BC_COMMENT' id='BC_COMMENT'>"
-	   + "<a href='#this' class='btn' name='updateComment'>작성</a>";
-	   $(obj.parent()).append(str);
-	   $("a[name='updateComment']").on("click", function(e){
-		   e.preventDefault();
-		   fn_updateComment($(this));
-	   });
-	}
-function fn_updateComment(obj){		
-	var comSubmit = new ComSubmit();		
-	comSubmit.setUrl("<c:url value='/board/commentModify' />");
-	comSubmit.addParam("BC_BCID", obj.parent().find("#BC_BCID").val());
-	comSubmit.addParam("BC_COMMENT", obj.parent().find("#BC_COMMENT").val());
-	comSubmit.addParam("BD_NUM",$("input[name='BD_NUM']").val());
-	comSubmit.addParam("ID",$("input[name='B_ID']").val());
-	comSubmit.submit();	 
-}
-/* function fn_commentWrite(){
-    var comSubmit = new ComSubmit("frm");
-       comSubmit.setUrl("/insertBoardComment.omc");
-
-       if (!$("#BC_COMMENT").val()) {
-          alert("내용을 입력하세요.");
-          $("#BC_COMMENT").focus();
-          return false;
-       }
-     alert("댓글이 정상적으로 등록 되었습니다.");
-    comSubmit.submit();
-    } */
-    
-
-    function commentCheck() {
+    <!-- 댓글 입력 -->
+    function fn_commentCheck() {
     	var frm = document.getElementById('frm');
     	var BD_NUM = document.getElementById('BD_NUM');
+    	
+    	if (!$("#BC_COMMENT").val()) {
+            alert("내용을 입력하세요.");
+            $("#BC_COMMENT").focus();
+            return false;
+         }
+      /*  alert("댓글이 정상적으로 등록 되었습니다."); */
     	//commentForm.action = 
     	frm.submit();
     }
@@ -172,8 +137,38 @@ function deleteCheck1() {
 	}/* adminQnaComDelete.al?COMMENTIDX=${comment.COMMENTIDX}&ARTICLEIDX=${comment.ARTICLEIDX } */
 }
 
+<!-- 수정 유효성검사 -->
+
+function deleteCheck2() {
+	var BC_BCID = document.getElementById('BC_BCID').value;
+	var BC_NUM = document.getElementById('BC_NUM').value;
+	if(confirm("수정하시겠습니까?") == true) {
+		location.href="commentModify.omc?BC_BCID=" + BC_BCID +"&BC_NUM="+ BC_NUM;
+	}
+}	
 
 
+function commentWrite(){
+   var comSubmit = new ComSubmit("frm");
+      comSubmit.setUrl("<c:url value='/commentUpdate.omc' />");
+      if (!$("#BC_COMMENT").val()) {
+         alert("내용을 입력하세요.");
+         $("#BC_COMMENT").focus();
+         return false;
+      }
+    alert("댓글이 정상적으로 수정 되었습니다.");
+   comSubmit.submit();
+   }
+
+<!-- 댓글 수정 -->
+$(function (){
+	$('input[type="button"][id="commentModify"]').on('click', function(){
+	var etcChk = $('input[type=button][id="commentModify"]:checked').val();
+		if(etcChk=='Modify'){
+		$('#comModify').css('display','block');
+		} 
+	});
+});
 </script>
 
 

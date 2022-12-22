@@ -39,10 +39,10 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	/* 총 결제 금액 */
-	@Override
-	public List<Map<String, Object>> selectTotalPay(int orderNum) {
-		return orderDAO.selectTotalPay(orderNum);
-	}
+//	@Override
+//	public List<Map<String, Object>> selectTotalPay(int orderNum) {
+//		return orderDAO.selectTotalPay(orderNum);
+//	}
 
 	/* 마이페이지 주문조회 */
 	@Override
@@ -96,10 +96,16 @@ public class OrderServiceImpl implements OrderService {
 		return orderDAO.insertPay(map);
 	}
 	
-	  /* 주문 결과 확인 (장바구니 -> 주문하기) */
-	   @Override
-	   public List<Map<String, Object>> selectOrderODNum(int orderNum) throws Exception {
-	      return orderDAO.selectOrderODNum(orderNum);
-	   }
+	/* 결제 정보 확인 (장바구니 -> 주문하기) */
+	@Override
+	public Map<String, Object> selectPayODNum(int orderNum) throws Exception {
+		return orderDAO.selectPayODNum(orderNum);
+	}
+	
+	/* 주문 결과 확인 (장바구니 -> 주문하기) */
+	@Override
+	public List<Map<String, Object>> selectOrderODNum(int orderNum) throws Exception {
+		return orderDAO.selectOrderODNum(orderNum);
+	}
 	
 }

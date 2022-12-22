@@ -9,23 +9,23 @@
 <div class="col-sm-12">
 	<!-- <div class="sidebar-box ftco-animate" id="menu" style="margin-top:30px;"> -->
 		<ul class="categories">
-			<li><h1 style="font-size: 1vw; color:#82ae46;">회원관리</h1><br>
-				<a href="memberList.al" style="font-size: 0.8vw;">회원 리스트</a>
+			<li><h1 style="font-size: 1vw; color:#fd7e14;">회원관리</h1><br>
+				<a href="memberList.omc" style="font-size: 0.8vw;">회원 리스트</a>
 			</li>
-			<li><h1 style="font-size: 1vw; color:#82ae46;">상품관리</h1><br>
-				<a href="adminPList.al" style="font-size: 0.8vw;">상품 리스트</a>
-				<a href="adminPWriteForm.al" style="font-size: 0.8vw;">상품 등록</a>
+			<li><h1 style="font-size: 1vw; color:#fd7e14;">상품관리</h1><br>
+				<a href="adminGoodsList.omc" style="font-size: 0.8vw;">상품 리스트</a>
+				<a href="adminGoodsWriteForm.omc" style="font-size: 0.8vw;">상품 등록</a>
 			</li>
-			<li><h1 style="font-size: 1vw; color:#82ae46;">주문 관리</h1><br>
-				<a href="adminOrderList.al" style="font-size: 0.8vw;">주문 리스트</a>
-				<a href="adminSellList.al" style="font-size: 0.8vw;">매출 리스트</a>
+			<li><h1 style="font-size: 1vw; color:#fd7e14;">주문 관리</h1><br>
+				<a href="adminOrderList.omc" style="font-size: 0.8vw;">주문 리스트</a>
+				<a href="adminSellList.omc" style="font-size: 0.8vw;">매출 리스트</a>
 			</li>
-			<li><h1 style="font-size: 1vw; color:#82ae46;">게시판 관리</h1><br>
-				<a href="adminNoticeList.al" style="font-size: 0.8vw;">공지사항</a>
-				<a href="adminReviewList.al" style="font-size: 0.8vw;">후기</a>
-				<a href="adminQnaList.al" style="font-size: 0.8vw;">고객센터</a>
+			<li><h1 style="font-size: 1vw; color:#fd7e14;">게시판 관리</h1><br>
+				<a href="adminNoticeList.omc" style="font-size: 0.8vw;">공지사항</a>
+				<a href="adminReviewList.omc" style="font-size: 0.8vw;">후기</a>
+				<a href="adminQnaList.omc" style="font-size: 0.8vw;">고객센터</a>
 			</li>
-			<li><a href="adminMainForm.al" style="font-size: 1vw; color:#82ae46;">페이지 관리</a></li>
+			<li><a href="adminMainForm.omc" style="font-size: 1vw; color:#fd7e14;">페이지 관리</a></li>
 		</ul>
 	<!-- </div> -->
 </div>

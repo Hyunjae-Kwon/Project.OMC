@@ -57,8 +57,8 @@
 	  <div align="center" style="height:100px;"> 
 		<input type="button" value="목록" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="window.history.back()">
 	
-		<input type="button" value="수정" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='updateBoardForm.omc?BD_NUM=${boardDetail.BD_NUM}'">
-    </div>
+<%-- 		<input type="button" value="수정" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='updateBoardForm.omc?BD_NUM=${boardDetail.BD_NUM}'">
+ --%>    </div>
    </c:forEach>
 </div>
 </body>

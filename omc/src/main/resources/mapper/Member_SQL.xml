@@ -109,12 +109,12 @@
 	UPDATE
 		MEMBER
 	SET
-		MEM_PW = #{MEM_PW},
+		MEM_BLOCK = #{MEM_BLOCK},
 		MEM_NAME = #{MEM_NAME},
 		MEM_ZIPCODE = #{MEM_ZIPCODE},
 		MEM_ADD1 = #{MEM_ADD1},
 		MEM_ADD2 = #{MEM_ADD2},
-		MEM_PHONE =#{MEM_PHONE},
+		MEM_PHONE = #{MEM_PHONE}
 	WHERE
 		MEM_ID=#{MEM_ID}
 	]]>	
@@ -133,13 +133,12 @@
 	
 <!-- memberListPaging(회원리스트 페이징) -->	
 	<select id="memberListPaging" parameterType="hashmap" resultType="hashmap">	
-	<![CDATA[	
 	SELECT *
 	FROM (
-		SELECT MEM_ID, MEM_NAME, MEM_REGDATE, MEM_PHONE, ROWNUM R
+		SELECT MEM_ID, MEM_NAME, MEM_REGDATE, MEM_PHONE, MEM_ADD1, MEM_ADD2, ROWNUM R
 		FROM (
 			SELECT
-				MEM_ID, MEM_NAME, MEM_REGDATE, MEM_PHONE
+				MEM_ID, MEM_NAME, MEM_REGDATE, MEM_PHONE, MEM_ADD1, MEM_ADD2
 			FROM
 				MEMBER
 			ORDER BY MEM_REGDATE ASC
@@ -148,33 +147,32 @@
 		)	
 	WHERE
 		R BETWEEN #{START} AND #{END}
-	]]>	
 	</select>		
 	
 
+<!-- 수정 -->
 <!--memberListSearchPaging(회원리스트 검색페이징)-->
 	<select id="memberListSearchPaging" parameterType="hashmap" resultType="hashmap">	
-	<![CDATA[	
 	SELECT *
 	FROM (
-		SELECT MEM_ID, MEM_NAME, MEM_REGDATE, MEM_PHONE, ROWNUM R
+		SELECT MEM_ID, MEM_NAME, MEM_REGDATE, MEM_PHONE, MEM_ADD1, MEM_ADD2, MEM_ZIPCODE, MEM_BLOCK, ROWNUM R
 		FROM (
 			SELECT
-				MMEM_ID, MEM_NAME, MEM_REGDATE, MEM_PHONE
+				MEM_ID, MEM_NAME, MEM_REGDATE, MEM_PHONE, MEM_ADD1, MEM_ADD2, MEM_ZIPCODE, MEM_BLOCK
 			FROM
 				MEMBER
 			<where>
-			<if test="KEYWORD!=NULL">
-				<if test="CONDITION.equals('MEM_NAME')">
-					NAME LIKE '%'||#{KEYWORD}||'%'
+				<if test="KEYWORD!=NULL">
+					<if test="CONDITION.equals('MEM_ID')">
+						MEM_ID LIKE '%'||#{KEYWORD}||'%'
+					</if>
+					<if test="CONDITION.equals('MEM_NAME')">
+						MEM_NAME LIKE '%'||#{KEYWORD}||'%'
+					</if>
+					<if test="CONDITION.equals('MEM_PHONE')">
+						MEM_PHONE LIKE '%'||#{KEYWORD}||'%'
+					</if>
 				</if>
-				<if test="CONDITION.equals('MEM_ID')">
-					RANK LIKE '%'||#{KEYWORD}||'%'
-				</if>
-				<if test="CONDITION.equals('MEM_PHONE')">
-					RANK LIKE '%'||#{KEYWORD}||'%'
-				</if>
-			</if>
 			</where>
 			ORDER BY MEM_REGDATE ASC
 			)
@@ -182,7 +180,6 @@
 		)
 	WHERE
 		R BETWEEN #{START} AND #{END}
-	]]>	
 	</select>	
 	
 <!-- memberCount(회원수) -->
@@ -202,14 +199,14 @@
    			MEMBER
    		<where>
    			<if test="KEYWORD!=NULL">
-   				<if test="CONDITION.equals('MEM_NAME')">
-   					EMAIL LIKE '%'||#{KEYWORD}||'%'
+   				<if test="CONDITION.equals('MEM_ID')">
+   					MEM_ID LIKE '%'||#{KEYWORD}||'%'
    				</if>
-				<if test="CONDITION.equals('MEM_ID')">
-   					NAME LIKE '%'||#{KEYWORD}||'%'
+				<if test="CONDITION.equals('MEM_NAME')">
+   					MEM_NAME LIKE '%'||#{KEYWORD}||'%'
    				</if>
 				<if test="CONDITION.equals('MEM_PHONE')">
-   					RANK LIKE '%'||#{KEYWORD}||'%'
+   					MEM_PHONE LIKE '%'||#{KEYWORD}||'%'
    				</if>
    			</if>
    		</where>

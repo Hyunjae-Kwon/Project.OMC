@@ -21,61 +21,6 @@ function getCount() {
 	return count;
 }
 
-/* function insertCart() {
-	var goodsId = document.getElementById('GD_GID').value;
-	var count = Number(document.getElementById('orderCount').value);
-	var stock = Number(document.getElementById('GD_STOCK').value);
-	
-	if(confirm("장바구니에 넣으시겠습니까?") == true) {
-		if(count>stock) {
-			alert("상품의 재고 수량보다 많은 양을 장바구니에 넣을 수 없습니다. 재고 :" + stock + "개");
-			return false;
-		}
-		location.href="insertCart.omc?GD_GID=" + goodsId + "&orderCount=" + count;
-	} else {
-		return;
-	}
-} */
-
-/* function insertCart() {
-	if(confirm("장바구니에 넣으시겠습니까?") == true) {
-		//서버로 전송할 데이터
-		const form = {
-				GD_GNAME : '${goods.GD_GNAME}',
-				GD_GID : '${goods.GD_GID}',
-				GD_PRICE : '${goods.GD_PRICE}',
-				GD_DCPRICE : '${goods.GD_DCPRICE}',
-				orderCount : '${orderCount}'
-		}
-
-		$(".btn_cart").on("click", function(e){
-			$.ajax({
-				url: 'insertCart.omc',
-				type: 'GET',
-				data: form,
-				success: function (result){
-					cartAlert(result);
-				}
-			})
-		});
-
-		function cartAlert(result){
-			if(result == '0'){
-				alert("장바구니에 추가를 하지 못하였습니다.");
-			} else if(result == '1'){
-				alert("장바구니에 추가되었습니다.");
-			} else if(result == '2'){
-				alert("장바구니에 이미 추가되어져 있습니다.");
-			} else if(result == '5'){
-				alert("로그인이 필요합니다.");	
-			}
-		}
-		location.href="insertCart.omc";
-	} else {
-		return;
-	}
-} */
-
 function insertCart(){
 	   var items=$("td[id=contain]").get();
 	   if(${MEM_ID ne null}){
@@ -101,8 +46,7 @@ function insertCart(){
 	      alert("로그인 후 이용해주세요.");
 	      location.href = "/loginForm.omc";
 	   }
-	   
-	   }
+}
 
 function orderForm() {
 	var goodsId = document.getElementById('GD_GID').value;
@@ -140,29 +84,6 @@ window.onload = function() {
 			    				<input type="hidden" id="GD_GID" name="GD_GID" value="${goods.GD_GID}">
 							<div class="col-md-12">
 				          		<table style="width:80%; margin-left:auto">
-				          			<%-- <tr>
-				          				<td style="text-align:left">
-				          				<b>정가</b>
-				          				</td>
-				          				<td style="text-align:right; width:50%">
-   										<c:if test="${productBean.PSALE == 0}">
-				          				${productBean.PPRICE}원
-				          				</c:if>
-   										<c:if test="${productBean.PSALE != 0}">
-				          				<del>${productBean.PPRICE}원</del>
-				          				</c:if>
-				          				</td>
-				          			</tr>
-									<tr>
-				          				<td style="text-align:left;">
-				          				<b>판매가</b>
-				          				</td>
-				          				<td style="text-align:right; width:50%">
-				          				<c:set var="salePrice" value="${productBean.PPRICE * (100-productBean.PSALE) * 0.01}" />
-				          				<fmt:formatNumber value="${salePrice}" pattern="#.#" />원
-				          				<input type="hidden" id="PPRICE" name="PPRICE" value="${productBean.PPRICE}">
-				          				</td>
-				          			</tr> --%>
 				          			<tr>
 				          				<td style="text-align: left">
 				          				<b>정가</b>
@@ -176,15 +97,6 @@ window.onload = function() {
 				          				<input type="hidden" id="GD_DCPRICE" name="GD_DCPRICE" value="${goods.GD_DCPRICE}">
 				          				</td>
 				          			</tr>
-									<%-- <tr>
-				          				<td style="text-align:left;">
-				          				<b>할인률</b>
-				          				</td>
-				          				<td style="text-align:right; width:50%">
-				          				${productBean.PSALE}%
-				          				<input type="hidden" id="PSALE" name="PSALE" value="${productBean.PSALE}">
-				          				</td>
-				          			</tr> --%>
 									<tr>
 				          				<td style="text-align:left;">
 				          				<b>수량</b>
@@ -204,11 +116,6 @@ window.onload = function() {
 				          				</td>
 				          				<td style="text-align:right; width:50%">
 				          				<div id="totalPrice" style="font-weight:bold; font-size:25px; color:#82AE46">
-											<%-- <input type="hidden" id="GD_GNAME" name="GD_GNAME" value="${goods.GD_GNAME}">
-			    							<input type="hidden" id="GD_GID" name="GD_GID" value="${goods.GD_GID}">
-			    							<input type="hidden" id="GD_PRICE" name="GD_PRICE" value="${goods.GD_PRICE}">
-				          					<input type="hidden" id="GD_DCPRICE" name="GD_DCPRICE" value="${goods.GD_DCPRICE}">
-				          					<input type="hidden" id="GD_STOCK" name="GD_STOCK" value="${goods.GD_STOCK}"> --%>
 				          				</div>
 				          				</td>
 				          			</tr>
@@ -337,11 +244,14 @@ window.onload = function() {
 				<hr>				
 			</div>
 		</div>
+		<!-- 관리자일 경우 관리 탭 추가 -->
+        <c:if test="${ MEM_ID == 'ADMIN' }">
+		    <div align="right">
+				<input type="button" value="상품 수정" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='adminGoodsModifyForm.omc?GD_GID=${GD_GID}'">
+		    </div>
+        </c:if>
+		
 	</div>
-	<!-- 상품 수정 임시 버튼 -->
-    <div align="center">
-		<input type="button" value="상품 수정" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='goodsModifyForm.omc?GD_GID=${GD_GID}'">
-    </div>
 	</section>
 </body>
 </html>

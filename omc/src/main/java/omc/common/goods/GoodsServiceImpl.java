@@ -23,55 +23,16 @@ public class GoodsServiceImpl implements GoodsService {
 	@Resource(name="fileUtils")
 	private FileUtils fileUtils;
 	
-	@Override
-	public List<Map<String, Object>> maingoods(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return goodsDAO.maingoods(map);
-	}
-
-	@Override
-	public List<Map<String, Object>> getReview2(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return goodsDAO.review2(map);
-	}
-
-	@Override
-	public List<Map<String, Object>> getReviewRe(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return goodsDAO.reviewRe(map);
-	}
-
-	@Override
-	public List<Map<String, Object>> getReview(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return goodsDAO.review(map);
-	}
-
-
-	@Override
-	public List<Map<String, Object>> goodsSubList(Map<String, Object> map) {
-		return goodsDAO.goodsSubList(map);
-	}
-
-	@Override
-	public List<Map<String, Object>> goodsSaleList(Map<String, Object> map) {
-		return goodsDAO.goodsSaleList(map);
-	}
-
-	@Override
-	public List<Map<String, Object>> getsubDetail(Map<String, Object> map) {
-		return goodsDAO.subDetail(map);
-	}
-
-	@Override
-	public List<Map<String, Object>> getsaleDetail(Map<String, Object> map) {
-		return goodsDAO.saleDetail(map);
-	}
-	
 	/* 전체 상품 리스트 */
 	@Override
 	public Map<String, Object> allGoodsList(Map<String, Object> map) throws Exception {
 		return goodsDAO.allGoodsList(map);
+	}
+	
+	/* 카테고리 상품 리스트 페이징 */
+	@Override
+	public Map<String, Object> categoryGoodsListPaging(Map<String, Object> map) throws Exception {
+		return goodsDAO.categoryGoodsListPaging(map);
 	}
 	
 	/* 신상품 리스트 */
@@ -108,12 +69,6 @@ public class GoodsServiceImpl implements GoodsService {
 		return resultMap;
 	}
 	
-	/* 상품 상세 정보에서 장바구니로 넘어갈 때 같이 전송하는 상품 정보 */
-//	@Override
-//	public Map<String, Object> selectGoods(String memberId) throws Exception {
-//		return goodsDAO.selectGoods(memberId);
-//	}
-	
 	/* 상품 리뷰 리스트 (상품 상세) */
 	@Override
 	public List<Map<String, Object>> goodsReview(Map<String, Object> map) throws Exception {
@@ -125,38 +80,25 @@ public class GoodsServiceImpl implements GoodsService {
 	public List<Map<String, Object>> goodsQna(Map<String, Object> map) throws Exception {
 		return goodsDAO.goodsQna(map);
 	}
-	
-	/* 상품 수정 폼 */
-	@Override
-	public Map<String, Object> goodsModifyForm(Map<String, Object> map) {
-		return goodsDAO.goodsModifyForm(map);
-	}
-	
-	/* 상품 수정 */
-	@Override
-	public void goodsModify(Map<String, Object> map, MultipartHttpServletRequest request) throws Exception {
-		goodsDAO.goodsModify(map);
-	}
-	
-	/* 상품 삭제 */
-	@Override
-	public void goodsDelete(Map<String, Object> map, HttpServletRequest request) throws Exception {
-		goodsDAO.goodsDelete(map);
-	}
-	
-	/* 상품 등록 */
-	@Override
-	public void goodsWrite(Map<String, Object> map, MultipartHttpServletRequest request) throws Exception {
-		goodsDAO.goodsWrite(map);
-		
-		Map<String,Object> map1 = fileUtils.parseInsertFileInfo(map, request);
-		goodsDAO.updateImg(map1);
-	}
 
 	/* 구매 수량 재고 업데이트 */
 	@Override
 	public void sellCountUpdate(Map<String, Object> map) throws Exception {
 		goodsDAO.sellCountUpdate(map);
 	}
+	
+	/* 상품 전체 수량 구하기 */
+	@Override
+	public int allGoodsCount() throws Exception {
+		Map<String,Object> mapCount = goodsDAO.allGoodsCount();
+		return Integer.parseInt(String.valueOf(mapCount.get("COUNT")));
+	}
+
+	/* 상품 검색 */
+	@Override
+	public List<Map<String, Object>> searchGoodsList(Map<String, Object> map, HttpServletRequest request) throws Exception {
+		return goodsDAO.searchGoodsList(map);
+	}
+	
 	
 }

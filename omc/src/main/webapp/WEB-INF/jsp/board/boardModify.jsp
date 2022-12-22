@@ -89,7 +89,7 @@ function fn_updateBoard(){
 				return false;
 			}
 
-			alert("게시글이 정상적으로 수정 되었습니다.");
+			alert("게시판이 정상적으로 수정 되었습니다.");
 			comSubmit.submit();
 }
  

@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,5 +25,10 @@ public class MainController {
 		 mv.addObject("mainList", list);
 	
 		 return mv;
+	 }
+	 
+	 @RequestMapping(value="/adminMain.omc")
+	 public String adminMain(Model model) {
+	 	 return "admin_layout";
 	 }
 }

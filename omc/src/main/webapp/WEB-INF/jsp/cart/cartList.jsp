@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <%@ include file="/WEB-INF/include/include-header.jspf" %>
 <!DOCTYPE html>
@@ -126,6 +127,13 @@ $(document).ready(function(){
 							<th>주문 금액</th>
 						</tr>
 					</thead>
+					<c:choose>
+						<c:when test="${fn:length(cartList)<=0}">
+							<tr>
+								<td style="text-align: center" colspan="8">장바구니에 상품이 없습니다.</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
 							<c:forEach var="goods" items="${cartList}">
 							<tbody id="tbody">
 						      <tr id="tr" class="text-center">
@@ -149,7 +157,7 @@ $(document).ready(function(){
 						        <!-- 수량 -->
 						        <td>
 						        	<span class="minus">-</span>
-		            				<input type="number" class="count" style="width: 3em;" maxlength="2" oninput="numberMaxLength(this);" id="CT_COUNT" name="CT_COUNT" value="${goods.CT_COUNT}" readonly>
+		            				<input type="number" class="count" style="width: 3em;" maxlength="2" oninput="numberMaxLength(this);" id="CT_COUNT" name="CT_COUNT" value="${goods.CT_COUNT}">
 									<span class="plus">+</span>
 					          	</td>
 					          	
@@ -174,35 +182,30 @@ $(document).ready(function(){
 						        	<span class="totalSum">${goods.CT_DCPRICE * goods.CT_COUNT}원</span>
 						        </td>
 						      </tr>
-							
-					<%-- <c:if test="${Size<=0}">
-						<tr><td style="text-align:center" colspan="8">장바구니에 상품이 없습니다.</td></tr>
-					</c:if> --%>
-			 </tbody>
-			</c:forEach>
-		</table>
+			 				</tbody>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+				</table>
 			
-					</div> <!-- end cart-list div -->
-		<br>		
-		<div align="center">
-			<button type="button" class="btn btn-primary" onclick="chkAll2();">전체선택</button>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" class="btn btn-primary" id="deleteChk">선택삭제</button>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" class="btn btn-primary" onclick="buyItem()">선택주문</button>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" class="btn btn-primary" onclick="location.href='<c:url value='/main.omc'/>';">메인으로</button>
-		</div>		  						  
-	<!-- 쇼핑계속버튼 -->		  
-		<div style='float: right;'>
-			<input type="button" class="btn btn-dark py-2 px-3" value="쇼핑 계속하기" onclick="location.href='/allGoodsList.omc'"/>
-    	</div>
-    	
+			</div> <!-- end cart-list div -->
+			<br>		
+			<div align="center">
+				<button type="button" class="btn btn-primary" onclick="chkAll2();">전체선택</button>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" class="btn btn-primary" id="deleteChk">선택삭제</button>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" class="btn btn-primary" onclick="buyItem()">선택주문</button>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" class="btn btn-primary" onclick="location.href='<c:url value='/main.omc'/>';">메인으로</button>
+			</div>		  						  
+			<!-- 쇼핑계속버튼 -->		  
+			<div style='float: right;'>
+				<input type="button" class="btn btn-dark py-2 px-3" value="쇼핑 계속하기" onclick="location.href='/allGoodsList.omc'"/>
+	    	</div>
+		</div>
 	</div>
-</div>
-
 	<input type="hidden" id="listSize" name="listSize" value="${Size}">
-    	 
     		<br><br><br><br>
     		<div class="container">
     				<div class="cart-total mb-3" style="text-align:center">
@@ -229,8 +232,6 @@ $(document).ready(function(){
     				<div style="text-align:center">
     				<input type="button" class="btn btn-primary py-3 px-5"
     				 onClick="return orderConfirm()" value="구매하기"><br><br><br><br>
-    				<!--선택주문 나중에 구현 -->
-    				<!-- <a href="/Jumo/basketOrderForm.al" class="btn btn-primary py-3 px-4">선택 상품 주문</a> -->
     				</div>
     			</div>
 <script>

@@ -25,7 +25,7 @@ public class OrderDAO extends AbstractDAO {
 	/* 주문 결과 확인 */
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> selectOrderOID(Map<String, Object> map) {
-		return (Map<String, Object>) selectOne("order.selectOrderOId", map);
+		return (Map<String, Object>) selectList("order.selectOrderOId", map);
 	}
 	
 	/* 총 결제 금액 */
@@ -73,5 +73,11 @@ public class OrderDAO extends AbstractDAO {
 	@SuppressWarnings("unchecked")
 	   public List<Map<String, Object>> selectOrderODNum(int orderNum) throws Exception{
 	      return (List<Map<String, Object>>) selectList("order.selectOrderODNum", orderNum);
-	   }
+	}
+	
+	/* 결제 정보 확인 (장바구니 -> 주문하기) */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectPayODNum(int orderNum) throws Exception{
+		return (Map<String, Object>) selectOne("order.selectPayODNum", orderNum);
+	}
 }

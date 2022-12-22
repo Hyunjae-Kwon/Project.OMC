@@ -12,11 +12,38 @@
 <script>
 	function fn_search(pageNo) {
 		var comSubmit = new ComSubmit();
-		comSubmit.setUrl("<c:url value='/allGoodsList.omc' />");
+		var sort = $("#sortVal").val();
+		comSubmit.setUrl('<c:url value="allGoodsList.omc" />');
+		comSubmit.addParam("sort", sort)
 		comSubmit.addParam("currentPageNo", pageNo);
 		comSubmit.submit();
 	}
 </script>
+<script>
+$(document).ready(function(){
+	$('#sortDiv a').click(function(){
+		var id=$(this).attr('id');
+		location.href='<c:url value="allGoodsList.omc?sort='+id+'"/>';
+	});
+});
+/* allGoodsList.omc?sort='+id+'" */
+</script>
+<style type="text/css">
+.sort-tab {
+    width: 100%;
+    height: 32px;
+    font-size: 11px;
+    line-height: 30px;
+    color: #828282;
+    text-align: right;
+}
+.sort-tab a{
+   cursor:pointer;
+}
+.sort-tab .on {
+    font-weight: bold;
+}
+</style>
 <body>
 	<section class="ftco-section">
 		<div class="container">
@@ -26,12 +53,20 @@
 					<h2 class="mb-4">전체 상품</h2>
 				</div>
 			</div>
+			<div id="sortDiv" class="sort-tab center-block">
+				<a id="1" >낮은가격순</a>
+				<span class="separation-bar">|</span> 
+				<a id="2" >높은가격순</a>
+			</div>
 		</div>
 		<form action="allGoodsList.omc" method="GET">
 			<div class="container">
 				<div class="row">
 					<div class="container" align="center">
 						<div class="row">
+							<c:if test="${not empty sort}">
+								<input type="hidden" id="sortVal" value="${sort}">
+							</c:if>
 							<c:forEach var="goods" items="${allGoodsList}">
 								<div class="col-md-6 col-lg-3 ftco-animate"
 									style="float: left; width: 33%; padding: 10px;">
@@ -54,9 +89,6 @@
 														<span>판매가 : ${goods.GD_PRICE}원</span>
 													</p>
 												</div>
-												<div align="center">
-													<a href="/goodsDelete.omc?GD_GID=${goods.GD_GID}">상품 삭제</a>
-												</div>
 											</div>
 										</div>
 									</div>
@@ -77,4 +109,3 @@
 	</section>
 </body>
 </html>
-

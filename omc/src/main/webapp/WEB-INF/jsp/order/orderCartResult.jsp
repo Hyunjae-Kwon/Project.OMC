@@ -120,7 +120,7 @@
 								</p> -->
 								<p class="d-flex total-price">
 									<span>총 결제 금액</span>
-									<span>${totalpay[0].TOTALPAY}&nbsp;원</span>
+									<span>${payResult.TOTALPAY}&nbsp;원</span>
 								</p>
 								<p class="d-flex total-price">
 									무통장 입금

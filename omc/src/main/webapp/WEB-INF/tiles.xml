@@ -10,20 +10,6 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/main.jsp" />
 	</definition>
 
-	<!-- 
-	<definition name="main_layout" template="/WEB-INF/jsp/layout/layout.jsp" >
-		<put-attribute name="header" value="/WEB-INF/jsp/layout/main_header.jsp"  />
-		<put-attribute name="content" value="/WEB-INF/jsp/main.jsp"  />
-		<put-attribute name="footer" value="/WEB-INF/jsp/layout/main_footer.jsp"  />
-	</definition>
-	-->
-	
-	<!-- <definition name="myPage" template="/WEB-INF/jsp/layout/layout.jsp" >
-		<put-attribute name="header" value="/WEB-INF/jsp/layout/main_header.jsp"  />
-		<put-attribute name="body" value="/WEB-INF/jsp/member/myPage.jsp"  />
-		<put-attribute name="footer" value="/WEB-INF/jsp/layout/main_footer.jsp"  />
-	</definition> -->
-
 	<definition name="*/*/*" extends="main_layout">
 		<put-attribute name="body" value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
 	</definition>
@@ -31,12 +17,16 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/{1}/{2}.jsp" />
 	</definition>
 	
-	<!-- 
-	<definition name="main" template="/WEB-INF/jsp/layout/layout.jsp" >
-		<put-attribute name="header" value="/WEB-INF/jsp/layout/header.jsp"  />
-		<put-attribute name="content" value="/WEB-INF/jsp/notice/{1}.jsp"  />
-		<put-attribute name="footer" value="/WEB-INF/jsp/layout/footer.jsp"  />
+	<!-- Admin -->
+	<definition name="admin_layout" template="/WEB-INF/jsp/layout/admin_layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/jsp/layout/main_header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/layout/main_footer.jsp" />
+		<put-attribute name="left" value="/WEB-INF/jsp/layout/admin_left.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/admin/adminMain.jsp" />
 	</definition>
-	 -->
+	
+	<definition name="*/*/*" extends="admin_layout">
+		<put-attribute name="body" value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
+	</definition>
 	
 </tiles-definitions>
