@@ -41,16 +41,13 @@
 			</tr>
 			<tr>
 				<th scope="row">제목</th>
-				<td colspan="5">${boardDetail.BD_TITLE}</td>
-			</tr>
-		
-			
+				<td colspan="5" style="font-size:25px">${boardDetail.BD_TITLE}</td>
+			</tr>		
 			<tr>
 				<th scope="row">내용</th>
 				<td colspan="6">${fn:replace(boardDetail.BD_CONTENT, replaceChar,"<br/>") }</td>
 				
-			</tr>
-		
+			</tr>		
 	</table>
 
 		<div class="col-md-12"><hr>
@@ -61,7 +58,7 @@
 					    <ul class="comment-list">
 							<li class="comment">
 								<div class="vcard bio">
-                    				<h5 style="color:#82ae46;">OMC</h5><!-- COMMENTWRITER로 하면 ADMIN으로 떠서 Jumo로 입력 -->
+                    				<h5 style="color:#82ae46;">${comment.BC_ID }</h5><!-- COMMENTWRITER로 하면 ADMIN으로 떠서 Jumo로 입력 -->
                   				</div>
 								<div class="comment-body">
 									<div class="meta">${comment.BC_REGDATE}</div><!-- 답변 작성 날짜 -->
@@ -71,7 +68,6 @@
 										<input type="hidden" id="BC_NUM" name="BC_NUM" value="${comment.BC_NUM }">
 									 </p>
 									<p><a onClick="deleteCheck1()" class="reply">삭제</a>
-										<a onClick="commentWrite()" class="reply">수정</a></p>
 								</div>
 						
 						     </li>
@@ -100,9 +96,9 @@
 	<br/>
 	<hr>
 	  <div align="center" style="height:100px;"> 
-		<input type="button" value="목록" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="window.history.back()">
-	
+		<input type="button" value="이전" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="window.history.back()">	
 		<input type="button" value="수정" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='updateBoardForm.omc?BD_NUM=${boardDetail.BD_NUM}'">
+		<input type="button" value="삭제" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="return deleteCheck()">
     </div>
    
 	</c:forEach>	
@@ -169,6 +165,15 @@ $(function (){
 		} 
 	});
 });
+</script>
+
+<script>
+function deleteCheck() {
+	var BD_NUM = document.getElementById('BD_NUM').value;
+	if(confirm("삭제하시겠습니까?") == true) {
+		location.href="boardDelete.omc?BD_NUM=" + BD_NUM;
+	}
+}
 </script>
 
 

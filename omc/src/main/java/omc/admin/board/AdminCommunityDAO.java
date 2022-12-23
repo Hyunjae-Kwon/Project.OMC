@@ -103,23 +103,17 @@ public class AdminCommunityDAO extends AbstractDAO {
 	}	
 	
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> noticeListCount()
-			throws Exception {
-		return (Map<String, Object>) selectOne(
-			"board.noticeListCount");
+	public Map<String, Object> noticeListCount() throws Exception {
+		return (Map<String, Object>) selectOne("board.noticeListCount");
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> reviewListCount()
-			throws Exception {
-		return (Map<String, Object>) selectOne(
-			"board.reviewListCount");
+	public Map<String, Object> reviewListCount() throws Exception {
+		return (Map<String, Object>) selectOne("board.reviewListCount");
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> qnaListCount()
-			throws Exception {
-		return (Map<String, Object>) selectOne(
-			"board.qnaListCount");
+	public Map<String, Object> qnaListCount() throws Exception {
+		return (Map<String, Object>) selectOne("board.qnaListCount");
 	}
 }

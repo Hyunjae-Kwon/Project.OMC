@@ -21,16 +21,21 @@
 				<div class="col-md-12 ftco-animate">
 				
 					<div class="cart-list">
-				
+			   			<div class="col-md-10 mb-5 text-center">
+			   				<ul class="product-category">
+			   					<li><a href="adminSellList.omc?goodsOrder=HIGH">판매량높은순</a></li>
+			   					<li><a href="adminSellList.omc?goodsOrder=LOW">판매량낮은순</a></li>
+			   				</ul>
+		   				</div>
 						<table class="table">
 							<thead class="thead-primary">
 								<tr class="text-center">
 									<th>&nbsp;</th>
 									<th>상품 리스트</th>
-									<th>&nbsp;</th>
 									<th>가격</th>
 									<th>재고</th>
 									<th>판매량</th>
+									<th>매출액</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -38,8 +43,6 @@
 								<c:forEach var="goods" items="${sellList}">
 								<tr class="text-center">
 									<td></td>
-									
-									<td class="image-prod"><div class="img" style="background-image:url(/resources/img/goods/${goods.GD_IMAGE});"></div></td>
 									
 									<td class="product-name">
 										<h3><b>${goods.GD_GNAME}</b></h3>
@@ -54,9 +57,17 @@
 									</td>
 									
 									<td class="total">${goods.GD_SELL}</td>
+									<td class="totalPrice">${goods.GD_PRICE * goods.GD_SELL}</td>
 								</tr><!-- END TR-->
 								</c:forEach>
-							
+								<%-- <div class="container">
+				    				<div class="cart-total mb-3" style="text-align:center">
+				    					<p class="d-flex total-price">
+				    						<span style="font-size:20px">총 매출액</span>
+				    						<span style="font-size:20px" id="finalSum">${(goods.GD_PRICE * goods.GD_SELL) * (goods.GD_PRICE * goods.GD_SELL)}</span>
+				    					</p>
+				    				</div>
+				    			</div> --%>
 							</tbody>
 						</table>
 						

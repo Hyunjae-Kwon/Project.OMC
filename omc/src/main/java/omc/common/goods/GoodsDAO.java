@@ -92,6 +92,4 @@ public class GoodsDAO extends AbstractDAO {
 	public List<Map<String, Object>> searchGoodsList(Map<String, Object> map) throws Exception {
 		return (List<Map<String, Object>>) selectList ("goods.searchGoodsList", map);
 	}
-	
-	
 }

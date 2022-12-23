@@ -1,6 +1,5 @@
 package omc.common.goods;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -12,13 +11,12 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import omc.common.board.BoardService;
 import omc.common.common.CommandMap;
-import omc.util.FileUpload;
+import omc.member.login.LoginService;
 
 @Controller
 public class GoodsController {
@@ -27,6 +25,12 @@ public class GoodsController {
 	
 	@Resource(name = "goodsService")
 	GoodsService goodsService;
+	
+	@Resource(name = "loginService")
+	LoginService loginService;
+	
+	@Resource(name = "boardService")
+	BoardService boardService;
 	
 	/* 전체 상품 리스트 */
 	@RequestMapping(value="/allGoodsList.omc")
@@ -67,7 +71,7 @@ public class GoodsController {
 	}
 	
 	/* 카테고리 상품 리스트 */
-	@RequestMapping(value="/allGoodsListCategory.omc", method=RequestMethod.GET)
+	@RequestMapping(value="/allGoodsListCategory.omc")
 	public ModelAndView categoryGoodsList(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("goods/categoryGoodsList");
 		
@@ -112,6 +116,66 @@ public class GoodsController {
 		mv.addObject("keyword", keyword);
 		mv.addObject("goods", list);
 		
+		return mv;
+	}
+	
+	/* 상품 후기 작성 */
+	@RequestMapping("/goodsReviewForm.omc")
+	public ModelAndView goodsReviewForm(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("goods/goodsReviewForm");
+		
+		String loginId = (String) request.getSession().getAttribute("MEM_ID");
+        
+		Map<String,Object> memInfo = loginService.selectMember(loginId);		
+		Map<String, Object> goods = goodsService.goodsDetail(commandMap.getMap());
+		
+		mv.addObject("memInfo", memInfo);
+		mv.addObject("goods", goods);
+
+		return mv;
+	}
+	
+	/* 상품 후기 작성 */
+	@RequestMapping("/goodsReview.omc")
+	public ModelAndView goodsReview(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("goods/goodsReview");
+		
+		boardService.insertReview(commandMap.getMap());
+
+		mv.addObject("msg", "후기를 등록하였습니다.");
+		String urlParam = "/goodsDetail.omc?GD_GID=" + request.getParameter("BD_GID");
+		mv.addObject("url", urlParam);
+
+		return mv;
+	}
+	
+	/* 상품 문의 작성 폼 */
+	@RequestMapping("/goodsQnaForm.omc")
+	public ModelAndView goodsQnaForm(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("goods/goodsQnaForm");
+		
+		String loginId = (String) request.getSession().getAttribute("MEM_ID");
+        
+		Map<String,Object> memInfo = loginService.selectMember(loginId);		
+		Map<String, Object> goods = goodsService.goodsDetail(commandMap.getMap());
+		
+		mv.addObject("memInfo", memInfo);
+		mv.addObject("goods", goods);
+
+		return mv;
+	}
+	
+	/* 상품 문의 작성 */
+	@RequestMapping("/goodsQna.omc")
+	public ModelAndView goodsQna(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("goods/goodsQna");
+		
+		boardService.insertQna(commandMap.getMap());
+
+		mv.addObject("msg", "상품 문의를 등록하였습니다.");
+		String urlParam = "/goodsDetail.omc?GD_GID=" + request.getParameter("BD_GID");
+		mv.addObject("url", urlParam);
+
 		return mv;
 	}
 }

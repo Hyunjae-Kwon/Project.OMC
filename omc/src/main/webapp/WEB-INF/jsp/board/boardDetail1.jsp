@@ -41,7 +41,7 @@
 			</tr>
 			<tr>
 				<th scope="row">제목</th>
-				<td colspan="5">${boardDetail.BD_TITLE}</td>
+				<td colspan="5" style="font-size:25px">${boardDetail.BD_TITLE}</td>
 			</tr>
 			<tr>
 				<th scope="row">내용</th>
@@ -51,14 +51,39 @@
 		</tbody>
 	</table>
 	
+	<div class="col-md-12"><hr>
+		    <b>댓글</b><br><br>
+		    	<c:if test="${comListCount!=0}">
+		    	
+					<c:forEach var="comment" items="${comList}" varStatus="status">
+					    <ul class="comment-list">
+							<li class="comment">
+								<div class="vcard bio">
+                    				<h5 style="color:#82ae46;">OMC</h5><!-- COMMENTWRITER로 하면 ADMIN으로 떠서 Jumo로 입력 -->
+                  				</div>
+								<div class="comment-body">
+									<div class="meta">${comment.BC_REGDATE}</div><!-- 답변 작성 날짜 -->
+									<p style="font-size:middle;">
+									 	${comment.BC_COMMENT}
+									 	<input type="hidden" id="BC_BCID" name="BC_BCID" value="${comment.BC_BCID }">
+										<input type="hidden" id="BC_NUM" name="BC_NUM" value="${comment.BC_NUM }">
+									 </p>				
+								</div>
+						
+						     </li>
+						</ul>
+					</c:forEach>
+					
+				</c:if>
+				
+			</div>
 	
 	<br/>
 	
 	  <div align="center" style="height:100px;"> 
-		<input type="button" value="목록" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="window.history.back()">
+		<input type="button" value="이전" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="window.history.back()">
 	
-<%-- 		<input type="button" value="수정" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='updateBoardForm.omc?BD_NUM=${boardDetail.BD_NUM}'">
- --%>    </div>
+      </div>
    </c:forEach>
 </div>
 </body>

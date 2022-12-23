@@ -16,13 +16,13 @@ public interface GoodsService {
 	Map<String, Object> categoryGoodsListPaging(Map<String, Object> map) throws Exception;
 	
 	/* 신상품 리스트 */
-	List<Map<String, Object>> newGoodsList(Map<String, Object> map) throws Exception; //신상
+	List<Map<String, Object>> newGoodsList(Map<String, Object> map) throws Exception;
 	
 	/* 베스트 상품 리스트 */
-	List<Map<String, Object>> bestGoodsList(Map<String, Object> map) throws Exception; //인기
+	List<Map<String, Object>> bestGoodsList(Map<String, Object> map) throws Exception;
 	
 	/* 카테고리 상품 리스트 */
-	List<Map<String, Object>> categoryGoodsList(Map<String, Object> map) throws Exception; //카테고리
+	List<Map<String, Object>> categoryGoodsList(Map<String, Object> map) throws Exception;
 	
 	/* 상품 상세 정보 */
 	Map<String, Object> goodsDetail(Map<String, Object> map) throws Exception;
@@ -43,5 +43,5 @@ public interface GoodsService {
 	int allGoodsCount() throws Exception;
 	
 	/* 상품 검색 */
-	List<Map<String, Object>> searchGoodsList(Map<String, Object> map, HttpServletRequest request) throws Exception; //카테고리
+	List<Map<String, Object>> searchGoodsList(Map<String, Object> map, HttpServletRequest request) throws Exception;
 }

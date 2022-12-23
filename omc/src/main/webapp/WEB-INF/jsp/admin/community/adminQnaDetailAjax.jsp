@@ -9,50 +9,6 @@
 <meta charset="UTF-8">
 <title>오늘의 메뉴 추천, 오메추</title>
 
-<!-- 삭제 유효성검사 -->
-<script>
-function deleteCheck1() {
-	var BC_BCID = document.getElementById('BC_BCID').value;
-	var BC_NUM = document.getElementById('BC_NUM').value;
-	if(confirm("삭제하시겠습니까?") == true) {
-		location.href="adminQnaComDelete.omc?BC_BCID=" + BC_BCID +"&BC_NUM="+ BC_NUM;
-	}/* adminQnaComDelete.al?COMMENTIDX=${comment.COMMENTIDX}&ARTICLEIDX=${comment.ARTICLEIDX } */
-}
-</script>
-
-<!-- 수정 유효성검사 -->
-<script>
-function deleteCheck2() {
-	var BC_BCID = document.getElementById('BC_BCID').value;
-	var BC_NUM = document.getElementById('BC_NUM').value;
-	if(confirm("수정하시겠습니까?") == true) {
-		location.href="adminQnaComModify.omc?BC_BCID=" + BC_BCID +"&BC_NUM="+ BC_NUM;
-	}
-}	
-</script>
-
-<!-- 댓글 입력 -->
-<script type="text/javascript">
-function commentCheck() {
-	var commentForm = document.getElementById('commentForm');
-	var BC_NUM = document.getElementById('BD_NUM');
-	//commentForm.action = 
-	commentForm.submit();
-}
-</script>
-
-<!-- 댓글 수정 -->
-<script type="text/javascript">
-$(function (){
-	$('input[type="button"][id="commentModify"]').on('click', function(){
-	var etcChk = $('input[type=button][id="commentModify"]:checked').val();
-		if(etcChk=='Modify'){
-		$('#comModify').css('display','block');
-		} 
-	});
-});
-</script>
-
 <script>
 /* 댓글 수정 Ajax */
 function ModifyCheckAjax(BC_BCID, BC_NUM, index) {
@@ -186,18 +142,20 @@ p { word-break: break-all;}
               	  		style="font-size:large; color:dark;">카테고리</a>
 	              		<div class="dropdown-menu" aria-labelledby="dropdown04">
 	              			<a class="dropdown-item" href="/allGoodsList.omc">전체 상품</a>
-	              			<a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=KOREAN" >한식</a>
-			                <a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=ITALIAN" >양식</a>
-			                <a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=CHIJAP" >중식/일식</a>
-			                <a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=ASIAN" >아시아</a>
-			                <a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=SNACKBAR" >분식</a>
-			                <a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=HEALTHY" >건강식</a>
+	              			<a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=한식" >한식</a>
+			                <a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=양식" >양식</a>
+			                <a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=중식/일식" >중식/일식</a>
+			                <a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=아시안" >아시아</a>
+			                <a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=분식" >분식</a>
+			                <a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=건강식" >건강식</a>
 						</div>
            	  		</li>
 					<li class="nav-item active"><a href="/allGoodsListBest.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">베스트 상품</a></li>
 					<li class="nav-item active"><a href="/allGoodsListNew.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">신상품</a></li>
-					<li class="nav-item active"><a href="/event.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">이벤트</a></li>
-					<li class="nav-item active"><a href="/board.omc" class="nav-link" style="font-size:x-large; color:#fd7e14;">커뮤니티</a></li>
+					<li class="nav-item active"><a href="/noticeList.omc" class="nav-link" style="font-size:x-large; color:#82ae46;">공지사항</a></li>
+					<li class="nav-item active"><a href="/boardList.omc" class="nav-link" style="font-size:x-large; color:#82ae46;">커뮤니티</a></li>
+					<li class="nav-item active"><a href="/faqList.omc" class="nav-link" style="font-size:x-large; color:#82ae46;">FAQ</a></li>
+					
 				</ul>
 				</div>
 
@@ -249,32 +207,11 @@ p { word-break: break-all;}
 									<p style="font-size:middle; width: 100%;">
 									 	${comment.BC_COMMENT}
 									 	<input type="hidden" id="BC_BCID" name="BC_BCID" value="${comment.BC_BCID }">
-										<input type="hidden" id="BC_NUM" name="BC_NUM" value="${comment.BC_NUM }">
-										<div class="form-group modify-form" id="modify-form">
-							              <textarea id="BC_COMMENT" name="BC_COMMENT" cols="120" rows="2" class="form-control"></textarea>
-							              <input type="hidden" id="BC_ID" name="BC_ID" value="${comment.BC_ID}">
-							              <input type="hidden" id="BC_BCID" name="BC_BCID" value="${comment.BC_BCID }">
-							              <a onClick="ModifyCheckAjax(${comment.BC_BCID}, ${status.index});" class="reply">수정</a>
-										  <a onClick="" id="btn_close" class="reply">취소</a>
-					                   	</div>
-									 <div>
-									 <a onClick="" id="btn_modify" class="reply">수정</a>
+										<input type="hidden" id="BC_NUM" name="BC_NUM" value="${comment.BC_NUM }">															             							              
+									 <div>								
 									 <a onClick="deleteCheckAjax(${comment.BC_BCID }, ${qnaMap.BD_NUM} ,${status.index});" class="reply">삭제</a>
 									 </div>
-									 
-									 <script>
-										$('#btn_modify').on('click', function(){
-										  $('.modify-form').addClass('show-modal');
-										});
-								    	$('#btn_close').on('click',function(){
-								    		$('.modify-form').removeClass('show-modal');
-								    	});	
-									</script>
-									 
-									 <%-- <p>
-									 <a onClick="deleteCheckAjax(${qnaBean[i].CIDX} ,${i});" class="reply" id="bas${i}">삭제
-									 </a></p> --%>
-								</div>
+								</div> 
 						     </li>
 						</ul>
 					</c:forEach>
