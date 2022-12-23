@@ -371,6 +371,13 @@
 		WHERE GD_GID = #{OD_GID}
 	</update>
 	
+	<!-- [saleCountUpdate] 판매 수량 업데이트 -->
+	<update id="saleCountUpdate" parameterType="hashmap">
+		UPDATE GOODS
+		SET GD_SELL = GD_SELL + #{OD_COUNT}
+		WHERE GD_GID = #{OD_GID}
+	</update>
+	
 	<!-- [searchGoods] 상품 검색 -->
 	<select id="searchGoodsList" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[

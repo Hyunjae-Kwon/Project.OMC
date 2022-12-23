@@ -39,6 +39,9 @@ public interface GoodsService {
 	/* 구매 수량 재고 업데이트 */
 	void sellCountUpdate(Map<String, Object> map) throws Exception;
 	
+	/* 판매 수량 업데이트 */
+	void saleCountUpdate(Map<String, Object> map) throws Exception;
+	
 	/* 상품 전체 수량 구하기 */
 	int allGoodsCount() throws Exception;
 	

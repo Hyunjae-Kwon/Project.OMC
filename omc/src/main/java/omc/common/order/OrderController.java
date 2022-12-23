@@ -80,6 +80,10 @@ public class OrderController {
 		
 		// DB에 주문 정보 입력
 		orderService.insertOrderDirect(commandMap.getMap(), request);
+		
+		goodsService.sellCountUpdate(commandMap.getMap());
+		goodsService.saleCountUpdate(commandMap.getMap());
+		orderService.insertPay(commandMap.getMap());
 	
 		int OID = orderService.selectOIDMax();
 		model.addAttribute("msg", "주문을 완료했습니다.");
@@ -101,6 +105,7 @@ public class OrderController {
 		orderService.insertOrderCart(commandMap.getMap());
 		cartService.delCartOrder(loginId);
 		goodsService.sellCountUpdate(commandMap.getMap());
+		goodsService.saleCountUpdate(commandMap.getMap());
 		orderService.insertPay(commandMap.getMap());
 	
 		model.addAttribute("msg", "주문을 완료했습니다.");

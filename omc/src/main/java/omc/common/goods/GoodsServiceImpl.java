@@ -87,6 +87,12 @@ public class GoodsServiceImpl implements GoodsService {
 		goodsDAO.sellCountUpdate(map);
 	}
 	
+	/* 판매 수량 업데이트 */
+	@Override
+	public void saleCountUpdate(Map<String, Object> map) throws Exception {
+		goodsDAO.saleCountUpdate(map);
+	}
+	
 	/* 상품 전체 수량 구하기 */
 	@Override
 	public int allGoodsCount() throws Exception {

@@ -81,6 +81,11 @@ public class GoodsDAO extends AbstractDAO {
 		update("goods.sellCountUpdate", map);
 	}
 	
+	/* 판매 수량 업데이트 */
+	public void saleCountUpdate(Map<String, Object> map) throws Exception {
+		update("goods.saleCountUpdate", map);
+	}
+	
 	/* 상품 전체 수량 구하기 */
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> allGoodsCount() throws Exception {

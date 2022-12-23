@@ -226,9 +226,12 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 <input type="hidden" id="GD_PRICE" name="GD_PRICE" value="${goodsInfo.GD_PRICE}">
 <input type="hidden" id="GD_DCPRICE" name="GD_DCPRICE" value="${goodsInfo.GD_DCPRICE}">
 <input type="hidden" id="OD_COUNT" name="OD_COUNT" value="${orderCount}"> 
+<input type="hidden" id="TOTALPAY" name="TOTALPAY" value="${goodsInfo.GD_DCPRICE * orderCount}">
 
 <input type="hidden" name="OD_ID" value="${MEM_ID}">
 <input type="hidden" id="OD_TOTAL" name="OD_TOTAL" value="${totalPrice}">
+<input type="hidden" id="OD_NUM" name="OD_NUM" value="">
+<input type="hidden" id="OD_GID" name="OD_GID" value="${goodsInfo.GD_GID}">
 
 <input type="hidden" id="OD_ID" value="${memInfo.MEM_ID}">
 <input type="hidden" id="OD_NAME" value="${memInfo.MEM_NAME}">
@@ -236,7 +239,6 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 <input type="hidden" id="OD_ZIPCODE" value="${memInfo.MEM_ZIPCODE}">
 <input type="hidden" id="OD_ADD1" value="${memInfo.MEM_ADD1}">
 <input type="hidden" id="OD_ADD2" value="${memInfo.MEM_ADD2}">
-	
 	<div class="col-md-12">
 	<section class="ftco-section">
 		<div class="container" style="text-align:center;">
