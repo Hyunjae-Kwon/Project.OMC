@@ -69,13 +69,14 @@ function logoutCheck() {
 					<li class="nav-item active"><a href="/allGoodsListNew.omc" class="nav-link" style="font-size:large; color:#fd7e14;">신상품</a></li>
 					<c:if test="${ MEM_ID != 'ADMIN' }">
 						<li class="nav-item active"><a href="/boardList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">커뮤니티</a></li>
+						<li class="nav-item active"><a href="/qnaList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">Q&A</a></li>		<!-- 고객센터에서 Q&A 로 수정 -->
 						<li class="nav-item active"><a href="/faqList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">FAQ</a></li>
 						<li class="nav-item active"><a href="/noticeList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">공지사항</a></li>
 					</c:if>
 					<!-- 관리자용 메뉴 수정필 -->
 					<c:if test="${ MEM_ID == 'ADMIN' }">
 					<li class="nav-item active"><a href="/adminBoardList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">커뮤니티</a></li>
-					<li class="nav-item active"><a href="/adminQnaList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">고객센터</a></li>
+					<li class="nav-item active"><a href="/adminQnaList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">Q&A</a></li>		<!-- 고객센터에서 Q&A 로 수정 -->
 					<li class="nav-item active"><a href="/adminFaqList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">FAQ</a></li>
 					<li class="nav-item active"><a href="/adminNoticeList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">공지사항</a></li>
 					</c:if>
@@ -84,6 +85,7 @@ function logoutCheck() {
 		        <ul class="navbar-nav ml-auto">
 		          <!-- 관리자일 경우 관리 탭 추가 -->
 		          <c:if test="${ MEM_ID == 'ADMIN' }">
+		          	
 		        	<li class="nav-item active"><a href="/adminMain.omc" class="nav-link" style="font-size:large; color:#fd7e14;">관리</a></li>
 		          </c:if>
 		        </ul>

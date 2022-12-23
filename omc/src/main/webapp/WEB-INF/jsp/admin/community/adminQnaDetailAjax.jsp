@@ -74,7 +74,7 @@ function WriteCheckAjax(BD_NUM) {
          contentType   : "application/json",
          success      : function(data) {
         	 console.log(data)
-            alert("작성이완료되었습니다.");
+            alert("작성이 완료되었습니다.");
             window.location.reload();
          },
          error:function(request, error) {
@@ -200,7 +200,7 @@ p { word-break: break-all;}
 					    <ul class="comment-list">
 							<li class="comment" id="Dcom${status.index}">
 								<div class="vcard bio">
-                    				<h5 style="color:#82ae46;">OMC</h5><!-- COMMENTWRITER로 하면 ADMIN으로 떠서 Jumo로 입력 -->
+                    				<h5 style="color:#82ae46;">ADMIN</h5><!-- 관리자답변이므로 OMC에서 ADMIN으로 변경  -->
                   				</div>
 								<div class="comment-body">
 									<div class="meta"><p style="width: 100%;">${comment.BC_REGDATE}</p></div><!-- 답변 작성 날짜 -->

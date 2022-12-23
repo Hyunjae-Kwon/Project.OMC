@@ -21,9 +21,10 @@
 				<a href="adminSellList.omc" style="font-size: 0.8vw;">매출 리스트</a>
 			</li>
 			<li><h1 style="font-size: 1vw; color:#fd7e14;">게시판 관리</h1><br>
+				<a href="adminFaqList.omc" style="font-size: 0.8vw;">FAQ</a>		<!--  추가 -->
 				<a href="adminNoticeList.omc" style="font-size: 0.8vw;">공지사항</a>
 				<a href="adminReviewList.omc" style="font-size: 0.8vw;">후기</a>
-				<a href="adminQnaList.omc" style="font-size: 0.8vw;">고객센터</a>
+				<a href="adminQnaList.omc" style="font-size: 0.8vw;">Q&A</a>		<!-- 고객센터에서 Q&A 로 수정 -->
 			</li>
 			<li><a href="adminMainForm.omc" style="font-size: 1vw; color:#fd7e14;">페이지 관리</a></li>
 		</ul>

@@ -142,9 +142,10 @@ $(document).ready(function(){
 					<c:choose>
 						<c:when test="${fn:length(cartList)<=0}">
 							<tr>
-								<td style="text-align: center" colspan="8">장바구니에 상품이 없습니다.</td>
+								<td style="text-align: center" colspan="8">장바구니에 상품이 없습니다.<br/><br/>
+									<input type="button" class="btn btn-dark py-2 px-3" value="쇼핑 계속하기" onclick="location.href='/allGoodsList.omc'"/>
+								</td>
 							</tr>
-							<input type="button" class="btn btn-dark py-2 px-3" value="쇼핑 계속하기" onclick="location.href='/allGoodsList.omc'"/>
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="goods" items="${cartList}">
@@ -181,9 +182,6 @@ $(document).ready(function(){
 						        
 						        <!-- 할인가 -->
 						        <td class="saleprice">${goods.CT_DCPRICE}원
-							        <%-- <c:set var="salePrice" value="${goods.CT_DCPRICE}" />
-			    					<b><fmt:formatNumber value="${salePrice}" pattern="#.#" />원</b> --%>
-			    					<%-- <input type="hidden" id="salePrice" name="salePrice" value="${goods.CT_DCPRICE}"> --%>
 			    					<input type="hidden" id="CT_DCPRICE" name="CT_DCPRICE" value="${goods.CT_DCPRICE}">
 				          		</td>
 						        
@@ -191,7 +189,6 @@ $(document).ready(function(){
 						        <td style="font-weight : bold;">
 						        	<c:set var="total" value="${goods.CT_DCPRICE * goods.CT_COUNT}" />
 						        	<fmt:parseNumber var="totalPrice" integerOnly="true" value="${total}" />
-						        	<%-- <b><fmt:formatNumber value="${totalPrice}" type="number" />원</b> --%>
 						        	<span class="totalSum">${goods.CT_DCPRICE * goods.CT_COUNT}원</span>
 						        </td>
 						      </tr>
@@ -262,6 +259,7 @@ $(document).ready(function(){
         	});
     	
     	var totalPrice = cnt*price;
+    	getCount();
  	});
  	
     /* 상품 수량 수정 시 화면에서 금액 변경 (상품 수량 감소) */
@@ -293,7 +291,9 @@ $(document).ready(function(){
 				success: function(data){
 				}	
 	        });
-	    	var totalPrice = cnt*price;
+       	 
+    	var totalPrice = cnt*price;
+    	getCount();
 	});
 
     /* 장바구니 상품 삭제 */
@@ -308,8 +308,9 @@ $(document).ready(function(){
  				var num = $("#tbody tr").eq(tr).find("#CT_CID").val();
  				$.ajax({
  	 				type: "POST",
- 	 				url:"<c:url value='delSelectMyCart.omc'/>",
- 	 				data:{CT_CID:num},
+ 	 				url: "<c:url value='delSelectMyCart.omc'/>",
+ 	 				data: {CT_CID:num},
+ 	 				async: false,
  	 				success: function(data){
  	 						location.reload();
  	 				}	

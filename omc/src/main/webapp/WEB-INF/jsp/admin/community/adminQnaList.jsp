@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div style="text-align:center">
-		<h1> 고객센터 </h1>
+		<h1> Q&A </h1>			<!-- 고객센터에서 Q&A 로 수정 -->
 	</div>
 	
 	<section class="ftco-section ftco-cart">

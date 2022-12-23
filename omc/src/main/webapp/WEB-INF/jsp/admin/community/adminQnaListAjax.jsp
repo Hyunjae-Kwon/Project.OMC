@@ -37,7 +37,7 @@ function deleteCheckAjax(cidx, index) {
 
 <section class="ftco-section ftco-cart">
 	<div style="text-align:center">
-		<h2> 고객센터 </h2>
+		<h2> Q&A </h2>		<!-- 고객센터에서 Q&A 로 수정 -->
 	</div>
 	<br>
 
