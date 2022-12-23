@@ -33,7 +33,6 @@ function getCount(){
 		totalDCPrice += parseInt($("#tbody tr").eq(index).find(".CT_DCPRICE").val()) * count;
 		// 총 구매 금액
 		//finalTotalPrice += parseInt($("#tbody tr").eq(index).find(".ct_totalprice").val());
-		
 	});
 	
 	dcprice = totalPrice - totalDCPrice;
@@ -47,13 +46,7 @@ function getCount(){
 	// 최종 가격(총 할인 금액 + 배송비)
 	$("#finalSum").text(finalTotalPrice.toLocaleString());		
 }
-/*
-function cartUpdate() {
-	var cid = document.getElementById('CT_CID').value;
-	var count = document.getElementById('CT_COUNT').value;		
-	location.href="updateMyCart.omc?CT_CID" + cid + "&CT_COUNT=" + count;
-}
-*/
+
 function orderConfirm(){
 	var MEM_ID = document.getElementById('MEM_ID').value;
 	var size = document.getElementById('listSize').value;
@@ -76,39 +69,58 @@ function chkAll(){
 }
 
 function chkAll2(){
-    $("input[name=checkRow]").prop("checked", true);
+	if($("#chkAll").prop("checked")){
+		$("#chkAll").prop("checked", false);
+		$("input[name=checkRow]").prop("checked", false);
+	} else {
+		$("#chkAll").prop("checked", true);
+		$("input[name=checkRow]").prop("checked", true);
+	}
+	
+	getCount(".ct_info");
+}
+
+function chkCount(){
+	$("input[name=checkRow]").click(function(){
+		var total = $("input[name=checkRow]").length;
+		var checked = $("input:checkbox[name=checkRow]:checked").length;
+		
+		if(total != checked) $("#chkAll").prop("checked", false);
+		else $("#chkAll").prop("checked", true);
+	});
 }
 </script>
 <script>
 $(document).ready(function(){
 	getCount();
+	chkCount();
 	
 	$(".checkbox").on("change", function(){
 		getCount(".ct_info");
 	});
+	
+	$("#chkAll").on("change", function(){
+		getCount(".ct_info");
+	});
 });
 
-/* window.onload = function() {
-	getCount();
-}; */
 </script>
 <script>
+	//수량입력폼 글자수제한
     function numberMaxLength(e){
         if(e.value.length > e.maxLength){
             e.value = e.value.slice(0, e.maxLength);
         }
-    }//수량입력폼 글자수제한
+    }
 </script>
   </head>
   
   <body>
   	 <input type="hidden" id="MEM_ID" name="MEM_ID" value="<%=request.getSession().getAttribute("MEM_ID")%>">
   <hr>
-		
 		<div style="text-align:center">
 			<h2>장바구니</h2>
 		</div>
-		
 		<br>
 		  <div class="container">
 		  	<div style="text-align:center" id="board" >
@@ -132,6 +144,7 @@ $(document).ready(function(){
 							<tr>
 								<td style="text-align: center" colspan="8">장바구니에 상품이 없습니다.</td>
 							</tr>
+							<input type="button" class="btn btn-dark py-2 px-3" value="쇼핑 계속하기" onclick="location.href='/allGoodsList.omc'"/>
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="goods" items="${cartList}">
@@ -157,7 +170,7 @@ $(document).ready(function(){
 						        <!-- 수량 -->
 						        <td>
 						        	<span class="minus">-</span>
-		            				<input type="number" class="count" style="width: 3em;" maxlength="2" oninput="numberMaxLength(this);" id="CT_COUNT" name="CT_COUNT" value="${goods.CT_COUNT}">
+		            				<input type="number" class="count" style="width: 3em;" maxlength="2" oninput="numberMaxLength(this);" id="CT_COUNT" name="CT_COUNT" value="${goods.CT_COUNT}" readonly>
 									<span class="plus">+</span>
 					          	</td>
 					          	
@@ -187,26 +200,11 @@ $(document).ready(function(){
 					</c:otherwise>
 				</c:choose>
 				</table>
-			
 			</div> <!-- end cart-list div -->
-			<br>		
-			<div align="center">
-				<button type="button" class="btn btn-primary" onclick="chkAll2();">전체선택</button>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button type="button" class="btn btn-primary" id="deleteChk">선택삭제</button>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button type="button" class="btn btn-primary" onclick="buyItem()">선택주문</button>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button type="button" class="btn btn-primary" onclick="location.href='<c:url value='/main.omc'/>';">메인으로</button>
-			</div>		  						  
-			<!-- 쇼핑계속버튼 -->		  
-			<div style='float: right;'>
-				<input type="button" class="btn btn-dark py-2 px-3" value="쇼핑 계속하기" onclick="location.href='/allGoodsList.omc'"/>
-	    	</div>
 		</div>
 	</div>
 	<input type="hidden" id="listSize" name="listSize" value="${Size}">
-    		<br><br><br><br>
+    		<br><br>
     		<div class="container">
     				<div class="cart-total mb-3" style="text-align:center">
     					<h2>결제 금액</h2><br>
@@ -228,12 +226,16 @@ $(document).ready(function(){
     						<span id="finalSum">0</span>원
     					</p>
     				</div>
-    			
-    				<div style="text-align:center">
-    				<input type="button" class="btn btn-primary py-3 px-5"
-    				 onClick="return orderConfirm()" value="구매하기"><br><br><br><br>
-    				</div>
     			</div>
+				<div align="center">
+					<button type="button" class="btn btn-primary" onclick="chkAll2();">전체선택</button>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button type="button" class="btn btn-primary" id="deleteChk">선택삭제</button>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button type="button" class="btn btn-primary" onclick="buyItem()">선택주문</button>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button type="button" class="btn btn-primary" onclick="location.href='<c:url value='/main.omc'/>';">메인으로</button>
+				</div>		  						  
 <script>
 $(document).ready(function(){
 	

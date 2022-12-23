@@ -39,29 +39,53 @@ public class LoginController {
 	    }
 	   
 	// 로그인 처리
-		@RequestMapping(value = "/login.omc", method = RequestMethod.POST)
-		   public ModelAndView login(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		      ModelAndView mav = new ModelAndView("login/login");
-		      HttpSession session = request.getSession();
-		      // session.setAttribute("USER_ID", id); 
-		      // HttpSession session, @RequestParam String id,
-		      String message="";
-		      String url="";
-		      Map<String,Object> result = loginService.selectMemberId(commandMap.getMap());
-		      if(result == null || result.get("MEM_ID").equals("N")) { // 아이디가 있는지 or 삭제된 아이디인지 확인
-		         message="해당 아이디가 존재하지 않습니다.";
-		      } else { 
-		    	  if(result.get("MEM_PW").equals(commandMap.get("MEM_PW"))) { // 비밀번호가 같다면
-		    		  session.setAttribute("MEM_ID", commandMap.get("MEM_ID"));
-		    		  session.setAttribute("MEM_NUM", result.get("MEM_NUM")); 
-		    	  } else {//비밀번호가 일치하지 않을 때
-		    		  message="비밀번호가 맞지 않습니다.";
-		    	  }
-		      }
-		      mav.addObject("message", message);
-		  //	session.setAttribute("USER_ID", request.getParameter("${USER_ID}")); 
-		      return mav;
-		}
+	   @RequestMapping(value = "/login.omc", method = RequestMethod.POST)
+       public ModelAndView login(CommandMap commandMap,HttpServletRequest request) throws Exception {
+          ModelAndView mv = new ModelAndView("login/login");
+          HttpSession session = request.getSession();
+          // session.setAttribute("USER_ID", id); 
+          // HttpSession session, @RequestParam String id,
+
+          Map<String,Object> result = loginService.selectMemberId(commandMap.getMap());
+          if(result == null || result.get("MEM_ID").equals("N")) { // 아이디가 있는지 or 삭제된 아이디인지 확인
+             mv.addObject("msg","회원을 찾을 수 없습니다.");
+             mv.addObject("url", "/loginForm.omc");
+             return mv;
+          } else { 
+            
+             if(result.get("MEM_PW").equals(commandMap.get("MEM_PW"))) { // 비밀번호가 같다면
+                
+                if(result.get("MEM_BLOCK").equals("Y")) {
+                  mv.addObject("msg","정지된 회원입니다.");
+                    mv.addObject("url", "/loginForm.omc");
+                    return mv;
+                }
+                
+                session.setAttribute("MEM_ID", commandMap.get("MEM_ID"));
+                session.setAttribute("MEM_NUM", result.get("MEM_NUM")); 
+                
+				// 관리자 체크
+				if (result.get("MEM_ID").equals("ADMIN")) {
+					mv.addObject("msg", "관리자 로그인 성공!");
+					mv.addObject("url", "/adminMain.omc");
+					return mv;
+				} else {
+					mv.addObject("url", "/main.omc");
+				}
+             } else {//비밀번호가 일치하지 않을 때
+                mv.addObject("msg", "비밀번호가 틀립니다.");
+                mv.addObject("url", "/loginForm.omc");
+                return mv;
+      //   session.setAttribute("USER_ID", request.getParameter("${USER_ID}"));            
+           }
+           
+        }   
+          mv.addObject("msg", "로그인성공!");
+          mv.addObject("url","/main.omc");
+          return mv;
+    }
+	   
+	   
 		//로그아웃
 		@RequestMapping(value="/logout.omc")
 		   public void logout(HttpServletRequest request,HttpServletResponse response,CommandMap commandMap) throws Exception {

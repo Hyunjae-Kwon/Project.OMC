@@ -198,5 +198,15 @@
 			ODNUM = #{OD_NUM}
 	]]>
 	</select>
+	
+	<!-- [selectOIDMax] 기존 주문번호의 최대값-->
+	<select id="selectOIDMax" resultType="hashmap">
+	<![CDATA[
+		SELECT 
+			MAX(OD_OID) MAX 
+		FROM 
+			ORDERCOMMAND
+	]]>
+	</select>
 
 </mapper>

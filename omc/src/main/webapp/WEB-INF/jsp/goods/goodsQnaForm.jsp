@@ -9,65 +9,32 @@
 <meta charset="UTF-8">
 <title>오늘의 메뉴 추천, 오메추</title>
 <script>
-function getCount() {
-	var count = document.getElementById('GD_STOCK').value;
-	var price = document.getElementById('GD_PRICE').value;
-	var sale = document.getElementById('GD_DCPRICE').value;
-	var salePrice = price * (100-sale) / 100;
-	/* var totalPrice = salePrice * count; */
-	var totalPrice = sale
+function confirmQna() {
+	var form = document.getElementById("qnaForm");
+	var GD_GID = document.getElementById("GD_GID");
+	var BD_ID = document.getElementById("BD_ID");
+	var BD_CONTENT = document.getElementById("BD_CONTENT");
+	var BD_TITLE = document.getElementById("BD_TITLE");
 	
-	document.getElementById("totalPrice").innerText = totalPrice + '원';
-	return count;
-}
-
-function insertCart(){
-	   var items=$("td[id=contain]").get();
-	   if(${MEM_ID ne null}){
-	      $.each(items,function(index,item){
-	         var goodsName=$("td[id=contain]:eq("+index+")").find('#GD_GNAME').val();
-	         var goodsID=$("td[id=contain]:eq("+index+")").find('#GD_GID').val();
-	         var goodsPrice=parseInt($("td[id=contain]:eq("+index+")").find('#GD_PRICE').val());
-	         var goodsDCPrice=parseInt($("td[id=contain]:eq("+index+")").find('#GD_DCPRICE').val());
-	         var count=parseInt($("td[id=contain]:eq("+index+")").find('#orderCount').val());
-	         
-	         $.ajax({
-	            type : "POST",
-	            url : '<c:url value="insertCart.omc"/>',
-	            data : {CT_NAME:goodsName,CT_GID:goodsID,CT_PRICE:goodsPrice,CT_DCPRICE:goodsDCPrice,CT_COUNT:count},
-	            success : function(data){
-	                
-	            }
-	         });  
-	      })
-	      if(confirm("장바구니에 상품을 담았습니다.\n장바구니로 이동하시겠습니까?") == true){
-	      location.href="<c:url value='myCart.omc'/>";
-	      }	      
-	   } else {
-	      alert("로그인 후 이용해주세요.");
-	      location.href = "/loginForm.omc";
-	   }
-}
-
-function orderForm() {
-	var goodsId = document.getElementById('GD_GID').value;
-	var count = Number(document.getElementById('orderCount').value);
-	var stock = Number(document.getElementById('GD_STOCK').value);
-	// 구매수량이 상품 재고보다 많을 경우 구매 정지
-	
-	if(count>stock) {
-		alert("상품의 재고 수량보다 많은 양을 살 수 없습니다. 재고 :" + stock + "개");
-		return false;		
+	if(confirm("상품 문의를 등록하시겠습니까?") == true) {
+		if(BD_TITLE.value.trim()=="") {
+			alert("제목을 입력해주세요.");
+			BD_TITLE.focus();	
+			return false;
+		} else if(BD_CONTENT.value.trim()=="") {
+			alert("내용을 입력해주세요.");
+			BD_CONTENT.focus();
+			return false;
+		} else {	
+			form.submit();
+		}
 	}
-	location.href="orderForm.omc?GD_GID=" + goodsId + "&orderCount="+ count;	
 }
-
 window.onload = function() {
-	getCount();
-};
+	document.getElementById("BD_TITLE").focus();
+}
 </script>
-</head>
-<body>
+</head><body>
 	<p/>
 	<div>
 		<div>
@@ -225,7 +192,7 @@ window.onload = function() {
 					<c:forEach var="qna" items="${qnaList}">
 					<tr bgcolor="#E4F7BA">
 						<td style="width:60%; text-align:left;">
-						<a href="boardDetail.omc?BD_NUM=${qna.BD_NUM}"><h3 class="heading"><b>${qna.BD_TITLE}</b></h3></a>						
+						<h3 class="heading"><b>${qna.BD_TITLE}</b></h3>
 						</td>
 						<td style="width:20%; text-align:right;">
 						<h3 class="heading"><b>${qna.BD_ID}</b></h3>
@@ -245,14 +212,54 @@ window.onload = function() {
 				<hr>				
 			</div>
 		</div>
-		<!-- 관리자일 경우 관리 탭 추가 -->
-        <c:if test="${ MEM_ID == 'ADMIN' }">
-		    <div align="right">
-				<input type="button" value="상품 수정" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='adminGoodsModifyForm.omc?GD_GID=${GD_GID}'">
-		    </div>
-        </c:if>
-		
 	</div>
 	</section>
+</body>
+
+	<section>	
+	<div class="container">
+		<div class="row slider-text justify-content-center align-items-center">
+			<div class="col-lg-10 mb-5">
+
+					<form id="qnaForm" action="goodsQna.omc" method="post">
+					<table style="text-align:center; margin-left:auto; margin-right:auto; width:80%;">
+						<tr>
+							<td style="width:10%; text-align:left">
+			   					작성자
+			   				</td>
+			   				<td>
+			   				 	${memInfo.MEM_ID}
+			   					<input type="hidden" id="BD_ID" name="BD_ID" value="${memInfo.MEM_ID}">
+			   					<input type="hidden" id="BD_GID" name="BD_GID" value="${goods.GD_GID}">
+							</td>
+						</tr>
+						<tr>
+							<td style="width:10%; text-align:left;">
+								제목 
+							</td>
+							<td>
+								<input type="text" id="BD_TITLE" name="BD_TITLE" style="width:90%;" maxlength="50">
+							</td>
+						</tr>
+						<tr>
+							<td style="width:100%; text-align:left;" colspan="2">
+								<textarea name="BD_CONTENT" id="BD_CONTENT" cols="30" rows="7" maxlength="500" class="form-control"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td style="width:100%; text-align:left;" colspan="2">
+								<input type="button" class="btn btn-primary py-2 px-3"
+									onClick="return confirmQna()" value="작성">
+								<a href="goodsDetail.omc?GD_GID=${goods.GD_GID}" class="btn btn-black py-2 px-3">취소</a>
+							</td>
+						</tr>
+					</table>
+					</form>
+					<hr>				
+
+			</div>
+		</div>
+	</div>
+	</section>	
 </body>
 </html>

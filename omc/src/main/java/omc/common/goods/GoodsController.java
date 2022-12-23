@@ -39,6 +39,7 @@ public class GoodsController {
 		
 		Map<String,Object> resultMap = goodsService.allGoodsList(commandMap.getMap());
 		String sort = (String)commandMap.get("sort");
+		System.out.println(sort);
 		
 		mv.addObject("sort", sort);
 		mv.addObject("paginationInfo", (PaginationInfo)resultMap.get("paginationInfo"));
@@ -156,7 +157,7 @@ public class GoodsController {
 		
 		String loginId = (String) request.getSession().getAttribute("MEM_ID");
         
-		Map<String,Object> memInfo = loginService.selectMember(loginId);		
+		Map<String,Object> memInfo = loginService.selectMember(loginId);
 		Map<String, Object> goods = goodsService.goodsDetail(commandMap.getMap());
 		
 		mv.addObject("memInfo", memInfo);

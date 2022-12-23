@@ -13,10 +13,16 @@
 	function fn_search(pageNo) {
 		var comSubmit = new ComSubmit();
 		var sort = $("#sortVal").val();
-		comSubmit.setUrl('<c:url value="allGoodsList.omc" />');
-		comSubmit.addParam("sort", sort)
-		comSubmit.addParam("currentPageNo", pageNo);
-		comSubmit.submit();
+		if(sort == null){
+			comSubmit.setUrl('<c:url value="allGoodsList.omc" />');
+			comSubmit.addParam("currentPageNo", pageNo);
+			comSubmit.submit();
+		}else{
+			comSubmit.setUrl('<c:url value="allGoodsList.omc" />');
+			comSubmit.addParam("sort", sort)
+			comSubmit.addParam("currentPageNo", pageNo);
+			comSubmit.submit();
+		}
 	}
 </script>
 <script>

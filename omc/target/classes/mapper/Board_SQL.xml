@@ -205,7 +205,7 @@
 				#{BD_TITLE}, 
 				SYSDATE, 
 				#{BD_ID}, 
-				NULL, 
+				#{BD_GID},
 				0, 
 				#{BD_CONTENT}, 
 				'Q'

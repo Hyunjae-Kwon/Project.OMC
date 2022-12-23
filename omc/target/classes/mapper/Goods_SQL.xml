@@ -129,7 +129,7 @@
 	<include refid="common.pagingPost"/> 
 	</select> -->
 	
-	<!-- 전체상품 정렬 -->
+	<!-- [allGoodsList] 전체상품 정렬 -->
 	<select id="allGoodsList" parameterType="hashmap" resultType="hashmap">
 	<include refid="common.pagingPre"/> 
 	<choose>
@@ -148,7 +148,7 @@
 			    	ORDER BY GD_DCPRICE DESC)S)
 	    </when>
 	    <otherwise>
-			SELECT ROW_NUMBER() OVER (ORDER BY GD_GID DESC) RNUM, GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE
+			SELECT ROW_NUMBER() OVER (ORDER BY GD_GID DESC) RNUM, GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_CATEGORY
 			FROM GOODS
 	    </otherwise>
 	</choose>

@@ -8,16 +8,10 @@
 
 <script charset="utf-8"></script>
 <script type="text/javascript">
-$(document).ready(function(){ 
-	var message = "${message}";
-	if(message!=null && message!=''){
-		alert(message);
-		location.href = "http://localhost:8080/loginForm.omc";
-	}else{
-		alert("로그인 성공!");
-		location.href = "http://localhost:8080/main.omc"
-	}
-})
+if(${! empty msg}) {
+	alert('${msg}');
+}
+location.href='${pageContext.request.contextPath}${url}';
 </script>
 </head>
 </html>
