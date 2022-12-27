@@ -20,7 +20,7 @@
 			<li><a href="/myInfoModify.omc" style="font-size:middle;">회원정보 수정</a></li>
 			</c:if>
 			<li><a href="/myOrderList.omc" style="font-size:middle;">주문조회</a></li>
-			<li><a href="/myReviewList.omc" style="font-size:middle; color:#82ae46;">후기</a></li>
+			<li><a href="/myReviewList.omc" style="font-size:middle; color:#fd7e14;">후기</a></li>
 			<li><a href="/myQnaList.omc" style="font-size:middle;">문의내역</a></li>
 		</ul>
 	</div>

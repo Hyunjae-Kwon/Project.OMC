@@ -32,11 +32,6 @@ public class AdminGoodsDAO extends AbstractDAO {
 		return (Map<String, Object>) selectOne("goods.allgoodsKeywordSearchCount", map);
 	}	
     
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> selectGoodsListPaging(Map<String, Object> map) throws Exception{
-		return (List<Map<String, Object>>) selectList("goods.selectGoodsListPaging", map);
-	}
-	
 	public void deleteCartGID (Map<String, Object> map) throws Exception {
 		 delete("cart.deleteCartGID", map);
 	}
@@ -77,5 +72,20 @@ public class AdminGoodsDAO extends AbstractDAO {
 		delete("goods.adminGoodsDelete", map);
 	}
 	
-	
+    /* 매출 총합 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> sellSum(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>) selectOne("goods.sellSum", map);
+	}
+
+	/* 전체 상품 리스트, 매출 리스트 */
+    @SuppressWarnings("unchecked")
+	public Map<String, Object> selectGoodsListPaging(Map<String, Object> map) throws Exception{
+		return (Map<String, Object>) selectPagingList("goods.selectGoodsListPaging", map);
+	}
+    
+//    @SuppressWarnings("unchecked")
+//	public List<Map<String, Object>> selectGoodsListPaging(Map<String, Object> map) throws Exception{
+//		return (List<Map<String, Object>>) selectList("goods.selectGoodsListPaging", map);
+//	}
 }

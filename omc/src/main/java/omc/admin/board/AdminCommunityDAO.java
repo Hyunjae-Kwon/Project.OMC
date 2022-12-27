@@ -116,4 +116,67 @@ public class AdminCommunityDAO extends AbstractDAO {
 	public Map<String, Object> qnaListCount() throws Exception {
 		return (Map<String, Object>) selectOne("board.qnaListCount");
 	}
+	
+	//관리자 faq리스
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> adminFaqListPaging(Map<String, Object>map) throws Exception{
+		return (Map<String, Object>) selectPagingList("board.adminFaqListPaging", map);
+	}
+	
+	//faq디테일
+		@SuppressWarnings("unchecked")
+		public List<Map<String, Object>> selectFaqId(Map<String, Object>map) {
+			return (List<Map<String,Object>>) selectList("board.selectFaqId",map);
+		}
+		
+		public void updateHitCnt(Map<String, Object> map){
+		      update("board.updateHitCnt", map);
+		   }
+	//faq 글작성
+	public void insertBoard(Map<String, Object> map) throws Exception{
+		insert("board.insertBoard", map);
+		}		
+	//커뮤니티 수정
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> updateBoardForm(Map<String, Object> map)throws Exception{
+			return (Map<String, Object>)selectOne("board.updateBoardForm", map); 
+		   }
+		   
+	public void updateBoard(Map<String, Object> map)throws Exception{
+		    update("board.updateBoard", map);
+		   }		
+	
+	//faq 글삭제
+   public void deleteBoard(Map<String, Object> map) throws Exception {
+         delete("board.deleteBoard", map);
+      }
+	   
+   /* 관리자 커뮤니티 리스트 */
+   @SuppressWarnings("unchecked")
+   public Map<String, Object> adminBoardListPaging(Map<String, Object> map) throws Exception{
+	   return (Map<String, Object>) selectPagingList("board.adminBoardListPaging", map);
+   }
+   
+   /* 관리자 커뮤니티 상세보기 (조회수 증가 X) */
+   @SuppressWarnings("unchecked")
+	public List<Map<String, Object>> adminBoardDetail(Map<String, Object> map) {
+		return (List<Map<String,Object>>) selectList("board.selectBoardId",map);
+	}
+   
+   /* 관리자 커뮤니티 수정 폼 */
+   @SuppressWarnings("unchecked")
+   public Map<String, Object> adminBoardModifyForm(Map<String, Object> map)throws Exception{
+      return (Map<String, Object>)selectOne("board.updateBoardForm", map); 
+   }
+   
+   /* 관리자 커뮤니티 수정 기능 */
+   public void adminBoardModify(Map<String, Object> map)throws Exception{
+      update("board.updateBoard", map);
+   }
+   
+   /* 관리자 커뮤니티 삭제 */
+   public void adminBoardDelete(Map<String, Object> map) throws Exception {
+       delete("board.deleteBoard", map);
+   }
+   
 }

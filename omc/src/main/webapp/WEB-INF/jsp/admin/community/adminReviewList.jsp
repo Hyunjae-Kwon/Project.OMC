@@ -49,7 +49,9 @@
 										
 										<td>${review.BD_ID}</td>
 										
-										<td>${review.BD_REGDATE}</td>	
+										<td ${review.BD_REGDATE }>
+            									<fmt:formatDate value="${review.BD_REGDATE}" pattern="yyyy-MM-dd"/>   
+           										 </td>
 										
 										<td>
 											<button class="btn btn-light py-2 px-3"

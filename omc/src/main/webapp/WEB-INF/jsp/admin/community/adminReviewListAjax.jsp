@@ -69,8 +69,9 @@ function deleteCheckAjax(BD_NUM, index) {
 										
 										<td>${review.BD_ID}</td>
 										
-										<td>${review.BD_REGDATE}</td>	
-										
+										<td ${review.BD_REGDATE }>
+            									<fmt:formatDate value="${review.BD_REGDATE}" pattern="yyyy-MM-dd"/>   
+           									 </td>
 										<td>
 											<button class="btn btn-light py-2 px-3"
 															onClick="deleteCheckAjax(${review.BD_NUM}, ${status.index});">삭제</button>

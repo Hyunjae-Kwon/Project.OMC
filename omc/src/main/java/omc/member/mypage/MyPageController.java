@@ -8,18 +8,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import omc.common.board.BoardService;
 import omc.common.common.CommandMap;
 import omc.common.order.OrderService;
+import omc.member.login.LoginService;
 
 @Controller
 public class MyPageController {
+	Logger log = Logger.getLogger(this.getClass());
 
+	@Resource(name = "loginService")
+	private LoginService loginService;
+	
 	@Resource(name = "myPageService")
 	private MyPageService myPageService;
 	
@@ -84,19 +91,38 @@ public class MyPageController {
 		return mv;
 	}
 	
-	/* 마이페이지 주문 조회 */
-	@RequestMapping(value="/myOrderList.omc", method = RequestMethod.GET)
+	/* 마이페이지 주문 내역 */
+	@RequestMapping(value="/myOrderList.omc")
 	public ModelAndView myOrderList(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("member/myInfoOrder");
 			
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("MEM_ID");
 		commandMap.put("MEM_ID", id);
+				
+		Map<String, Object> orderList = orderService.myOrderListPaging(commandMap.getMap());
+		mv.addObject("paginationInfo", (PaginationInfo)orderList.get("paginationInfo"));
+		mv.addObject("orderCount", orderList.size());
+		mv.addObject("order", orderList.get("result"));
 		
-		List<Map<String, Object>> map = orderService.myOrderList(commandMap.getMap());
-		mv.addObject("orderCount", map.size());
-		mv.addObject("order", map);
-		
+		return mv;
+	}
+	
+	/* 마이페이지 주문 상세 */
+	@RequestMapping(value ="/myOrderDetail.omc", method = RequestMethod.GET)
+	public ModelAndView myOrderDetail(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("member/myInfoOrderDetail");
+	       
+		String loginId = (String) request.getSession().getAttribute("MEM_ID");
+			             
+		List<Map<String, Object>> orderInfo = orderService.selectOrderODNum(commandMap.getMap());
+		Map<String, Object> payInfo = orderService.selectPayODNum(commandMap.getMap());
+		Map<String,Object> memInfo = loginService.selectMember(loginId);
+	       
+		mv.addObject("orderResult", orderInfo);
+		mv.addObject("payResult", payInfo);
+		mv.addObject("memInfo", memInfo);
+	          
 		return mv;
 	}
 	

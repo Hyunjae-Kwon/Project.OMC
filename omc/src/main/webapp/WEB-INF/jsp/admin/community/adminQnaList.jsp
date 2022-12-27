@@ -43,7 +43,9 @@
 												
 												<td>${qna.BD_ID}</td>
 												
-												<td>${qna.BD_REGDATE}</td>	
+												<td ${qna.BD_REGDATE }>
+            									<fmt:formatDate value="${qna.BD_REGDATE}" pattern="yyyy-MM-dd"/>   
+           										 </td>
 												
 												<td>
 													<form id="qnaDelete" action="adminQnaDelete.omc" method="post">

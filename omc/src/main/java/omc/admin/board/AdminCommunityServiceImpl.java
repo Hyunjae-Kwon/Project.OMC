@@ -173,4 +173,68 @@ public class AdminCommunityServiceImpl implements AdminCommunityService {
 		Map<String,Object> mapCount = adminCommunityDAO.reviewListCount();
 		return Integer.parseInt(String.valueOf(mapCount.get("COUNT")));
 	}
+	
+	//faq페이지 리스트//faq리스트
+	@Override
+	public Map<String, Object> adminFaqListPaging(Map<String,Object> map) throws Exception{
+		return adminCommunityDAO.adminFaqListPaging(map);
+	}
+	
+	//faq 디테일/조회
+	@Override
+	public List<Map<String, Object>> selectFaqId(Map<String,Object>map)  {
+		adminCommunityDAO.updateHitCnt(map);
+		return adminCommunityDAO.selectFaqId(map);
+	}
+	// faq작성
+
+	@Override 
+	 public void insertBoard(Map<String, Object> map) throws Exception { 
+		 adminCommunityDAO.insertBoard(map);
+	 }	
+	//faq 수정
+		@Override
+		   public Map<String, Object> updateBoardForm(Map<String, Object> map)throws Exception{
+		     return adminCommunityDAO.updateBoardForm(map);
+		   }
+		   
+		   public void updateBoard(Map<String, Object> map)throws Exception{
+			   adminCommunityDAO.updateBoard(map);
+		   }
+	//faq 삭제
+	 @Override
+	   public void deleteBoard(Map<String, Object> map) throws Exception {
+		  adminCommunityDAO.deleteBoard(map);
+		   }
+
+	/* 관리자 커뮤니티 리스트 */
+	@Override
+	public Map<String, Object> adminBoardListPaging(Map<String, Object> map) throws Exception {
+		return adminCommunityDAO.adminBoardListPaging(map);
+	}
+
+	/* 관리자 커뮤니티 상세보기 (조회수 증가 X) */
+	@Override
+	public List<Map<String, Object>> adminBoardDetail(Map<String, Object> map) {
+		return adminCommunityDAO.adminBoardDetail(map);
+	}
+
+	/* 관리자 커뮤니티 수정 폼 */
+	@Override
+	public Map<String, Object> adminBoardModifyForm(Map<String, Object> map) throws Exception {
+		return adminCommunityDAO.adminBoardModifyForm(map);
+	}
+
+	/* 관리자 커뮤니티 수정 기능 */
+	@Override
+	public void adminBoardModify(Map<String, Object> map) throws Exception {
+		adminCommunityDAO.adminBoardModify(map);
+	}
+
+	/* 관리자 커뮤니티 삭제 */
+	@Override
+	public void adminBoardDelete(Map<String, Object> map) throws Exception {
+		adminCommunityDAO.adminBoardDelete(map);
+		
+	}		   
 }

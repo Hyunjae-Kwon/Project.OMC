@@ -19,7 +19,7 @@
 			<c:if test="${MEM_ID != 'ADMIN'}">
 			<li><a href="/myInfoModify.omc" style="font-size:middle;">회원정보 수정</a></li>
 			</c:if>
-			<li><a href="/myOrderList.omc" style="font-size:middle; color:#82ae46;">주문조회</a></li>
+			<li><a href="/myOrderList.omc" style="font-size:middle; color:#fd7e14;">주문조회</a></li>
 			<li><a href="/myReviewList.omc" style="font-size:middle;">후기</a></li>
 			<li><a href="/myQnaList.omc" style="font-size:middle;">문의내역</a></li>
 		</ul>
@@ -34,39 +34,45 @@
 	<br><br>
 		<div class="row">
 				<div class="col-md-12 ftco-animate">
-				
 					<div class="cart-list">
-				
 						<table class="table">
 							<thead class="thead-primary">
 								<tr class="text-center">
+									<th>주문날짜</th>
 									<th>주문번호</th>
-									<th>운송장번호</th>
-									<th>상품명</th>
-									<th>수량</th>
-									<th>가격</th>
-									<th>상태</th>
+									<th>주문내용</th>
+									<th>결제금액</th>
+									<th>진행상태</th>
 								</tr>
 							</thead>
 							<tbody>
-							
 							    <c:choose> 
 							    	<c:when test="${orderCount!=0}"> 
 							    		<c:forEach var="order" items="${order}" varStatus="status"> 
 											<tr class="text-center">
-											<td>${order.OD_OID}</td>
-											
-											<td>${order.OD_WAYBILL}</td>
-    			
-    										<td><a href="/goodsDetail?GD_GID=${order.OD_GID}">${order.OD_GNAME}</a></td>
+											<td><fmt:formatDate value="${order.OD_REGDATE}" pattern="yy/MM/dd" type="date"/></td>
+																					
+											<td>${order.OD_NUM}</td>
+																					
+    										<c:choose>
+	    										<c:when test="${order.CNT!=1}">
+	    										<td>
+	    											<a href="myOrderDetail.omc?OD_NUM=${order.OD_NUM}">${order.OD_GNAME} 외 ${order.CNT-1}건</a>
+	    											<input type="hidden" id="OD_NUM" name="OD_NUM" value="${order.OD_NUM}">
+	    										</td>
+	    										</c:when>
+	    										<c:otherwise>
+	    										<td>
+	    											<a href="myOrderDetail.omc?OD_NUM=${order.OD_NUM}">${order.OD_GNAME}</a>
+	    											<input type="hidden" id="OD_NUM" name="OD_NUM" value="${order.OD_NUM}">
+	    										</td>
+	    										</c:otherwise>
+    										</c:choose>
     										
-    										<td>${order.OD_COUNT}</td>
-											
-											<td>${order.OD_TOTAL}</td>
-											
-											<td>${order.OD_STATUS}</td>
-											
-										</tr><!-- END TR-->
+    										<td>${order.TOTALPAY}</td>
+    										
+    										<td>${order.OD_STATUS}</td>
+										</tr>
 							   			</c:forEach>
 									</c:when>
 							    

@@ -12,72 +12,36 @@
 
     <section id="home-section" class="hero">
 		  <div class="home-slider owl-carousel">
-	      <div class="slider-item" style="background-image: url(resources/img/bg_1.jpg);">
+	      <div class="slider-item" style="background-image: url(resources/img/bg_1.jpg);" onClick="location.href='foodTestForm.omc'">
 	      	<div class="overlay"></div>
 	        <div class="container">
 	          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
 	            <div class="col-md-12 ftco-animate text-center">
-	              <h1 class="mb-2">오늘의 메뉴는?!?!</h1>
-	              <h2 class="subheading mb-4">오늘의 메뉴 추천, 오메추</h2>
+	              <h1 class="mb-2">오늘의 메뉴 추천!!</h1>
+	              <h2 class="subheading mb-4">배너를 클릭하시면 오늘의 메뉴를 추천해드립니다!</h2>
 	            </div>
-
 	          </div>
 	        </div>
 	      </div>
-
 	      <div class="slider-item" style="background-image: url(resources/img/bg_2.jpg);">
 	      	<div class="overlay"></div>
 	        <div class="container">
 	          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
 	            <div class="col-sm-12 ftco-animate text-center">
-	              <h1 class="mb-2">오늘 뭐 먹지~?</h1>
+	              <h1 class="mb-2">간편하게 즐기는 셰프들의 요리!</h1>
 	              <h2 class="subheading mb-4">오늘의 메뉴 추천, 오메추</h2>
 	            </div>
-
 	          </div>
 	        </div>
 	      </div>
-	      
 	      <div class="slider-item" style="background-image: url(resources/img/bg_3.jpg);">
 	      	<div class="overlay"></div>
 	        <div class="container">
 	          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
 	            <div class="col-sm-12 ftco-animate text-center">
-	              <h1 class="mb-2">간편하게 즐길 수 있는 셰프들의 요리!</h1>
+	              <h1 class="mb-2">클래식과 현대의 요리 기술</h1>
 	              <h2 class="subheading mb-4">오늘의 메뉴 추천, 오메추</h2>
 	            </div>
-
-	          </div>
-	        </div>
-	      </div>
-	      
-	      <div class="slider-item" style="background-image: url(resources/img/bg_4.jpg);">
-	      	<div class="overlay"></div>
-	        <div class="container">
-	          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
-	            <div class="col-sm-12 ftco-animate text-center">
-	              <h1 class="mb-2">메가 커피</h1>
-	              <h2 class="subheading mb-4">오늘의 메뉴 추천, 오메추</h2>
-	            </div>
-
-	          </div>
-	        </div>
-	      </div>
-	      
-	      <div class="slider-item" style="background-image: url(resources/img/bg_5.jpg);">
-	      	<div class="overlay"></div>
-	        <div class="container">
-	          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
-	            <div class="col-sm-12 ftco-animate text-center">
-	              <h1 class="mb-2">스타벅스</h1>
-	              <h2 class="subheading mb-4">오늘의 메뉴 추천, 오메추</h2>
-	            </div>
-
 	          </div>
 	        </div>
 	      </div>
@@ -121,7 +85,7 @@
 	    			</c:forEach>
 					<div class="col-md-6 col-lg-3 ftco-animate" style="float:left; width:33%; padding:10px;">
 	    				<div class="goods">
-	    					<a href="/allGoodsList.omc" class="img-prod"><img src="resources/img/main_bp.jpg" style="height:250px;">
+	    					<a href="/allGoodsList.omc" class="img-prod"><img src="resources/img/main_bp.png" style="height:250px;">
 	    						<div class="overlay"></div>
 	    					</a>
 	    					<div class="text py-3 pb-4 px-3 text-center">

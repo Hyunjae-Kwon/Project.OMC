@@ -59,29 +59,31 @@ public class AdminQnaController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/adminQnaDelete.omc", method = RequestMethod.POST)
+	@RequestMapping(value="/adminQnaDelete.omc")
 	public ModelAndView adminQnaDelete(CommandMap commandMap) throws Exception{
-		ModelAndView mv = new ModelAndView("/admin/community/adminQnaDelete");
+		ModelAndView mv = new ModelAndView("admin/community/adminQnaDelete");
 		
 		mv.addObject("msg", "게시글 삭제가 완료되었습니다.");
-		mv.addObject("url", "/adminQnaList.omc?BD_NUM="+commandMap.get("BD_NUM"));
+		mv.addObject("url", "/adminQnaList.omc");
 		adminComService.deleteCommunityId(commandMap.getMap());
 		
 		return mv;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/adminQnaDeleteAjax.omc", method = RequestMethod.POST)
-	public String adminQnaDeleteAjax(CommandMap commandMap) throws Exception{
-						
+	
+	@RequestMapping(value="/adminQnaDeleteAjax.omc")
+	public ModelAndView adminQnaDeleteAjax(CommandMap commandMap) throws Exception{
+		ModelAndView mv = new ModelAndView("admin/community/adminQnaList");
+				
+	
 		adminComService.deleteCommunityId(commandMap.getMap());
 		
-		return "sucess";
+		return mv;
 	}
 	
 	@RequestMapping(value="/adminQnaDetail.omc", method = RequestMethod.GET)
 	public ModelAndView adminQnaDetail(CommandMap commandMap) throws Exception {
-		ModelAndView mv = new ModelAndView("/admin/community/adminQnaDetailAjax");
+		ModelAndView mv = new ModelAndView("admin/community/adminQnaDetailAjax");
 		
 		Map<String, Object> qnaMap = adminComService.selectQnaId(commandMap.getMap());
 		commandMap.put("BC_NUM",commandMap.get("BD_NUM"));

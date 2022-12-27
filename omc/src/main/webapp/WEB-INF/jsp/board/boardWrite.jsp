@@ -24,10 +24,9 @@
       <!-- 카테고리 -->
       <div style="display:inline-block; width:19%;">
          <select class="form-control" id="BD_TYPE" name="BD_TYPE">
-            <option>카테고리 선택</option>
+     
             <option value="C">COMMUNITY</option>
-            <option value="R">Review</option>
-            <option value="Q">Q&A</option>
+           
          </select>
       </div>
       <!-- 제목 -->

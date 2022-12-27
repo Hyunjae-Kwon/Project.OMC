@@ -69,7 +69,6 @@ function logoutCheck() {
 					<li class="nav-item active"><a href="/allGoodsListNew.omc" class="nav-link" style="font-size:large; color:#fd7e14;">신상품</a></li>
 					<c:if test="${ MEM_ID != 'ADMIN' }">
 						<li class="nav-item active"><a href="/boardList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">커뮤니티</a></li>
-						<li class="nav-item active"><a href="/qnaList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">Q&A</a></li>		<!-- 고객센터에서 Q&A 로 수정 -->
 						<li class="nav-item active"><a href="/faqList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">FAQ</a></li>
 						<li class="nav-item active"><a href="/noticeList.omc" class="nav-link" style="font-size:large; color:#fd7e14;">공지사항</a></li>
 					</c:if>

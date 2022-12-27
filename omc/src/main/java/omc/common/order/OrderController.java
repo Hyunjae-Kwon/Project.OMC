@@ -44,7 +44,10 @@ public class OrderController {
 		
 		Map<String,Object> memInfo = loginService.selectMember(loginId);
         Map<String,Object> goodsInfo = goodsService.goodsDetail(commandMap.getMap());
+        /* OD_NUM 최대값 구해서 넘겨주기 */
+		int orderNum = orderService.selectODNumMax() + 1;
         
+		mv.addObject("orderNum", orderNum);
 		mv.addObject("orderCount", orderCount);
 		mv.addObject("goodsInfo",goodsInfo);
 		mv.addObject("memInfo", memInfo);

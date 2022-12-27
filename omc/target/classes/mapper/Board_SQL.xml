@@ -105,6 +105,27 @@
 	]]>
 	</select>
 
+<!--  [FaqListPaging]관리자faq 게시판 리스트 페이징 
+	<select id="adminFaqListPaging" parameterType="hashmap"
+		resultType="hashmap">
+	<![CDATA[
+		SELECT *
+		FROM (
+			SELECT BD_NUM, BD_TITLE, BD_REGDATE, BD_ID, BD_GID, BD_COUNT, BD_CONTENT, ROWNUM R
+			FROM ( 	
+				SELECT BD_NUM, BD_TITLE, BD_REGDATE, BD_ID, BD_GID, BD_COUNT, BD_CONTENT 
+				FROM
+					BOARD
+				WHERE
+					BD_TYPE = 'F' 
+				ORDER BY BD_NUM DESC
+			)
+		)
+		WHERE
+			R BETWEEN #{START} AND #{END}
+	]]>
+	</select>
+ -->
 	<!-- [reviewListPaging] 후기 게시판 리스트 페이징 -->
 	<select id="reviewListPaging" parameterType="hashmap"
 		resultType="hashmap">
@@ -195,7 +216,6 @@
 	]]>
 	</insert>
 
-	<!-- [insertQna] 고객센터 게시판 글 입력 기능 -->
 	<insert id="insertQna" parameterType="hashmap">
 	<![CDATA[
 		INSERT 
@@ -392,7 +412,7 @@
      		FROM
      			BOARD
      		WHERE
-     			BD_TYPE='Q'
+     			BD_TYPE='F'
      		]]>
 		<include refid="common.pagingPost" />
 	</select>
@@ -434,4 +454,58 @@
 		         BD_NUM = #{BD_NUM}   
     ]]>
 	</update>
+	
+	
+	<!-- [adminFaqListPaging] 관리자FAQ 리스트 페이징 -->
+	<select id="adminFaqListPaging" parameterType="hashmap"
+		resultType="hashmap">
+		<include refid="common.pagingPre" />
+     	<![CDATA[
+     		SELECT
+     			ROW_NUMBER() OVER (ORDER BY BD_NUM DESC) RNUM,
+     			BD_NUM,
+     			BD_ID,
+     			BD_TITLE,
+     			BD_COUNT,
+     			BD_REGDATE,
+     			BD_TYPE
+     		FROM
+     			BOARD
+     		WHERE
+     			BD_TYPE='F'
+     		]]>
+		<include refid="common.pagingPost" />
+	</select>
+	
+	<!-- 관리자faq 디테일 -->
+	<select id="selectFaqId" parameterType="hashmap"
+		resultType="hashmap">
+     <![CDATA[
+     		SELECT * 
+				FROM BOARD
+				WHERE BD_TYPE='F' AND BD_NUM = #{BD_NUM}
+     ]]>
+	</select>
+	
+	<!-- [adminBoardListPaging] 관리자 커뮤니티 리스트 -->
+	<select id="adminBoardListPaging" parameterType="hashmap"
+		resultType="hashmap">
+		<include refid="common.pagingPre" />
+        <![CDATA[
+           SELECT
+              ROW_NUMBER() OVER (ORDER BY BD_NUM DESC) RNUM,
+              BD_NUM,
+              BD_ID,
+              BD_TITLE,
+              BD_COUNT,
+              BD_REGDATE,
+              BD_TYPE
+           FROM
+              BOARD
+              WHERE BD_TYPE = 'C'
+           ]]>
+		<include refid="common.pagingPost" />
+	</select>
+	
+
 </mapper>

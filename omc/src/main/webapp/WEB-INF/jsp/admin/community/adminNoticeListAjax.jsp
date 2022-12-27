@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,7 +77,9 @@ function deleteCheckAjax(BD_NUM, index) {
 									<td class="product-name">
 										${notice.BD_ID}
 									</td>
-									<td>${notice.BD_REGDATE}</td>
+									<td ${notice.BD_REGDATE }>
+           								 <fmt:formatDate value="${notice.BD_REGDATE}" pattern="yyyy-MM-dd"/>   
+          							  </td>
 									<td>
 										<button class="btn btn-light py-2 px-3"
 											onClick="deleteCheckAjax(${notice.BD_NUM}, ${status.index});">삭제</button>

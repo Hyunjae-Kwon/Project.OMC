@@ -80,22 +80,22 @@
 			ORDERCOMMAND
 		VALUES(
 			OD_OID_SEQ.NEXTVAL,
-			'',
+			#{OD_NUM},
 			#{OD_ID},
 			#{OD_NAME},
 			SYSDATE,
-			#{GD_GID},
-			#{GD_GNAME},
+			#{OD_GID},
+			#{OD_GNAME},
 			#{OD_COUNT},
-			#{GD_PRICE},
-			#{GD_DCPRICE},
+			#{OD_PRICE},
+			#{OD_DCPRICE},
 			#{OD_TOTAL},
 			#{OD_PHONE},
 			#{OD_ZIPCODE},
 			#{OD_ADD1},
 			#{OD_ADD2},
 			'상품준비중',
-			'100254889564'
+			'준비중'
 		)
 	]]>
 	</insert>
@@ -122,7 +122,7 @@
 			#{OD_ADD1},
 			#{OD_ADD2},
 			'상품준비중',
-			'100254889564'
+			'준비중'
 		)
 	]]>
 	</insert>
@@ -166,7 +166,7 @@
 	]]>
 	</insert>
 	
-	<!-- [selectOrderODNum] (장바구니번호로 주문 정보 조회) -->
+	<!-- [selectOrderODNum] 장바구니번호로 주문 정보 조회 -->
 	<select id="selectOrderODNum" parameterType="hashmap" resultType="hashmap"> 
 	<![CDATA[
 		SELECT
@@ -187,7 +187,7 @@
 	]]>
 	</select> -->
 	
-	<!-- [selectPayODNum] (장바구니번호로 결제 정보 조회) -->
+	<!-- [selectPayODNum] 장바구니번호로 결제 정보 조회 -->
 	<select id="selectPayODNum" parameterType="hashmap" resultType="hashmap"> 
 	<![CDATA[
 		SELECT
@@ -199,14 +199,114 @@
 	]]>
 	</select>
 	
-	<!-- [selectOIDMax] 기존 주문번호의 최대값-->
+	<!-- [selectOIDMax] 가장 마지막에 주문한 주문의 OID값 -->
 	<select id="selectOIDMax" resultType="hashmap">
 	<![CDATA[
-		SELECT 
-			MAX(OD_OID) MAX 
-		FROM 
+		SELECT
+			MAX(OD_OID) MAX
+		FROM
 			ORDERCOMMAND
 	]]>
+	</select>	
+
+	<!-- [orderCount] 전체주문 수량 -->
+	<select id="orderCount" resultType="hashmap">
+	<![CDATA[
+		SELECT COUNT(*) COUNT
+		FROM ORDERCOMMAND
+	]]>
+	</select>
+	
+	<!-- [orderSearchCount] 주문 수 -->
+   	<select id="orderSearchCount" parameterType="hashmap" resultType="hashmap">
+   		SELECT
+   			COUNT(*) COUNT
+   		FROM 
+   			ORDERCOMMAND
+		<where>
+			<if test="CONDITION!=NULL">
+				<if test="CONDITION.equals('OD_ID')">
+					OD_ID LIKE '%'||#{KEYWORD}||'%'
+				</if>
+				<if test="CONDITION.equals('OD_OID')">
+					OD_OID = #{KEYWORD}
+				</if>
+				<if test="CONDITION.equals('OD_GNAME')">
+					OD_GNAME LIKE '%'||#{KEYWORD}||'%'
+				</if>
+				<if test="CONDITION.equals('OD_STATUS')">
+					OD_STATUS = #{KEYWORD}
+				</if>
+			</if>
+		</where>
+	</select>	
+	
+	<!-- [orderListPaging] 주문 리스트 페이징 -->
+	<select id="orderListPaging" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT *
+		FROM (
+		   SELECT OD_OID, OD_GID, OD_NUM, OD_ID, OD_NAME, OD_REGDATE, OD_GNAME, OD_COUNT, OD_PRICE, OD_DCPRICE, OD_TOTAL, OD_PHONE, OD_ZIPCODE, OD_ADD1, OD_ADD2, OD_STATUS, OD_WAYBILL, ROWNUM R
+		   FROM (
+		      SELECT OD_OID, OD_GID, OD_NUM, OD_ID, OD_NAME, OD_REGDATE, OD_GNAME, OD_COUNT, OD_PRICE, OD_DCPRICE, OD_TOTAL, OD_PHONE, OD_ZIPCODE, OD_ADD1, OD_ADD2, OD_STATUS, OD_WAYBILL
+		      FROM 
+				  ORDERCOMMAND
+			  ORDER BY OD_OID DESC
+			)
+			ORDER BY R
+		)
+		WHERE R BETWEEN #{START} AND #{END}
+	    ]]>
+	</select>
+	
+	<!-- [orderListSearchPaging] 주문리스트 검색페이징 -->
+	<select id="orderListSearchPaging" parameterType="hashmap" resultType="hashmap">	
+		SELECT *
+		FROM (
+		   SELECT OD_OID, OD_GID, OD_NUM, OD_ID, OD_NAME, OD_REGDATE, OD_GNAME, OD_COUNT, OD_PRICE, OD_DCPRICE, OD_TOTAL, OD_PHONE, OD_ZIPCODE, OD_ADD1, OD_ADD2, OD_STATUS, OD_WAYBILL, ROWNUM R
+		   FROM (
+		      SELECT OD_OID, OD_GID, OD_NUM, OD_ID, OD_NAME, OD_REGDATE, OD_GNAME, OD_COUNT, OD_PRICE, OD_DCPRICE, OD_TOTAL, OD_PHONE, OD_ZIPCODE, OD_ADD1, OD_ADD2, OD_STATUS, OD_WAYBILL
+		      FROM 
+				  ORDERCOMMAND
+			<where>
+				<if test="CONDITION!=NULL">
+					<if test="CONDITION.equals('OD_ID')">
+						OD_ID LIKE '%'||#{KEYWORD}||'%'
+					</if>
+					<if test="CONDITION.equals('OD_OID')">
+						OD_OID = #{KEYWORD}
+					</if>
+					<if test="CONDITION.equals('OD_GNAME')">
+						OD_GNAME LIKE '%'||#{KEYWORD}||'%'
+					</if>
+					<if test="CONDITION.equals('OD_STATUS')">
+						OD_STATUS = #{KEYWORD}
+					</if>
+				</if>
+			</where>
+			ORDER BY OD_REGDATE DESC
+			)
+		ORDER BY R
+		)
+	WHERE
+		R BETWEEN #{START} AND #{END}
+	</select>
+	
+	<!-- [myOrderList] 마이페이 주문 목록 -->
+	<select id="myOrderList" parameterType="hashmap" resultType="hashmap">
+	<include refid="common.pagingPre"/> 
+	<![CDATA[
+		SELECT A.OD_NUM, A.OD_REGDATE, A.OD_OID, A.OD_STATUS, A.OD_GNAME, B.CNT, B.TOTALPAY, ROW_NUMBER() OVER (ORDER BY A.OD_NUM DESC) RNUM
+		FROM ORDERCOMMAND A
+		JOIN(
+		    SELECT OD_NUM, COUNT(OD_NUM) AS CNT, MIN(OD_OID) OD_OID, OD_REGDATE, OD_STATUS, TOTALPAY
+		    FROM ORDERCOMMAND O JOIN PAYMENT P ON O.OD_NUM=P.ODNUM
+		    WHERE OD_ID = #{MEM_ID}
+		    GROUP BY OD_NUM, OD_REGDATE, OD_STATUS, TOTALPAY
+		)B ON A.OD_NUM = B.OD_NUM AND A.OD_OID=B.OD_OID
+		ORDER BY RNUM
+	]]>
+	<include refid="common.pagingPost"/>
 	</select>
 
 </mapper>

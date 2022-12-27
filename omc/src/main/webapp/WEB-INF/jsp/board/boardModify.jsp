@@ -46,7 +46,7 @@
    </div> -->
    <!-- 버튼 -->
 </c:forEach>
-   <div align="center" style="height:100px;">                                  
+   <div align="center" style="height:100px;">
       <input type="button" class="btn btn-primary" onClick="return fn_updateBoard()" value="글 수정"></a>
       <input type="button" class="btn btn-primary" onClick="return fn_deleteBoard()" value="글 삭제">
       <input type="button" class="btn btn-outline-primary" value="취소" onClick="javascript:history.go(-1)">

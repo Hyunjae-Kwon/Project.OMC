@@ -82,6 +82,7 @@
 				</tbody>
 			</table>
 		</div>
+			${paging.pageHtml}
 		</div>			
 </section>
 <br>

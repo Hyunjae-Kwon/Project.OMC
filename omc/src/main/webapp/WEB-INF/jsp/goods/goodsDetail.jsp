@@ -140,6 +140,7 @@ window.onload = function() {
 		<div>
 			<div>
 				<section>
+					<h3 class="heading" style="text-align: center;">상품 상세 정보</h3><br/><br/><br/>
 					<c:set var="GD_GID" value="${goods.GD_GID}" />
 					<%
 						String imgDir1 = "resources/img/goods/goods-" + pageContext.getAttribute("GD_GID").toString() + "-detail1.png";
@@ -181,7 +182,7 @@ window.onload = function() {
 			<div class="col-lg-10 mb-5">
 				<table style="text-align:center; margin-left:auto; margin-right:auto; width:80%;">
 					<tr>
-						<td style="width:80%; text-align:right" colspan="2">
+						<td style="width:80%; text-align:right" colspan="4">
 			   				<ul class="product-category">
 			   					<li><a href="goodsReviewForm.omc?GD_GID=${GD_GID}">상품 후기 글쓰기</a></li>
 			   				</ul>
@@ -189,22 +190,22 @@ window.onload = function() {
 					</tr>
 					<c:forEach var="review" items="${reviewList}">
 					<tr bgcolor="#E4F7BA">
-						<td style="width:60%; text-align:left;">
-						<h3 class="heading"><b>${review.BD_TITLE}</b></h3>
+						<td style="width:40%; text-align:left;">
+						<h5 class="heading">${review.BD_TITLE}</h5>
 						</td>
-						<td style="width:20%; text-align:right;">
-						<h3 class="heading"><b>${review.BD_ID}</b></h3>
+						<td style="width:30%; text-align:center;">
+						<h5 class="heading">${review.BD_ID}</h5>
 						</td>
-						<td style="width:20%; text-align:right;">
-						<h3 class="heading"><b>${review.BD_REGDATE}</b></h3>
+						<td style="width:30%; text-align:right;">
+						<h5 class="heading">${review.BD_REGDATE}</h5>
 						</td>
 					</tr>
 					<tr>
-						<td style="width:80%; text-align:left" colspan="2">
+						<td style="width:100%; text-align:left" colspan="4">
 						<p>${review.BD_CONTENT}</p>
 						</td>
 					</tr>
-					<tr><td colspan="2"><hr></td></tr>
+					<tr><td colspan="4"><hr></td></tr>
 					</c:forEach>
 				</table>
 				<hr>				
@@ -216,7 +217,7 @@ window.onload = function() {
 			<div class="col-lg-10 mb-5">
 				<table style="text-align:center; margin-left:auto; margin-right:auto; width:80%;">
 					<tr>
-						<td style="width:80%; text-align:right" colspan="2">
+						<td style="width:80%; text-align:right" colspan="4">
 			   				<ul class="product-category">
 			   					<li><a href="goodsQnaForm.omc?GD_GID=${GD_GID}">상품 문의 글쓰기</a></li>
 			   				</ul>
@@ -224,22 +225,22 @@ window.onload = function() {
 					</tr>
 					<c:forEach var="qna" items="${qnaList}">
 					<tr bgcolor="#E4F7BA">
-						<td style="width:60%; text-align:left;">
-						<a href="boardDetail.omc?BD_NUM=${qna.BD_NUM}"><h3 class="heading"><b>${qna.BD_TITLE}</b></h3></a>						
+						<td style="width:40%; text-align:left;">
+						<a href="boardDetail.omc?BD_NUM=${qna.BD_NUM}"><h5 class="heading">${qna.BD_TITLE}</h5></a>						
 						</td>
-						<td style="width:20%; text-align:right;">
-						<h3 class="heading"><b>${qna.BD_ID}</b></h3>
+						<td style="width:30%; text-align:center;">
+						<h5 class="heading">${qna.BD_ID}</h5>
 						</td>
-						<td style="width:20%; text-align:right;">
-						<h3 class="heading"><b>${qna.BD_REGDATE}</b></h3>
+						<td style="width:30%; text-align:right;">
+						<h5 class="heading">${qna.BD_REGDATE}</h5>
 						</td>
 					</tr>
 					<tr>
-						<td style="width:80%; text-align:left" colspan="2">
+						<td style="width:80%; text-align:left" colspan="4">
 						<p>${qna.BD_CONTENT}</p>
 						</td>
 					</tr>
-					<tr><td colspan="2"><hr></td></tr>
+					<tr><td colspan="4"><hr></td></tr>
 					</c:forEach>
 				</table>
 				<hr>				

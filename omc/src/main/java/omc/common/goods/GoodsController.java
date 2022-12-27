@@ -68,7 +68,7 @@ public class GoodsController {
 		System.out.println(list);
 		mv.addObject("bestGoodsList", list);
 	
-		 return mv;
+		return mv;
 	}
 	
 	/* 카테고리 상품 리스트 */

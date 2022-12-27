@@ -11,12 +11,12 @@
 <title>오늘의 메뉴 추천, 오메추</title>
 <script>
 /* Ajax */
-function deleteCheckAjax(cidx, index) {
+function deleteCheckAjax(BD_NUM, index) {
    if(confirm("삭제하시겠습니까?") == true) {
 	   
       $.ajax({
          url         : "adminQnaDeleteAjax.omc",
-         data      : {"BD_NUM" : Number(BD_NUM)},
+         data      : {"BD_NUM" : BD_NUM},
          contentType   : "application/json",
          success      : function(data) {
             alert("삭제하였습니다.");
@@ -69,10 +69,12 @@ function deleteCheckAjax(cidx, index) {
 												
 												<td>${qna.BD_ID}</td>
 												
-												<td>${qna.BD_REGDATE}</td>	
+												<td ${qna.BD_REGDATE }>
+            									<fmt:formatDate value="${qna.BD_REGDATE}" pattern="yyyy-MM-dd"/>   
+           										 </td>
 												
 												<td>
-													<form id="qnaDelete" method="post">
+													<form id="qnaDelete">
 														<button class="btn btn-light py-2 px-3"
 															onClick="deleteCheckAjax(${qna.BD_NUM} ,${status.index});">삭제</button>
 														

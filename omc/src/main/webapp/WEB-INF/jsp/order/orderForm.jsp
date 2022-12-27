@@ -225,20 +225,22 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 <input type="hidden" id="GD_GNAME" name="GD_GNAME" value="${goodsInfo.GD_GNAME}">
 <input type="hidden" id="GD_PRICE" name="GD_PRICE" value="${goodsInfo.GD_PRICE}">
 <input type="hidden" id="GD_DCPRICE" name="GD_DCPRICE" value="${goodsInfo.GD_DCPRICE}">
-<input type="hidden" id="OD_COUNT" name="OD_COUNT" value="${orderCount}"> 
 <input type="hidden" id="TOTALPAY" name="TOTALPAY" value="${goodsInfo.GD_DCPRICE * orderCount}">
 
-<input type="hidden" name="OD_ID" value="${MEM_ID}">
-<input type="hidden" id="OD_TOTAL" name="OD_TOTAL" value="${totalPrice}">
-<input type="hidden" id="OD_NUM" name="OD_NUM" value="">
-<input type="hidden" id="OD_GID" name="OD_GID" value="${goodsInfo.GD_GID}">
-
-<input type="hidden" id="OD_ID" value="${memInfo.MEM_ID}">
+<input type="hidden" id="OD_NUM" name="OD_NUM" value="${orderNum}">
+<input type="hidden" id="OD_ID" name="OD_ID" value="${memInfo.MEM_ID}">
 <input type="hidden" id="OD_NAME" value="${memInfo.MEM_NAME}">
+<input type="hidden" id="OD_GID" name="OD_GID" value="${goodsInfo.GD_GID}">
+<input type="hidden" id="OD_GNAME" name="OD_GNAME" value="${goodsInfo.GD_GNAME}">
+<input type="hidden" id="OD_COUNT" name="OD_COUNT" value="${orderCount}">
+<input type="hidden" id="OD_PRICE" name="OD_PRICE" value="${goodsInfo.GD_PRICE*orderCount}">
+<input type="hidden" id="OD_DCPRICE" name="OD_DCPRICE" value="${goodsInfo.GD_DCPRICE*orderCount}">
+<input type="hidden" id="OD_TOTAL" name="OD_TOTAL" value="${totalPrice}">
 <input type="hidden" id="OD_PHONE" value="${memInfo.MEM_PHONE}">
 <input type="hidden" id="OD_ZIPCODE" value="${memInfo.MEM_ZIPCODE}">
 <input type="hidden" id="OD_ADD1" value="${memInfo.MEM_ADD1}">
 <input type="hidden" id="OD_ADD2" value="${memInfo.MEM_ADD2}">
+	
 	<div class="col-md-12">
 	<section class="ftco-section">
 		<div class="container" style="text-align:center;">
@@ -252,8 +254,7 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 						<!-- 이름 -->
 						<div class="form-group">
 							<h6 class="mb-4" style="text-align:left;">이름</h6>
-							<input type="text" class="form-control" style="width:400px;"
-								value="${memInfo.MEM_NAME}" readonly>
+							<input type="text" class="form-control" style="width:400px;" value="${memInfo.MEM_NAME}" readonly>
 						</div>
 						<div class="w-100"></div>
 	
@@ -354,6 +355,7 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 	    					<hr>
 	    					<p class="d-flex total-price">
 	    						<span>총 금액</span>
+	    						<input type="hidden" id="TOTALPAY" name="finalSum">
 	    						<span id="finalSum"> <fmt:formatNumber value="${totalPrice+3000}" pattern="#.#" />원</span>
 	    					</p>
 	    				</div>

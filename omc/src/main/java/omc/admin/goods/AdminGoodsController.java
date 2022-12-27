@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import omc.common.common.CommandMap;
 import omc.common.goods.GoodsService;
 import omc.util.FileUpload;
@@ -264,47 +265,64 @@ public class AdminGoodsController {
 	}
 	
 	/* 매출 리스트 */
+//	@RequestMapping(value="/adminSellList.omc")
+//	public ModelAndView adminSellList(CommandMap commandMap, HttpServletRequest request) throws Exception {
+//		// mybatis allListSearchPaging에서 PSELL값을 이용하여 내림차순 정렬 사용
+//		ModelAndView mv = new ModelAndView("admin/goods/adminSellList");
+//		
+//		/* 페이징을 위한 변수 */
+//		int pageSize = 10; // 페이지당 출력할 상품의 수
+//		int START = 1;
+//		int END = pageSize;
+//		int currentPage = 1; // 현재 페이지
+//
+//		int countGoodsAll; // 전체 상품의 수
+//		int pageBlock = 5; // 표시할 페이지의 수
+//		String url = "adminSellList.omc";
+//		String searchUrl = "";
+//		
+//		/* 기본 페이지가 아닐 경우 */
+//		if(request.getParameter("page")!=null) {
+//			currentPage = Integer.parseInt(request.getParameter("page"));
+//			START = 1 + pageSize*(currentPage-1); 
+//			END = pageSize*currentPage;
+//		}
+//		
+//		countGoodsAll = goodsService.allGoodsCount();
+//		
+//		List<Map<String, Object>> list = adminGoodsService.selectGoodsListPaging(START, END);
+//		List<Map<String, Object>> sellList = new ArrayList<Map<String, Object>>();
+//		for(Map<String, Object> mapObject : list) {
+//			sellList.add(mapObject);
+//		}
+//		
+//		mv.addObject("sellList", sellList);
+//		
+//		Paging paging = new Paging(countGoodsAll, pageBlock,
+//				pageSize ,currentPage, url, searchUrl);
+//
+//		/* 페이징을 위한 값 삽입 */
+//		mv.addObject("currentPage", currentPage);
+//		mv.addObject("paging", paging);
+//		
+//		return mv;
+//	}	
+	
+	/* 매출 리스트 */
 	@RequestMapping(value="/adminSellList.omc")
-	public ModelAndView adminSellList(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		// mybatis allListSearchPaging에서 PSELL값을 이용하여 내림차순 정렬 사용
+	public ModelAndView allGoodsList(CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView("admin/goods/adminSellList");
 		
-		/* 페이징을 위한 변수 */
-		int pageSize = 10; // 페이지당 출력할 상품의 수
-		int START = 1;
-		int END = pageSize;
-		int currentPage = 1; // 현재 페이지
-
-		int countGoodsAll; // 전체 상품의 수
-		int pageBlock = 5; // 표시할 페이지의 수
-		String url = "adminSellList.omc";
-		String searchUrl = "";
+		Map<String,Object> resultMap = adminGoodsService.selectGoodsListPaging(commandMap.getMap());
+		Map<String,Object> sum = adminGoodsService.sellSum(commandMap.getMap());
+		String sort = (String)commandMap.get("sort");		
 		
-		/* 기본 페이지가 아닐 경우 */
-		if(request.getParameter("page")!=null) {
-			currentPage = Integer.parseInt(request.getParameter("page"));
-			START = 1 + pageSize*(currentPage-1); 
-			END = pageSize*currentPage;
-		}
-		
-		countGoodsAll = goodsService.allGoodsCount();
-		
-		List<Map<String, Object>> list = adminGoodsService.selectGoodsListPaging(START, END);
-		List<Map<String, Object>> sellList = new ArrayList<Map<String, Object>>();
-		for(Map<String, Object> mapObject : list) {
-			sellList.add(mapObject);
-		}
-		
-		mv.addObject("sellList", sellList);
-		
-		Paging paging = new Paging(countGoodsAll, pageBlock,
-				pageSize ,currentPage, url, searchUrl);
-
-		/* 페이징을 위한 값 삽입 */
-		mv.addObject("currentPage", currentPage);
-		mv.addObject("paging", paging);
+		mv.addObject("sum", sum.get("SUM"));
+		mv.addObject("sort", sort);
+		mv.addObject("paginationInfo", (PaginationInfo)resultMap.get("paginationInfo"));
+		mv.addObject("sellList", resultMap.get("result"));
 		
 		return mv;
-	}	
+	}
 
 }

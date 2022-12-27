@@ -19,9 +19,15 @@ public interface OrderService {
 	/* 총 결제 금액 */
 //	List<Map<String, Object>> selectTotalPay(int orderNum);
 	
-	/* 마이페이지 주문조회 */
-	List<Map<String, Object>> myOrderList(Map<String, Object> map);
-
+	/* 마이페이지 주문 조회 */
+	Map<String, Object> myOrderListPaging(Map<String, Object> map) throws Exception;
+	
+	/* 마이페이지 주문 상세 */
+   	List<Map<String, Object>> selectOrderODNum(Map<String, Object> map) throws Exception;
+   	
+   	/* 마이페이지 주문 결제정보 */
+   	Map<String, Object> selectPayODNum(Map<String, Object> map) throws Exception;
+	
 	List<Map<String, Object>> selectOrderOid(Map<String, Object> map);
 
 	public int selectOIDMax() throws Exception;	 
@@ -37,5 +43,4 @@ public interface OrderService {
    	
    	/* 결제 정보 확인 (장바구니 -> 주문하기) */
    	Map<String, Object> selectPayODNum(int orderNum) throws Exception;
-	
 }

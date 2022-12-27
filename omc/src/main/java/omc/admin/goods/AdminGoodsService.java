@@ -20,9 +20,6 @@ public interface AdminGoodsService {
 	//관리자 상품 리스트를 KEYWORD로 검색했을 때의 수 
 	public int allListKeywordCount(String KEYWORD, int KEYNUMBER) throws Exception;
 	
-	// 판매량을 조건으로 정렬하기 위해 상품 리스트 조건 검색 페이징
-	public List<Map<String, Object>> selectGoodsListPaging(int START, int END) throws Exception;
-    
 	// 상품번호로 장바구니 삭제
 	public void deleteCartGID(Map<String, Object> map) throws Exception;
 	
@@ -42,5 +39,14 @@ public interface AdminGoodsService {
 	
 	/* 상품 삭제 */
 	void adminGoodsDelete(Map<String, Object> map, HttpServletRequest request) throws Exception;
+	
+//	// 판매량을 조건으로 정렬하기 위해 상품 리스트 조건 검색 페이징
+//	public List<Map<String, Object>> selectGoodsListPaging(int START, int END) throws Exception;
+	
+    /* 판매량을 조건으로 정렬하기 위해 상품 리스트 조건 검색 페이징 */
+	Map<String, Object> selectGoodsListPaging(Map<String, Object> map) throws Exception;
+
+    /* 매출 총합 */
+	Map<String, Object> sellSum(Map<String, Object> map) throws Exception;
 	
 }

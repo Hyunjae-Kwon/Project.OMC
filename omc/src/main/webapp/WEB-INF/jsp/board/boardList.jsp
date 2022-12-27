@@ -21,7 +21,6 @@
 		comSubmit.submit();
 	}
 	
-	
 	//로그인후 글쓰기
 	function fn_writeForm(){
 		var comSubmit = new ComSubmit();
@@ -32,9 +31,7 @@
 		      alert("로그인 후 이용해주세요.");
 		      location.href = "/loginForm.omc";
 		   }
-		
 	}
-	
 </script>
 <body>
 
@@ -52,7 +49,6 @@
 		<br>
 		<br>
   		<!-- 고객센터 목록 부분 -->
-  		
 			<div style="text-align:center" id="board" >
 				<div class="col-md-12 ftco-animate">
 					<div class="cart-list">

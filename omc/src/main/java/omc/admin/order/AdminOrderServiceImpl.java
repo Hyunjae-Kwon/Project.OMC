@@ -43,5 +43,50 @@ public class AdminOrderServiceImpl implements AdminOrderService{
 		adminOrderDAO.updateOrderDirect(map);
 	}
 
+	/* 주문 수량 구하기 */
+	@Override
+	public int orderCount() throws Exception {
+		Map<String,Object> mapCount = adminOrderDAO.orderCount();
+		return Integer.parseInt(String.valueOf(mapCount.get("COUNT")));
+	}
+	
+	//주문 리스트 페이징
+	@Override
+	public List<Map<String, Object>> orderListPaging(int START, int END) throws Exception {
+        Map<String,Object> map = new HashMap<String,Object>();
+		
+		 map.put("START", START);
+		 map.put("END", END);
+		
+		return adminOrderDAO.orderListPaging(map);
+	}
+	
+	// 주문 검색
+	@Override
+	public int orderSearchCount(String CONDITION, String KEYWORD) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("CONDITION", CONDITION);
+		map.put("KEYWORD", KEYWORD);		
+		
+		Map<String, Object> countMap = adminOrderDAO.orderSearchCount(map);
+		
+		return Integer.parseInt(String.valueOf(countMap.get("COUNT")));
+	}
+	
+	// 주문 리스트 검색 페이징
+	@Override
+	public List<Map<String, Object>> orderListSearchPaging(String CONDITION, String KEYWORD, int START, int END)
+			throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("CONDITION", CONDITION);
+		map.put("KEYWORD", KEYWORD);
+		map.put("START", START);
+		map.put("END", END);
+		
+		return adminOrderDAO.orderListSearchPaging(map);
+	}
+
 
 }

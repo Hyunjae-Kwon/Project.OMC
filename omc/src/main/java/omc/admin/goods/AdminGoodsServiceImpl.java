@@ -76,16 +76,6 @@ public class AdminGoodsServiceImpl implements AdminGoodsService {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectGoodsListPaging(int START, int END) throws Exception {
-        Map<String,Object> map = new HashMap<String,Object>();
-		
-		 map.put("START", START);
-		 map.put("END", END);
-		
-		return adminGoodsDAO.selectGoodsListPaging(map);
-	}
-
-	@Override
 	public void deleteCartGID(Map<String, Object> map) throws Exception {
 		 
 		map.put("CT_GID", map.get("GD_GID"));
@@ -141,6 +131,31 @@ public class AdminGoodsServiceImpl implements AdminGoodsService {
 	@Override
 	public void adminGoodsDelete(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		adminGoodsDAO.adminGoodsDelete(map);
+	}
+	
+	/* 전체 상품 리스트 */
+//	@Override
+//	public List<Map<String, Object>> selectGoodsListPaging(int START, int END) throws Exception {
+//        Map<String,Object> map = new HashMap<String,Object>();
+//		
+//		 map.put("START", START);
+//		 map.put("END", END);
+//		
+//		return adminGoodsDAO.selectGoodsListPaging(map);
+//	}
+	
+	/* 전체 상품 리스트, 매출 리스트 */
+    @Override
+	public Map<String, Object> selectGoodsListPaging(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return adminGoodsDAO.selectGoodsListPaging(map);
+	}
+
+    /* 매출 총합 */
+	@Override
+	public Map<String, Object> sellSum(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return adminGoodsDAO.sellSum(map);
 	}
 	
 }

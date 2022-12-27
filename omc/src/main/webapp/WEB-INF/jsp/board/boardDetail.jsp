@@ -2,6 +2,7 @@
 <%@ include file="/WEB-INF/include/include-header.jspf" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <% pageContext.setAttribute("replaceChar","\n"); %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -14,11 +15,15 @@
 <div class="container">
 <table class="board_view">
 		<colgroup>
-			<col width="13%"/>
-			<col width="13%"/>
-			<col width="13%"/>
+			<col width="12%"/>
 			<col width="13%"/>
 			<col width="12%"/>
+			<col width="13%"/>
+			<col width="12%"/>
+			<col width="13%"/>
+			<col width="12%"/>
+			<col width="13%"/>
+			
 			<col width="25%"/>
 			<col width="40%"/>
 		</colgroup>
@@ -32,10 +37,12 @@
             <td>
             <c:if test="${boardDetail.BD_TYPE eq 'C' }">커뮤니티</c:if>
             <c:if test="${boardDetail.BD_TYPE eq 'N' }">공지사항</c:if>
-            <c:if test="${boardDetail.BD_TYPE eq 'Q' }">FAQ</c:if>
+            <c:if test="${boardDetail.BD_TYPE eq 'F' }">FAQ</c:if>
             </td>
             <th scope="row">작성시간</th>
-            <td>${boardDetail.BD_REGDATE }</td>
+            <td ${boardDetail.BD_REGDATE }>
+            <fmt:formatDate value="${boardDetail.BD_REGDATE}" pattern="yyyy-MM-dd"/>   
+            </td>
             <th scope="row">조회수</th>
             <td>${boardDetail.BD_COUNT}</td>
 			</tr>
@@ -43,7 +50,7 @@
 				<th scope="row">제목</th>
 				<td colspan="5" style="font-size:25px">${boardDetail.BD_TITLE}</td>
 			</tr>		
-			<tr>
+			<tr height="200">
 				<th scope="row">내용</th>
 				<td colspan="6">${fn:replace(boardDetail.BD_CONTENT, replaceChar,"<br/>") }</td>
 				
@@ -67,15 +74,14 @@
 									 	<input type="hidden" id="BC_BCID" name="BC_BCID" value="${comment.BC_BCID }">
 										<input type="hidden" id="BC_NUM" name="BC_NUM" value="${comment.BC_NUM }">
 									 </p>
+									 <c:if test="${MEM_ID eq comment.BC_ID}">
 									<p><a onClick="deleteCheck1()" class="reply">삭제</a>
+									</c:if>
 								</div>
-						
 						     </li>
 						</ul>
 					</c:forEach>
-					
 				</c:if>
-				
 			</div>
 	 
  	<form action="boardComWrite.omc?BD_NUM=${boardDetail.BD_NUM}" name="frm" id="frm" method="post" enctype="multipart/form-data">
@@ -90,15 +96,14 @@
    
    </div>
     </form> 
-  
-   
-
 	<br/>
 	<hr>
 	  <div align="center" style="height:100px;"> 
 		<input type="button" value="이전" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="window.history.back()">	
-		<input type="button" value="수정" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='updateBoardForm.omc?BD_NUM=${boardDetail.BD_NUM}'">
-		<input type="button" value="삭제" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="return deleteCheck()">
+		<c:if test="${MEM_ID eq boardDetail.BD_ID}">
+			<input type="button" value="수정" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='updateBoardForm.omc?BD_NUM=${boardDetail.BD_NUM}'">
+			<input type="button" value="삭제" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="return deleteCheck()">
+		</c:if>
     </div>
    
 	</c:forEach>	

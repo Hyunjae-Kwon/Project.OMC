@@ -346,8 +346,8 @@
 	]]>
 	</select>
 	
-	<!-- [selectGoodsListPaging] 전체 상품 게시판 페이징 -->
-	<select id="selectGoodsListPaging" parameterType="hashmap" resultType="hashmap">
+	<!-- [selectGoodsListPaging] 전체 상품 게시판 페이징, 매출 리스트 -->
+	<!-- <select id="selectGoodsListPaging" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
 		SELECT *
 		FROM (
@@ -362,6 +362,31 @@
 		)
 		WHERE R BETWEEN #{START} AND #{END}
 	    ]]>
+	</select> -->
+	
+	<select id="selectGoodsListPaging" parameterType="hashmap" resultType="hashmap">
+	<include refid="common.pagingPre"/> 
+	<choose>
+	    <when test="sort==1">
+			SELECT *
+			FROM (SELECT ROWNUM AS RNUM,S.*
+			FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY
+			    	FROM GOODS 
+			    	ORDER BY (GD_SELL * GD_DCPRICE) ASC)S)
+	    </when>
+	    <when test="sort==2">
+			SELECT *
+			FROM (SELECT ROWNUM AS RNUM,S.*
+			FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY
+			    	FROM GOODS 
+			    	ORDER BY (GD_SELL * GD_DCPRICE) DESC)S)
+	    </when>
+	    <otherwise>
+			SELECT ROW_NUMBER() OVER (ORDER BY GD_GID DESC) RNUM, GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY
+			FROM GOODS
+	    </otherwise>
+	</choose>
+	<include refid="common.pagingPost"/>
 	</select>
 	
 	<!-- [sellCountUpdate] 구매 수량 재고 업데이트 -->
@@ -385,6 +410,26 @@
 		FROM GOODS
 		WHERE GD_GNAME LIKE '%'||#{keyword}||'%'
 	]]>
+	</select>
+	
+	<!-- [sellSum] 매출 총합 -->
+	<select id="sellSum" resultType="hashmap">
+	   SELECT SUM(GD_DCPRICE*GD_SELL) SUM
+	   FROM GOODS	
+	</select>
+	
+	<!-- [testResultGoods] 테스트 결과에 따른 추천 상품 -->
+	<select id="testResultGoods" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_CATEGORY R
+		FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_CATEGORY, ROWNUM R
+			FROM (SELECT GD_GID, GD_GNAME, GD_SELL, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_CATEGORY
+				FROM GOODS
+				WHERE GD_CATEGORY = #{GD_CATEGORY}
+				ORDER BY GD_SELL DESC)
+			)
+		WHERE R BETWEEN 1 AND 3
+	    ]]>
 	</select>
 	
 </mapper>

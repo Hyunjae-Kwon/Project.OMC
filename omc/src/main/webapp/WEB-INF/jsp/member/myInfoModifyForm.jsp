@@ -154,7 +154,7 @@ window.onload = function() {
 	<div class="sidebar-box ftco-animate" id="menu" style="margin-top:30px;">
 		<ul class="categories">
 			<li><a href="/myPage.omc" style="font-size:middle;">마이페이지</a></li>
-			<li><a href="/myInfoModify.omc" style="font-size:middle; color:#82ae46;">회원정보 수정</a></li>
+			<li><a href="/myInfoModify.omc" style="font-size:middle; color:#fd7e14;">회원정보 수정</a></li>
 			<li><a href="/myOrderList.omc" style="font-size:middle;">주문조회</a></li>
 			<li><a href="/myReviewList.omc" style="font-size:middle;">후기</a></li>
 			<li><a href="/myQnaList.omc" style="font-size:middle;">문의내역</a></li>

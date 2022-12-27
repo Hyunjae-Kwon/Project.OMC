@@ -17,7 +17,6 @@ public class OrderDAO extends AbstractDAO {
 	}
 	
 	/* 주문하기 (장바구니 -> 주문하기) */
-	@SuppressWarnings("unchecked")
 	public int insertOrderCart(Map<String, Object> map) {
 		return (int) insert("order.insertOrderCart", map);
 	}
@@ -41,8 +40,20 @@ public class OrderDAO extends AbstractDAO {
 	
 	/* 마이페이지 주문조회 */
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> myOrderList(Map<String, Object> map) {
-		return (List<Map<String, Object>>) selectList("order.selectOrderMemberId", map);
+	public Map<String, Object> myOrderListPaging(Map<String, Object> map) throws Exception{
+		return (Map<String, Object>) selectPagingList("order.myOrderList", map);
+	}	
+	
+	/* 마이페이지 주문 상세 */
+	@SuppressWarnings("unchecked")
+	   public List<Map<String, Object>> selectOrderODNum(Map<String, Object> map) throws Exception{
+	      return (List<Map<String, Object>>) selectList("order.selectOrderODNum", map);
+	}
+	
+	/* 마이페이지 주문 결제정보 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectPayODNum(Map<String, Object> map) throws Exception{
+		return (Map<String, Object>) selectOne("order.selectPayODNum", map);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -53,6 +64,7 @@ public class OrderDAO extends AbstractDAO {
 
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> selectOIDMax() throws Exception {
+		// TODO Auto-generated method stub
 		return (Map<String, Object>) selectOne("order.selectOIDMax");
 	}
 	

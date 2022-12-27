@@ -46,12 +46,23 @@ public class OrderServiceImpl implements OrderService {
 
 	/* 마이페이지 주문조회 */
 	@Override
-	public List<Map<String, Object>> myOrderList(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return orderDAO.myOrderList(map);
+	public Map<String, Object> myOrderListPaging(Map<String, Object> map) throws Exception{
+		return orderDAO.myOrderListPaging(map);
 	}
-
-
+	
+	/* 마이페이지 주문 상세 */
+	@Override
+	public Map<String, Object> selectPayODNum(Map<String, Object> map) throws Exception{
+		return orderDAO.selectPayODNum(map);
+	}
+	
+	/* 마이페이지 주문 결제정보 */
+	@Override
+	public List<Map<String, Object>> selectOrderODNum(Map<String, Object> map) throws Exception{
+		return orderDAO.selectOrderODNum(map);
+	}
+	
+	
 	@Override
 	public List<Map<String, Object>> selectOrderOid(Map<String, Object> map) {
 		// TODO Auto-generated method stub

@@ -17,7 +17,7 @@ public interface BoardService {
 	
 	//커뮤니티 리스트
 	Map<String,Object> boardListPaging(Map<String, Object>map) throws Exception;
-
+	
 	//공지,faq,커뮤니티 상세보기
 	List<Map<String, Object>> selectBoardId(Map<String, Object>map) ;
 	

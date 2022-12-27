@@ -32,4 +32,28 @@ public class AdminOrderDAO extends AbstractDAO{
 	public void updateOrderDirect(Map<String, Object> map) throws Exception {
 		update("order.updateOrderDirect", map); 
 	}
+	
+	/* 주문 수량 구하기 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> orderCount() throws Exception {
+		return (Map<String, Object>) selectOne("order.orderCount");
+	}
+	
+	/* 주문 리스트 페이징 */
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> orderListPaging(Map<String, Object> map) throws Exception{
+		return (List<Map<String, Object>>) selectList("order.orderListPaging", map);
+	}	
+	
+	/* 검색된 주문 수 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> orderSearchCount(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>) selectOne("order.orderSearchCount", map);
+	}
+	
+	/* 주문 검색 페이징 */
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> orderListSearchPaging(Map<String, Object> map) throws Exception{
+		return (List<Map<String, Object>>) selectList("order.orderListSearchPaging", map);
+	}
 }

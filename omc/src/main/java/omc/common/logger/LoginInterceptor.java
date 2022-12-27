@@ -32,7 +32,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 					uri.equals("/findIdResult.omc") || uri.equals("/findPw.omc") || uri.equals("/findPwResult.omc") ||
 					uri.equals("/confirmId.omc") || uri.equals("/allGoodsList.omc") || uri.equals("/allGoodsListNew.omc") ||
 					uri.equals("/allGoodsListBest.omc") || uri.equals("/noticeList.omc") || uri.equals("/faqList.omc") ||
-					uri.equals("/boardList.omc") || uri.equals("/boardDetail1.omc") || uri.equals("/boardDetail.omc")
+					uri.equals("/boardList.omc") || uri.equals("/boardDetail1.omc") || uri.equals("/boardDetail.omc") || uri.equals("/allGoodsListCategory.omc")
 				)) {
 			System.out.println("- 로그인하지 않음 -");
 			return true;
