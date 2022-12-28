@@ -177,15 +177,6 @@
 	]]>
 	</select>
 	
-	<!-- [selectTotalPay] 총 결제 금액 -->
-	<!-- <select id="selectTotalPay" parameterType="hashmap" resultType="hashmap">
-	<![CDATA[
-		SELECT TOTALPAY
-		FROM PAYMENT
-		WHERE ODNUM = #{ODNUM}
-	]]>
-	</select> -->
-	
 	<!-- [selectPayODNum] 장바구니번호로 결제 정보 조회 -->
 	<select id="selectPayODNum" parameterType="hashmap" resultType="hashmap"> 
 	<![CDATA[

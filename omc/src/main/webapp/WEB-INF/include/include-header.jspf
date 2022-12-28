@@ -25,15 +25,12 @@
     <link rel="stylesheet" href="resources/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="resources/css/jquery.timepicker.css">
 
-    
     <link rel="stylesheet" href="resources/css/flaticon.css">
     <link rel="stylesheet" href="resources/css/icomoon.css">
     <link rel="stylesheet" href="resources/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="/resources/css/ui.css" />
      
-	<link rel="stylesheet" href="resources/css/join.css">
-	    	
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	

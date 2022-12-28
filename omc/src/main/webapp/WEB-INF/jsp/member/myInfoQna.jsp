@@ -27,9 +27,9 @@
 </div>
 <div class="col-sm-10">
 	<div style="text-align:center">
-		<br><br>
-		<h3> 내 문의내역 </h3>
+		<h3> 내 문의내역 </h3><br><br>
 	</div>
+	<button type="button" class="btn btn-dark py-2 px-3" style="float:right;" onClick="location.href='/boardWriteForm.omc'">글쓰기</button>
 	<br><br>
 		<div class="row">
 			<div class="col-md-12 ftco-animate">
@@ -57,8 +57,9 @@
    			
    										<td><a href="/boardDetail.omc?BD_NUM=${qna.BD_NUM}">${qna.BD_CONTENT}</a></td>
 										
-										<td>${qna.BD_REGDATE}</td>
-										
+										<td ${qna.BD_REGDATE}>
+   									<fmt:formatDate value="${qna.BD_REGDATE}" pattern="yyyy-MM-dd"/>   	
+   										</td>	
 									</tr><!-- END TR-->
 									</c:forEach>
 								</c:when>

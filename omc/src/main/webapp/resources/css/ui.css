@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 
-a:link, a:visited {text-decoration: none; color: #656565;}
+/* a:link, a:visited {text-decoration: none; color: #656565;} */
 
 .board_list {width:100%;border-top:5px solid pink;border-bottom:1px solid #ccc}
 .board_list thead th:first-child{background-image:none}

@@ -15,7 +15,7 @@
 
 <div style="text-align:center">
 	<br>
-	<span style="font-size:xx-large; color:#82ae46;"><b>비밀번호 찾기 결과</b></span>
+	<span style="font-size:xx-large; color:#fd7e14;"><b>비밀번호 찾기 결과</b></span>
 </div>
 <hr>
 <div style="text-align:center">
@@ -29,11 +29,11 @@
          <c:if test="${list!=null && list!=''}">
 	 <c:forEach items="${list}" var="item" varStatus="i">
 	
-		고객님께서 가입하신 비밀번호는
-		<div><c:out value="${item.MEM_PW}"/></div>
+		고객님께서 가입하신 비밀번호는<br><br>
+		<div><b><c:out value="${item.MEM_PW}"/></b></div>
 		입니다.
 	</c:forEach>
-
+	<br><br><br>
 </c:if>
 	
 	<p></p>		

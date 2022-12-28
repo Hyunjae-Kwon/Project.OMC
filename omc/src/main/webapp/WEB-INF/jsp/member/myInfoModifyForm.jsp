@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="resources/css/join.css">
 <meta charset="UTF-8">
 <title>오늘의 메뉴 추천, 오메추</title>
 <script

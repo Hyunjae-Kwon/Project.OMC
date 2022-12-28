@@ -92,7 +92,7 @@
 					<div class="select-wrap">
 					<h6 class="mb-4" style="text-align:left;">배송상태</h6>
 						<select name="OD_STATUS" id="OD_STATUS" class="form-control" style="width:400px;">
-							<option id="OD_STATUS" <c:if test="${orderDetail.OD_STATUS eq '배송전'}">selected</c:if> value="배송전">배송전</option>
+							<option id="OD_STATUS" <c:if test="${orderDetail.OD_STATUS eq '상품준비중'}">selected</c:if> value="상품준비중">상품준비중</option>
 		                    <option id="OD_STATUS" <c:if test="${orderDetail.OD_STATUS eq '배송중'}">selected</c:if> value="배송중">배송중</option>
 		                    <option id="OD_STATUS" <c:if test="${orderDetail.OD_STATUS eq '배송완료'}">selected</c:if> value="배송완료">배송완료</option>
 						</select>

@@ -66,7 +66,7 @@
 						    <td>${order.OD_TOTAL}</td>
 						    <td>
 						    <c:choose>
-						    	<c:when test="${order.OD_STATUS eq '배송전'}">&emsp;배송전&emsp;</c:when>
+						    	<c:when test="${order.OD_STATUS eq '상품준비중'}">&emsp;상품준비중&emsp;</c:when>
 						    	<c:when test="${order.OD_STATUS eq '배송중'}">&emsp;배송중&emsp;</c:when>
 						    	<c:when test="${order.OD_STATUS eq '배송완료'}">&emsp;배송완료&emsp;</c:when>
 						    </c:choose>

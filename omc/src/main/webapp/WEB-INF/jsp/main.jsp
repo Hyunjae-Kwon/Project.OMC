@@ -63,8 +63,7 @@
 					<div class="container" align="center">
 						<div class="row">
 							<c:forEach var="goods" items="${mainList}">
-								<div class="col-md-6 col-lg-3 ftco-animate"
-									style="float: left; width: 33%; padding: 10px;">
+								<div class="col-md-6 col-lg-3 ftco-animate" style="float: left; width: 33%; padding: 10px;">
 									<div class="goods">
 										<a href="/goodsDetail.omc?GD_GID=${goods.GD_GID}" class="img-prod"><img class="img-fluid"
 											src="resources/img/goods/${goods.GD_IMAGE}" style="height: 250px;"></a>
@@ -80,8 +79,8 @@
 														</p>
 														</c:when>
 													<c:otherwise>
-														<p class="price" style="color: gray;">
-														<strike><fmt:formatNumber value="${goods.GD_PRICE}" pattern="#,###"/>원</strike>
+														<p class="price">
+														<fmt:formatNumber value="${goods.GD_PRICE}" pattern="#,###"/>원
 														</p>
 														<p class="dcPrice">
 														<fmt:formatNumber value="${goods.GD_DCPRICE}" pattern="#,###"/>원

@@ -40,14 +40,21 @@
       <h1>당신의 결과는?!</h1>
       <form id="resultSet">
 	      <div id="FT_TITLE" class="resultname">
-	      	${testResult.FT_TITLE}
+	      	<h2 class="mb-4">
+				<c:if test="${testResult.FT_TITLE eq 'KOREAN'}">"한식"</c:if>
+				<c:if test="${testResult.FT_TITLE eq 'ITALIAN'}">"양식"</c:if>
+				<c:if test="${testResult.FT_TITLE eq 'CHIJAP'}">"중식/일식"</c:if>
+				<c:if test="${testResult.FT_TITLE eq 'ASIAN'}">"아시안 푸드"</c:if>
+				<c:if test="${testResult.FT_TITLE eq 'SNACKBAR'}">"분식"</c:if>
+				<c:if test="${testResult.FT_TITLE eq 'HEALTHY'}">"건강식"</c:if>
+			</h2>
 	      </div>
 	      <div id="resultImg" class="my-3 col-lg-6 col-md-8 col-sm-10 col-12 mx-auto">
-			<img src="resources/img/foodtest/${testResult.FT_IMAGE}" class="img-fluid">
+			<img src="resources/img/foodtest/${testResult.FT_IMAGE}" class="img-fluid"><br>
 	      </div>
 	      <div id="FT_CONTENT" class="resultDesc">
-			${testResult.FT_CONTENT}
-	      </div>
+			${testResult.FT_CONTENT}<br>
+	      </div><br>
 	      <h3>오메추 추천 상품</h3>
 	      <div>
 	      	<div class="row">
@@ -56,15 +63,27 @@
 	    				<div class="goods">
 	    					<a href="/goodsDetail.omc?GD_GID=${goods.GD_GID}" class="img-prod">
 	    						<img class="img-fluid" src="resources/img/goods/${goods.GD_IMAGE}" style="height:250px;">
-	    						<div class="overlay"></div>
 	    					</a>
 	    					<div class="text py-3 pb-4 px-3 text-center">
-	    						<h3><a href="/goodsDetail.omc?GD_GID=${goods.GD_GID}">${goods.GD_GNAME}</a></h3>
-	    						<div class="d-flex">
-	    							<div class="pricing">
-	    								<p class="dcPrice"><span>${goods.GD_DCPRICE}원</span></p>
-			    						<p class="price"><span>${goods.GD_PRICE}원</span></p>
-			    					</div>
+	    						<h5>
+									<a href="/goodsDetail.omc?GD_GID=${goods.GD_GID}">${goods.GD_GNAME}</a>
+								</h5>
+    							<div class="pricing">
+    								<c:choose>
+										<c:when test="${goods.GD_DCPRICE==goods.GD_PRICE}">
+											<p class="dcPrice">
+											<fmt:formatNumber value="${goods.GD_DCPRICE}" pattern="#,###"/>원
+											</p>
+											</c:when>
+										<c:otherwise>
+											<p class="price">
+											<fmt:formatNumber value="${goods.GD_PRICE}" pattern="#,###"/>원
+											</p>
+											<p class="dcPrice">
+											<fmt:formatNumber value="${goods.GD_DCPRICE}" pattern="#,###"/>원
+											</p>
+										</c:otherwise>
+									</c:choose>
 		    					</div>
 	    					</div>
 	    				</div>

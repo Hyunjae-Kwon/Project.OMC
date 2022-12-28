@@ -11,7 +11,7 @@
 
 <div style="text-align:center">
 	<br>
-	<span style="font-size:xx-large; color:#82ae46;"><b>아이디 찾기 결과</b></span>
+	<span style="font-size:xx-large; color:#fd7e14;"><b>아이디 찾기 결과</b></span>
 </div>
 <hr>
 <div style="text-align:center">
@@ -25,11 +25,11 @@
          <c:if test="${list!=null && list!=''}">
 	 <c:forEach items="${list}" var="item" varStatus="i">
 	
-		고객님께서 가입하신 아이디는
-		<div><c:out value="${item.MEM_ID}"/></div>
+		고객님께서 가입하신 아이디는<br><br>
+		<div><b><c:out value="${item.MEM_ID}"/></b></div><br>
 		입니다.
 	</c:forEach>
-
+	<br><br><br>
 </c:if>
 		<p></p>
 		<input type="button" value="로그인" class="btn btn-primary py-2 px-4"

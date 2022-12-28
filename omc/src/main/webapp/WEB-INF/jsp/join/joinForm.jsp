@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="resources/css/join.css">
 <meta charset="UTF-8">
 <title>오메추</title>
 <script
@@ -175,9 +176,9 @@ window.onload = function() {
 	<div id="container">
 		<div id="contents">
 			<div class="sub_content">
-				<div class="content_box">
-					<div class="join_base_wrap">
-						<div class="member_tit">
+				<div class="content_box" style="padding-left: 300px;">
+					<div class="join_base_wrap" >
+						<div class="member_tit" style="text-align:center;">
 							<form id="joinForm" name="joinForm" method="POST" action="/joinSuccess.omc" class="billing-form">
 								<h2>회원가입</h2>
 						</div>

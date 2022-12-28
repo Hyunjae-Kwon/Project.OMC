@@ -201,7 +201,7 @@ window.onload = function() {
 						</td>
 					</tr>
 					<c:forEach var="review" items="${reviewList}">
-					<tr bgcolor="#E4F7BA">
+					<tr bgcolor="#FFFFFF">
 						<td style="width:60%; text-align:left;">
 						<h5 class="heading"><b>${review.BD_TITLE}</b></h5>
 						</td>
@@ -237,7 +237,7 @@ window.onload = function() {
 					</tr>
 										
 					<c:forEach var="qna" items="${qnaList}">
-					<tr bgcolor="#E4F7BA">
+					<tr bgcolor="#FFFFFF">
 						<td style="width:60%; text-align:left;">
 						<h5 class="heading"><b>${qna.BD_TITLE}</b></h5>
 						</td>
