@@ -31,15 +31,4 @@ public class MyPageServiceImpl implements MyPageService {
 	public void deleteMember(Map<String, Object> map) throws Exception {
 		myPageDAO.deleteMember(map);
 	}
-
-//	@Override
-//	public Map<String, Object> checkPw(Map<String, Object> map) throws Exception {
-//		return myPageDAO.checkPw(map);
-//	}
-	
-//	@Override
-//	public List<Map<String, Object>> orderList(Map<String, Object> map) {
-//		return myPageDAO.orderList(map);
-//	}
-	
 }

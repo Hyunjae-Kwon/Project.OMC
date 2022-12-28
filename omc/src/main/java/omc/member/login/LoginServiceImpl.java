@@ -18,21 +18,18 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public Map<String, Object> selectMemberId(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
 		return loginDAO.selectMemberId(map);
 	}
 	
 	//아이디찾기
 	@Override
 	public List<Map<String, Object>> findId(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
 		return loginDAO.findId(map);
 	}
 
 	//비밀번호찾기 
 	@Override
 	public List<Map<String, Object>> findPw(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
 		return loginDAO.findPw(map);
 	}
 

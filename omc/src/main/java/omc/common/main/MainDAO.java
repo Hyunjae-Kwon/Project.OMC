@@ -14,5 +14,4 @@ public class MainDAO extends AbstractDAO {
 	public List<Map<String, Object>> selectGoodsList(Map<String, Object> map) throws Exception {
 		return (List<Map<String, Object>>) selectList ("goods.selectGoodsList", map);
 	}
-
 }

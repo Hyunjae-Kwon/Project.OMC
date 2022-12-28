@@ -3,8 +3,6 @@ package omc.admin.member;
 import java.util.List;
 import java.util.Map;
 
-import omc.common.common.CommandMap;
-
 public interface AdminMemberService {
 
 	List<Map<String, Object>> memberList() throws Exception;
@@ -22,5 +20,4 @@ public interface AdminMemberService {
 	public void deleteMember(Map<String, Object> map) throws Exception;
 
 	void updateMemberAdmin(Map<String, Object> map) throws Exception;
-
 }

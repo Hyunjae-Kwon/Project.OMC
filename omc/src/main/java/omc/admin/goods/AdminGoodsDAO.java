@@ -55,13 +55,7 @@ public class AdminGoodsDAO extends AbstractDAO {
 	public void adminUpdateImg(Map<String, Object> map) throws Exception{
 		update("goods.adminUpdateImg", map);
 	}
-	
-	/* 상품 수정 폼*/
-//	@SuppressWarnings("unchecked")
-//	public Map<String, Object> goodsModifyForm(Map<String, Object> map){
-//		return (Map<String, Object>) selectList("goods.goodsModify",map);
-//	}
-	
+
 	/* 상품 수정 */
 	public void adminGoodsModify(Map<String, Object> map) throws Exception {
 		insert("goods.adminGoodsModify", map);
@@ -83,9 +77,4 @@ public class AdminGoodsDAO extends AbstractDAO {
 	public Map<String, Object> selectGoodsListPaging(Map<String, Object> map) throws Exception{
 		return (Map<String, Object>) selectPagingList("goods.selectGoodsListPaging", map);
 	}
-    
-//    @SuppressWarnings("unchecked")
-//	public List<Map<String, Object>> selectGoodsListPaging(Map<String, Object> map) throws Exception{
-//		return (List<Map<String, Object>>) selectList("goods.selectGoodsListPaging", map);
-//	}
 }

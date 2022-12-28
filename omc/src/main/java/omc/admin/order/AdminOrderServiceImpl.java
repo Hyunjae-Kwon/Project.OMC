@@ -8,8 +8,6 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import omc.common.common.CommandMap;
-
 @Service("adminOrderService")
 public class AdminOrderServiceImpl implements AdminOrderService{
 
@@ -33,13 +31,11 @@ public class AdminOrderServiceImpl implements AdminOrderService{
 
 	@Override
 	public Map<String, Object> selectOrderOId(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
 		return adminOrderDAO.selectOrderOId(map);
 	}
 
 	@Override
 	public void updateOrderDirect(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
 		adminOrderDAO.updateOrderDirect(map);
 	}
 
@@ -87,6 +83,4 @@ public class AdminOrderServiceImpl implements AdminOrderService{
 		
 		return adminOrderDAO.orderListSearchPaging(map);
 	}
-
-
 }

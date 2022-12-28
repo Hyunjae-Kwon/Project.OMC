@@ -19,5 +19,4 @@ public class MainServiceImpl implements MainService {
 	public List<Map<String, Object>> selectGoodsList(Map<String, Object> map) throws Exception {
 		return mainDAO.selectGoodsList(map);
 	}
-
 }

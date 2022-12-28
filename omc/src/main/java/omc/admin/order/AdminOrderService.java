@@ -3,8 +3,6 @@ package omc.admin.order;
 import java.util.List;
 import java.util.Map;
 
-import omc.common.common.CommandMap;
-
 public interface AdminOrderService {
 	
 	//주문리스트

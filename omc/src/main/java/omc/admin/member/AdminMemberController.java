@@ -56,15 +56,6 @@ public class AdminMemberController {
 		if(keyword!=null && keyword.equals("")) {
 			keyword = null;
 		}
-//		if(condition!=null && condition.equals("RANK") && keyword!=null && keyword.equals("브론즈")) {
-//			keyword = "B";
-//		}
-//		if(condition!=null && condition.equals("RANK") && keyword!=null && keyword.equals("실버")) {
-//			keyword = "S";
-//		}
-//		if(condition!=null && condition.equals("RANK") && keyword!=null && keyword.equals("골드")) {
-//			keyword = "G";
-//		}
 		
 		/* 페이징을 위한 값 계산 */
 		if(keyword == null || keyword.trim() =="") { // 검색 조건이 아닐 때
@@ -104,16 +95,6 @@ public class AdminMemberController {
 	}
 	
 	// 관리자 - 회원 리스트 상세
-//	@RequestMapping(value = "/memberDetail.omc")
-//	@ResponseBody
-//	public ModelAndView memberDetail(CommandMap commandMap, HttpServletRequest request,Model model) throws Exception {
-//		ModelAndView mv = new ModelAndView("admin/member/memberDetail");
-//		Map<String, Object> selectMemberId = adminMemberService.selectMemberId(commandMap.getMap());
-//		model.addAttribute("selectMemberId", selectMemberId);
-//		
-//		return mv;
-//	}
-
 	@RequestMapping(value = "/memberDetail.omc")
 	   public ModelAndView memberDetail (CommandMap commandMap, Model model) throws Exception {
 		ModelAndView mv = new ModelAndView("admin/member/memberDetail");
@@ -149,7 +130,6 @@ public class AdminMemberController {
 		mv.addObject("url", "/memberList.omc");
 		return mv;
 	}
-
 	
 	// 관리자 - 회원 리스트 삭제
 	@RequestMapping(value = "/memberDelete.omc")
@@ -173,6 +153,4 @@ public class AdminMemberController {
 		
 		return mv;
 	}
-	
-	
 }

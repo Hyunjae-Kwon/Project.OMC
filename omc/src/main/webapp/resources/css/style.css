@@ -74,7 +74,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 1rem; }
+  margin-bottom: 0rem; }
 
 abbr[title],
 abbr[data-original-title] {
@@ -2682,7 +2682,7 @@ input[type="button"].btn-block {
 
 .dropdown-divider {
   height: 0;
-  margin: 0.5rem 0;
+  /* margin: 0.5rem 0; */
   overflow: hidden;
   border-top: 1px solid #e9ecef; }
 
@@ -7899,7 +7899,8 @@ a.text-light:hover, a.text-light:focus {
   color: #cbd3da !important; }
 
 .text-dark {
-  color: #343a40 !important; }
+  font-family: 'Nanum Pen Script', cursive;
+  color: black !important; }
 
 a.text-dark:hover, a.text-dark:focus {
   color: #121416 !important; }
@@ -8067,7 +8068,7 @@ h1, h2, h3, h4, h5,
   .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
     font-size: 11px;
     padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 0rem;
     padding-left: 20px;
     padding-right: 20px;
     font-weight: 400;
@@ -8099,8 +8100,8 @@ h1, h2, h3, h4, h5,
     .ftco-navbar-light .navbar-nav > .nav-item .dropdown-menu .dropdown-item {
       font-size: 14px; }
       .ftco-navbar-light .navbar-nav > .nav-item .dropdown-menu .dropdown-item:hover, .ftco-navbar-light .navbar-nav > .nav-item .dropdown-menu .dropdown-item:focus {
-        background: transparent;
-        color: #000000; }
+        background: #6c757d;
+        color: white; }
   .ftco-navbar-light .navbar-nav > .nav-item.ftco-seperator {
     position: relative;
     margin-left: 20px;
@@ -9273,11 +9274,10 @@ textarea.form-control {
 .heading-section {
   position: relative; }
   .heading-section .subheading {
-    font-size: 18px;
+    font-size: 25px;
     display: block;
     margin-bottom: 10px;
-    font-family: "Lora", Georgia, serif;
-    font-style: italic;
+    font-family: "Nanum Pen Script", cursive;
     color: #fd7e14; }
   .heading-section h2 {
     position: relative;

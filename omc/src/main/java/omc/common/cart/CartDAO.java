@@ -3,12 +3,9 @@ package omc.common.cart;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Repository;
 
 import omc.common.common.AbstractDAO;
-import omc.common.common.CommandMap;
 
 @Repository("cartDAO")
 public class CartDAO  extends AbstractDAO{
@@ -18,12 +15,10 @@ public class CartDAO  extends AbstractDAO{
 		return (List<Map<String, Object>>) selectList("cart.cartList",map);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void cartPut(Map<String, Object> map){
 	 insert("cart.cartPut",map);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void cartDelete(Map<String, Object> map){
 	 insert("cart.cartDelete",map);
 	}
@@ -76,6 +71,5 @@ public class CartDAO  extends AbstractDAO{
 	/* 선택상품 장바구니 삭제 */
 	public void delCartOrder(String loginId) throws Exception {
 		delete("cart.delCartOrder", loginId);
-	}
-	
+	}	
 }

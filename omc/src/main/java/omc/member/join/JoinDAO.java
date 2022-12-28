@@ -18,7 +18,6 @@ public class JoinDAO extends AbstractDAO {
 	}
 
 	public Object selectMemberId(String iD) throws Exception {
-		// TODO Auto-generated method stub
 		return selectOne("member.selectMemberId", iD);
 	}
 

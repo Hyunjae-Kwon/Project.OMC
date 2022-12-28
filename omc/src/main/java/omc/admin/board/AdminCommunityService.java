@@ -3,8 +3,6 @@ package omc.admin.board;
 import java.util.List;
 import java.util.Map;
 
-import omc.common.common.CommandMap;
-
 public interface AdminCommunityService {
 
 	public List<Map<String, Object>> noticeList()throws Exception;
@@ -74,5 +72,4 @@ public interface AdminCommunityService {
 	 
 	 /* 관리자 커뮤니티 삭제 */
 	 void adminBoardDelete(Map<String, Object> map) throws Exception;
-
 }

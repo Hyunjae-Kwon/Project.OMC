@@ -56,7 +56,5 @@ public class GoodsPaging {
 	public String toString() {
 		return "GoodsPaging [page=" + page + ", perPageNum=" + perPageNum + ", rowStart=" + rowStart + ", rowEnd=" + rowEnd
 				+ "]";
-	}
-	
-	
+	}	
 }

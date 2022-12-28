@@ -4,7 +4,6 @@ package omc.common.resolver;
 // supportsParameter 메서드 : Resolver가 적용 가능한지 검사하는 역할 
 // resolveArgument 메서드 : 파라미터와 기타 정보를 받아서 실제 객체를 반환
 // supportsparameter 메서드는 컨트롤러의 파라미터가 CommandMap 클래스인지 검사하도록 하였다.
-
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,5 +40,4 @@ public class CustomMapArgumentResolver implements HandlerMethodArgumentResolver{
 		}
 		return commandMap;	// 모든 파라미터가 담겨있는 commandMap을 반환
 	}
-
 }

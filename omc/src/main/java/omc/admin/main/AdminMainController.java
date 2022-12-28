@@ -13,5 +13,4 @@ public class AdminMainController {
 		ModelAndView mv = new ModelAndView("admin/admin/adminMainForm");
 		return mv;
 	}
-	
 }

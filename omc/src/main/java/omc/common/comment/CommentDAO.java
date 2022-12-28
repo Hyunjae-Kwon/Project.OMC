@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import omc.common.common.AbstractDAO;
 
-
 @Repository("commentDAO")
 public class CommentDAO extends AbstractDAO{
 	
@@ -19,16 +18,14 @@ public class CommentDAO extends AbstractDAO{
 		return (List<Map<String, Object>>) selectList("comment.selectCommentList", map);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void insertBoardComment(Map<String, Object> map) throws Exception{
 		insert("comment.insertBoardComment",map);
 	}
-	//댓삭
+	//댓글삭제
 	public void deleteComment(Map<String, Object> map) throws Exception {
 		delete("comment.deleteComment", map);	
 	}
-	//댓수정
-	@SuppressWarnings("unchecked")
+	//댓글수정
 	public void updateComment(Map<String, Object> map) throws Exception {
 		update("comment.updateComment", map);
 	}

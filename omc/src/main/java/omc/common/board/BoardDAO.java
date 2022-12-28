@@ -78,5 +78,4 @@ public class BoardDAO extends AbstractDAO{
 	public void insertQna(Map<String, Object> map) throws Exception {
 		insert("board.insertQna", map);
 	}
-
 }

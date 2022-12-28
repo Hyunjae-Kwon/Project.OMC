@@ -38,7 +38,8 @@
             <td>
             <c:if test="${boardDetail.BD_TYPE eq 'C' }">커뮤니티</c:if>
             <c:if test="${boardDetail.BD_TYPE eq 'N' }">공지사항</c:if>
-            <c:if test="${boardDetail.BD_TYPE eq 'Q' }">FAQ</c:if>
+            <c:if test="${boardDetail.BD_TYPE eq 'F' }">FAQ</c:if>
+            <c:if test="${boardDetail.BD_TYPE eq 'Q' }">Q&A</c:if>
             </td>
             <th scope="row">작성시간</th>
             <td ${boardDetail.BD_REGDATE }>

@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import omc.common.common.AbstractDAO;
-import omc.common.common.CommandMap;
 
 @Repository("adminCommunityDAO")
 public class AdminCommunityDAO extends AbstractDAO {
@@ -27,13 +26,11 @@ public class AdminCommunityDAO extends AbstractDAO {
 	}
 		
 	//관리자 공지사항 글 등록
-	@SuppressWarnings("unchecked")
 	public void insertNotice(Map<String,Object> map) throws Exception{
 		insert("board.insertNotice",map);
 	}
 		
 	//관리자 공지사항 수정 
-	@SuppressWarnings("unchecked")
 	public void updateNoticeId(Map<String,Object> map) throws Exception{
 		update("board.updateNoticeId",map);
 	}
@@ -63,25 +60,21 @@ public class AdminCommunityDAO extends AbstractDAO {
 	}
 	
 	//관리자 고객센터 댓글 입력
-	@SuppressWarnings("unchecked")
 	public void insertComment(Map<String, Object> map) throws Exception{
 		insert("board.insertComment",map);
 	}
 	
 	//관리자 고객센터 댓글 수정
-	@SuppressWarnings("unchecked")
 	public void updateComment(Map<String, Object> map) throws Exception {
 		update("board.updateComment", map);
 	}
 
 	//관리자 고객센터 댓글 삭제
-	@SuppressWarnings("unchecked")
 	public void deleteComment(Map<String, Object> map) throws Exception {
 		delete("board.deleteComment", map);
 	}
 	
 	//관리자 공지,후기 삭제 기능
-	@SuppressWarnings("unchecked")
 	public void deleteCommunityId(Map<String, Object> map) throws Exception {
 		delete("board.deleteCommunityId", map);
 	}
@@ -178,5 +171,4 @@ public class AdminCommunityDAO extends AbstractDAO {
    public void adminBoardDelete(Map<String, Object> map) throws Exception {
        delete("board.deleteBoard", map);
    }
-   
 }

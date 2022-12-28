@@ -115,12 +115,6 @@ public class AdminGoodsServiceImpl implements AdminGoodsService {
 		adminGoodsDAO.adminUpdateImg(map1);
 	}
 	
-	/* 상품 수정 폼 */
-//	@Override
-//	public Map<String, Object> goodsModifyForm(Map<String, Object> map) {
-//		return goodsDAO.goodsModifyForm(map);
-//	}
-	
 	/* 상품 수정 */
 	@Override
 	public void adminGoodsModify(Map<String, Object> map, MultipartHttpServletRequest request) throws Exception {
@@ -133,29 +127,15 @@ public class AdminGoodsServiceImpl implements AdminGoodsService {
 		adminGoodsDAO.adminGoodsDelete(map);
 	}
 	
-	/* 전체 상품 리스트 */
-//	@Override
-//	public List<Map<String, Object>> selectGoodsListPaging(int START, int END) throws Exception {
-//        Map<String,Object> map = new HashMap<String,Object>();
-//		
-//		 map.put("START", START);
-//		 map.put("END", END);
-//		
-//		return adminGoodsDAO.selectGoodsListPaging(map);
-//	}
-	
 	/* 전체 상품 리스트, 매출 리스트 */
     @Override
 	public Map<String, Object> selectGoodsListPaging(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
 		return adminGoodsDAO.selectGoodsListPaging(map);
 	}
 
     /* 매출 총합 */
 	@Override
 	public Map<String, Object> sellSum(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
 		return adminGoodsDAO.sellSum(map);
 	}
-	
 }

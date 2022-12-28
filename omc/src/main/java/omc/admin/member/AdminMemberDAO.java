@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import omc.common.common.AbstractDAO;
-import omc.common.common.CommandMap;
 
 @Repository("adminMemberDAO")
 public class AdminMemberDAO extends AbstractDAO {
@@ -28,7 +27,6 @@ public class AdminMemberDAO extends AbstractDAO {
 	
 	//회원정보 수정
 	public void updateMemberAdmin(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
 		update("member.updateMemberAdmin", map);
 	}
 	//회원정보 삭제
@@ -59,8 +57,4 @@ public class AdminMemberDAO extends AbstractDAO {
 	public Map<String, Object> memberSearchCount(Map<String, Object> map) throws Exception {
 		return (Map<String, Object>) selectOne("member.memberSearchCount", map);
 	}
-
-
-	
-
 }

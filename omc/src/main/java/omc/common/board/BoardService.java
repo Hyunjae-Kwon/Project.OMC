@@ -43,5 +43,4 @@ public interface BoardService {
 
 	/* 상품 문의 작성 */
 	void insertQna(Map<String, Object> map) throws Exception;
-
 }

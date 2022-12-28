@@ -9,8 +9,6 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import omc.common.common.CommandMap;
-
 @Service("adminMemberService")
 public class AdminMemberServiceImpl implements AdminMemberService {
 
@@ -18,17 +16,10 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	
 	@Resource(name="adminMemberDAO")
 	private AdminMemberDAO adminMemberDAO;
-	
-//	@Override
-//	public List<Map<String, Object>> memberList(Map<String, Object> map) throws Exception {
-//		// TODO Auto-generated method stub
-//		return adminMemberDAO.memberList(map);
-//	}
 
 	@Override
 	public Map<String, Object> selectMemberId( Map<String, Object> map) throws Exception {
-		
-		
+				
 		map.put("MEM_ID",map.get("MEM_ID"));
 		
 		return adminMemberDAO.selectMemberId(map);
@@ -38,20 +29,6 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	public List<Map<String, Object>> memberList() throws Exception {
 		return adminMemberDAO.memberList();
 	}
-
-//	@Override
-//	public List<Map<String, Object>> updateMemberAdmin(CommandMap commandMap) throws Exception {
-//		
-//		commandMap.put("MEM_BLOCK", commandMap.get("MEM_BLOCK"));
-//		commandMap.put("MEM_ADD1", commandMap.get("MEM_ADD1"));
-//		commandMap.put("MEM_ADD2", commandMap.get("MEM_ADD2"));
-//		commandMap.put("MEM_ZIPCODE", commandMap.get("MEM_ZIPCODE"));
-//		commandMap.put("MEM_PHONE", commandMap.get("MEM_PHONE"));
-//		
-//		commandMap.put("MEM_ID", commandMap.get("MEM_ID"));
-//		
-//		return adminMemberDAO.updateMemberAdmin(commandMap);
-//	}
 
 	@Override
 	public void deleteMember(Map<String, Object> map) throws Exception {
@@ -105,9 +82,6 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 
 	@Override
 	public void updateMemberAdmin(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
 		adminMemberDAO.updateMemberAdmin(map);
 	}
-
-
 }

@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import omc.common.comment.CommentService;
 import omc.common.common.CommandMap;
-//import omc.common.file.FileService;
-//import omc.common.file.FileUploadController;
 
 @Controller
 public class BoardController {
-	//	private static final Logger log = Logger.getLogger(FileUploadController.class);
-
+	Logger log = Logger.getLogger(this.getClass());
+	
 	@Resource(name = "boardService")
 	BoardService boardService;
 

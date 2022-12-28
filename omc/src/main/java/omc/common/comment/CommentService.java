@@ -3,8 +3,6 @@ package omc.common.comment;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 public interface CommentService {
 	
 	public List<Map<String, Object>> selectCommentList(Map<String, Object> map)throws Exception;
@@ -14,7 +12,4 @@ public interface CommentService {
 	public void deleteComment(Map<String, Object> map) throws Exception;
 	//댓글수정
 	public void updateComment(Map<String, Object> map)throws Exception;
-
-	
-	
 }

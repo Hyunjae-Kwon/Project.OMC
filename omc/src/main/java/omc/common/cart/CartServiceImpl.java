@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
-import omc.common.common.CommandMap;
-
 @Service ("cartService")
 public class CartServiceImpl implements CartService{
 

@@ -8,8 +8,6 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import omc.common.common.CommandMap;
-
 @Service("adminCommunityService")
 public class AdminCommunityServiceImpl implements AdminCommunityService {
 

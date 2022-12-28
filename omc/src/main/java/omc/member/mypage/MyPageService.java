@@ -11,9 +11,4 @@ public interface MyPageService {
 	void updateMember(Map<String, Object> map, HttpServletRequest request) throws Exception;
 	
 	void deleteMember(Map<String, Object> map) throws Exception;
-	
-//	Map<String, Object> checkPw(Map<String, Object> map) throws Exception;
-	
-//	List<Map<String, Object>> orderList(Map<String, Object> map);
-
 }

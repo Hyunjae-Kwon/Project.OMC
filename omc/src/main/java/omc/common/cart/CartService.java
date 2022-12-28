@@ -5,10 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import omc.common.common.CommandMap;
-
 public interface CartService {
 
 	List<Map<String, Object>> cartList(Map<String, Object> map);
@@ -40,6 +36,5 @@ public interface CartService {
 	void updateNum(Map<String, Object> map) throws Exception;
 	
 	/* 장바구니 구매 상품 구매 완료 시 장바구니 삭제 */
-	void delCartOrder(String loginId) throws Exception;
-	
+	void delCartOrder(String loginId) throws Exception;	
 }

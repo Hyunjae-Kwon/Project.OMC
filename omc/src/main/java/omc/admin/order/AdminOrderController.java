@@ -26,78 +26,6 @@ public class AdminOrderController {
 	private OrderService orderService;
 
 	/* 매출 리스트 */
-//	@RequestMapping(value="/adminOrderList.omc")
-//	public ModelAndView adminOrderList(CommandMap commandMap, HttpServletRequest request) throws Exception {
-//		ModelAndView mv = new ModelAndView("admin/order/adminOrderList");
-		
-		/* 페이징을 위한 변수 */
-//		int pageSize = 10; // 페이지당 출력할 상품의 수
-//		int START = 1;
-//		int END = pageSize;
-//		int currentPage = 1; // 현재 페이지
-//
-//		int countGoodsAll; // 전체 상품의 수
-//		int pageBlock = 5; // 표시할 페이지의 수
-//		String url = "adminOrderList.omc";
-//		String searchUrl = "";
-//		
-//		//검색 조건
-//		String condition = null;
-//		String keyword = null;
-//		
-//		condition = request.getParameter("condition");
-//		keyword = request.getParameter("keyword");
-//		if(keyword!=null && keyword.equals("")) {
-//			keyword = null;
-//		}
-//		
-//		List<Map<String, Object>> orderList = adminOrderService.orderList();
-//		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-//		List<Map<String, Object>> orderBeanList = new ArrayList<Map<String, Object>>();
-//		
-//		if(keyword == null || keyword.trim() == "") {
-//			list = adminOrderService.orderList();
-//		} else {
-//			list = adminOrderService.orderListSearch(condition, keyword);
-//		} 
-//		for(Map<String, Object> mapObject : list) {
-//			orderBeanList.add(mapObject);
-//		}
-		
-		
-		/* 기본 페이지가 아닐 경우 */
-//		if(request.getParameter("page")!=null) {
-//		currentPage = Integer.parseInt(request.getParameter("page"));
-//			START = 1 + pageSize*(currentPage-1); 
-//			END = pageSize*currentPage;
-//		}
-//		
-//		countGoodsAll = orderService.allOrderCount();
-//		
-//		List<Map<String, Object>> oList = adminOrderService.selectOrderPaging(START, END);
-//		List<Map<String, Object>> sellList = new ArrayList<Map<String, Object>>();
-//		for(Map<String, Object> mapObject : oList) {
-//			sellList.add(mapObject);
-//		}
-//		
-//		mv.addObject("sellList", sellList);
-//		
-//		Paging paging = new Paging(countGoodsAll, pageBlock,
-//				pageSize ,currentPage, url, searchUrl);
-
-		/* 페이징을 위한 값 삽입 */
-//		mv.addObject("currentPage", currentPage);
-//		mv.addObject("paging", paging);
-		
-		/* 검색을 위한 값 삽입*/
-//		mv.addObject("orderList", orderList);
-//		mv.addObject("orderBeanList", orderBeanList);
-//		mv.addObject("condition", condition);
-//		
-//		return mv;
-//	}	
-		
-	/* 매출 리스트 */
 	@RequestMapping(value = "/adminOrderList.omc")
 	public ModelAndView memberList(HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("admin/order/adminOrderList");
@@ -186,7 +114,5 @@ public class AdminOrderController {
 		mv.addObject("url", "/adminOrderList.omc");
 		
 		return mv;
-	}
-	
+	}	
 }
-

@@ -14,6 +14,5 @@ public interface LoginService {
 	public List<Map<String, Object>> findPw(Map<String, Object> map)throws Exception;
 	
 	/* 상품 상세 정보에서 주문하기로 넘어갈 때 같이 전송하는 로그인 되어있는 회원 정보 */
-	public Map<String, Object> selectMember(String memberId) throws Exception;
-	
+	public Map<String, Object> selectMember(String memberId) throws Exception;	
 }

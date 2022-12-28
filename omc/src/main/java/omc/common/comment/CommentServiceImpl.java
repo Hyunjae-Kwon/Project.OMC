@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,6 @@ public class CommentServiceImpl implements CommentService{
 	
 	@Override
 	public List<Map<String, Object>> selectCommentList(Map<String, Object> map) throws Exception {
-		//Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("BC_NUM", map.get("BC_NUM"));
 		
@@ -25,7 +23,6 @@ public class CommentServiceImpl implements CommentService{
 	
 	@Override
 	public void insertBoardComment(Map<String, Object> map) throws Exception {
-		//Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("BC_NUM", map.get("BC_NUM"));
 		map.put("BC_ID", map.get("BC_ID"));
@@ -33,20 +30,18 @@ public class CommentServiceImpl implements CommentService{
 		
 		commentDAO.insertBoardComment(map);
 	}
-	//댓삭
-	 @Override
-	   public void deleteComment(Map<String, Object> map) throws Exception {
-		 commentDAO.deleteComment(map);
-	   }
-	 //댓수정
-	 @Override
-		public void updateComment(Map<String, Object> map) throws Exception {
-			//Map<String, Object> map = new HashMap<String, Object>();
+	//댓글삭제
+	@Override
+	public void deleteComment(Map<String, Object> map) throws Exception {
+		commentDAO.deleteComment(map);
+	}
+	 //댓글수정
+	@Override
+	public void updateComment(Map<String, Object> map) throws Exception {
 			
-			map.put("BC_COMMENT", map.get("BC_COMMENT"));
-			map.put("BC_BCID", map.get("BC_BCID"));
+		map.put("BC_COMMENT", map.get("BC_COMMENT"));
+		map.put("BC_BCID", map.get("BC_BCID"));
 			
-			commentDAO.updateComment(map);
-		}
-
+		commentDAO.updateComment(map);
+	}
 }
