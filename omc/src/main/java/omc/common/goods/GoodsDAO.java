@@ -76,14 +76,24 @@ public class GoodsDAO extends AbstractDAO {
 		return (Map<String, Object>)selectOne("goods.selectGD_GIDMax");
 	}
 	
-	/* 구매 수량에 따른 상품 재고 수정 */
+	/* 구매 수량 재고 업데이트 (재고 감소) */
 	public void sellCountUpdate(Map<String, Object> map) throws Exception {
 		update("goods.sellCountUpdate", map);
 	}
 	
-	/* 판매 수량 업데이트 */
+	/* 판매 수량 업데이트 (판매량 증가) */
 	public void saleCountUpdate(Map<String, Object> map) throws Exception {
 		update("goods.saleCountUpdate", map);
+	}
+	
+	/* 주문 취소 수량 재고 업데이트 (재고 증가) */
+	public void sellCountUpdateC(Map<String, Object> map) throws Exception {
+		update("goods.sellCountUpdateC", map);
+	}
+	
+	/* 주문 취소 수량 판매량 업데이트 (판매량 감소) */
+	public void saleCountUpdateC(Map<String, Object> map) throws Exception {
+		update("goods.saleCountUpdateC", map);
 	}
 	
 	/* 상품 전체 수량 구하기 */

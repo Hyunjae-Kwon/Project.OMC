@@ -50,14 +50,15 @@
 									<td>${review.BD_NUM}</td>
 									
 									<td>
-										<a href="/goodsDetail.omc?BD_NUM=${review.BD_NUM}"class="img-prod">
-										<img class="img-fluid" src="resources/img/${review.BD_GID}" style="height:70px;">
+										<a href="/goodsDetail.omc?GD_GID=${review.BD_GID}"class="img-prod">
+										<img class="img-fluid" src="resources/img/goods/goods-${review.BD_GID}.png" style="height:70px;">
 										</a>
 									</td>
 									
 									<td><b>${review.BD_TITLE}</b><br>${review.BD_CONTENT}</td>
 									
-									<td>${review.BD_REGDATE}</td>
+									<%-- <td>${review.BD_REGDATE}"</td> --%>
+									<td><fmt:formatDate value="${review.BD_REGDATE}" pattern="yy/MM/dd" type="date"/></td>
 	
 								</tr><!-- END TR-->
 								</c:forEach>

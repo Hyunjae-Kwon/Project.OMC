@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import omc.util.FileUtils;
 
@@ -81,16 +80,28 @@ public class GoodsServiceImpl implements GoodsService {
 		return goodsDAO.goodsQna(map);
 	}
 
-	/* 구매 수량 재고 업데이트 */
+	/* 구매 수량 재고 업데이트 (재고 감소) */
 	@Override
 	public void sellCountUpdate(Map<String, Object> map) throws Exception {
 		goodsDAO.sellCountUpdate(map);
 	}
 	
-	/* 판매 수량 업데이트 */
+	/* 판매 수량 업데이트 (판매량 증가) */
 	@Override
 	public void saleCountUpdate(Map<String, Object> map) throws Exception {
 		goodsDAO.saleCountUpdate(map);
+	}
+	
+	/* 주문 취소 수량 재고 업데이트 (재고 증가) */
+	@Override
+	public void sellCountUpdateC(Map<String, Object> map) throws Exception {
+		goodsDAO.sellCountUpdateC(map);
+	}
+	
+	/* 주문 취소 수량 판매량 업데이트 (판매량 감소) (판매량 감소) */
+	@Override
+	public void saleCountUpdateC(Map<String, Object> map) throws Exception {
+		goodsDAO.saleCountUpdateC(map);
 	}
 	
 	/* 상품 전체 수량 구하기 */
@@ -104,7 +115,5 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public List<Map<String, Object>> searchGoodsList(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		return goodsDAO.searchGoodsList(map);
-	}
-	
-	
+	}	
 }

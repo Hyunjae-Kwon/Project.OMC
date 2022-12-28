@@ -191,25 +191,27 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 									<td class="count" id="OD_COUNT" name="OD_COUNT">${orderCount} 개</td>
 									
 									<!-- 상품 금액 -->
-									<td class="price" id="OD_PRICE" name="OD_PRICE">${goodsInfo.GD_PRICE} 원</td>
+									<td class="price" id="OD_PRICE" name="OD_PRICE">
+										<fmt:formatNumber value="${goodsInfo.GD_PRICE}" pattern="#,###" />원
+									</td>
 									
 									<!-- 판매금액 -->
 									<td class="price">
 				          				<c:set var="salePrice" value="${goodsInfo.GD_DCPRICE}" />
-				          				<fmt:formatNumber value="${salePrice}" pattern="#.#" />원
+				          				<fmt:formatNumber value="${salePrice}" pattern="#,###" />원
 									</td>
 									
 									<!-- 할인금액 -->
 									<td class="price" id="OD_DCPRICE" name="OD_DCPRICE" style="color:Crimson">
 									<c:set var="sale" value="${(goodsInfo.GD_PRICE-goodsInfo.GD_DCPRICE)*orderCount}" />
 									<fmt:parseNumber var="saled" integerOnly="true" value="${sale}"/>
-									<fmt:formatNumber value="${saled}" pattern="#.#" />원</td> 
+									<fmt:formatNumber value="${saled}" pattern="#,###" />원</td> 
 									
 									<!-- 결제 금액 -->
 									<td class="total">
 										<c:set var="total" value="${salePrice * orderCount}" />
 										<fmt:parseNumber var="totalPrice" integerOnly="true" value="${total}"/>
-										<b><fmt:formatNumber value="${totalPrice}" pattern="#.#" />원</b>
+										<b><fmt:formatNumber value="${totalPrice}" pattern="#,###" />원</b>
 									</td>
 								</tr><!-- END TR-->
 							</tbody>
@@ -340,23 +342,25 @@ $(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).va
 	    					<h2>결제 금액</h2><br>
 	    					<p class="d-flex">
 	    						<span>주문 금액</span>
-	    						<span id="originalSum">${goodsInfo.GD_PRICE*orderCount}원</span>
+	    						<span id="originalSum">
+	    						<fmt:formatNumber value="${goodsInfo.GD_PRICE*orderCount}" pattern="#,###" />원
+	    						</span>
 	    						<input type="hidden" id="totalPrice" name="totalPrice" value="${goodsInfo.GD_PRICE*orderCount}">
 	    					</p>
 	    					<p class="d-flex">
 	    						<span>할인 금액</span>
-	    						<span id="saleSum" style="color:Crimson"><fmt:formatNumber value="${saled}" pattern="#.#" />원</span>
+	    						<span id="saleSum" style="color:Crimson"><fmt:formatNumber value="${saled}" pattern="#,###" />원</span>
 	    						<input type="hidden" id="saled" name="saled" value="${saled}">
 	    					</p>
 	    					<p class="d-flex">
 	    						<span>배송비</span>
-	    						<span>3000원</span>
+	    						<span>3,000원</span>
 	    					</p>
 	    					<hr>
 	    					<p class="d-flex total-price">
 	    						<span>총 금액</span>
 	    						<input type="hidden" id="TOTALPAY" name="finalSum">
-	    						<span id="finalSum"> <fmt:formatNumber value="${totalPrice+3000}" pattern="#.#" />원</span>
+	    						<span id="finalSum"> <fmt:formatNumber value="${totalPrice+3000}" pattern="#,###" />원</span>
 	    					</p>
 	    				</div>
 	    			</div>

@@ -16,9 +16,6 @@ public interface OrderService {
 	/* 주문 결과 확인 */
 	Map<String, Object> selectOrderOID(Map<String, Object> map, HttpServletRequest request);
 	
-	/* 총 결제 금액 */
-//	List<Map<String, Object>> selectTotalPay(int orderNum);
-	
 	/* 마이페이지 주문 조회 */
 	Map<String, Object> myOrderListPaging(Map<String, Object> map) throws Exception;
 	
@@ -43,4 +40,10 @@ public interface OrderService {
    	
    	/* 결제 정보 확인 (장바구니 -> 주문하기) */
    	Map<String, Object> selectPayODNum(int orderNum) throws Exception;
+   	
+   	/* 마이페이지 주문 취소 */
+   	void deleteOrder(Map<String, Object> map) throws Exception;
+   	
+   	/* 마이페이지 주문 취소 결제 정보 삭제 */
+   	void deletePay(Map<String, Object> map) throws Exception;
 }

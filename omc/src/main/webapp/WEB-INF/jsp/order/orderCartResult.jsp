@@ -30,8 +30,8 @@
 									<th>수량</th>
 									<th>상품 단가</th>
 									<th>할인 단가</th>
-									<th>합계 금액</th>
 									<th>할인 금액</th>
+									<th>합계 금액</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -49,21 +49,22 @@
 									<td class="count">${order.OD_COUNT}</td>
 									
 									<!-- 상품 단가 -->
-									<td class="price">${order.OD_PRICE}원</td>
+									<td class="price"><fmt:formatNumber value="${order.OD_PRICE}" pattern="#,###" />원</td>
 									
 									<!-- 할인 단가 -->
-									<td class="dcPrice">${order.OD_DCPRICE}원</td>
-									
-									<!-- 합계 금액 -->
-									<td class="price">
-				          				<c:set var="salePrice" value="${order.OD_DCPRICE * order.OD_COUNT}" />
-				          				<fmt:formatNumber value="${salePrice}" pattern="#.#" />원
-									</td>
+									<td class="dcPrice"><fmt:formatNumber value="${order.OD_DCPRICE}" pattern="#,###" />원</td>
 									
 									<!-- 할인 금액 -->
 									<td class="saled" style="color:Crimson">
 										<c:set var="saled" value="${(order.OD_PRICE - order.OD_DCPRICE) * order.OD_COUNT}" />
-										<fmt:formatNumber value="${saled}" pattern="#.#" />원</td>
+										<fmt:formatNumber value="${saled}" pattern="#,###" />원
+									</td>
+																		
+									<!-- 합계 금액 -->
+									<td class="price">
+				          				<c:set var="salePrice" value="${order.OD_DCPRICE * order.OD_COUNT}" />
+				          				<b><fmt:formatNumber value="${salePrice}" pattern="#,###" />원</b>
+									</td>
 								</tr><!-- END TR-->
 							</c:forEach>	
 							</tbody>
@@ -120,7 +121,7 @@
 								</p> -->
 								<p class="d-flex total-price">
 									<span>총 결제 금액</span>
-									<span>${payResult.TOTALPAY}&nbsp;원</span>
+									<span><b><fmt:formatNumber value="${payResult.TOTALPAY}" pattern="#,###" />&nbsp;원</b></span>
 								</p>
 								<p class="d-flex total-price">
 									무통장 입금
@@ -132,74 +133,8 @@
 							</div>
 						</div>
 					</div>				
-					
-					<%--
-					
-					<!-- 장바구니 -->
-					<c:if test="${result=='cart'}">
-					
-					<div class="row justify-content-end">
-						<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-							<div class="cart-total mb-3">
-								<h5><b>주문자 정보</b></h5><br>
-								<p class="d-flex total-price">
-									<span>이름</span>
-									<span>${memInfo.MEM_NAME}</span>
-								</p>
-								<p class="d-flex total-price">
-									<span>휴대폰번호</span>
-									<span>${memInfo.MEM_PHONE}</span>
-								</p><br>
-								<p class="d-flex total-price"></p>
-							</div>
-						</div>
-						<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-							<div class="cart-total mb-3">
-								<h5><b>배송 정보</b></h5><br>
-								<p class="d-flex total-price">
-									<span>우편번호</span>
-									<span>${orderInfo[0].OD_ZIPCODE}</span>
-								</p>
-								<p class="d-flex total-price">
-									<span>주소</span>
-									<span>${orderInfo[0].OD_ADD1}</span>
-								</p>
-								<p class="d-flex total-price">
-									<span>상세주소</span>
-									<span>${orderInfo[0].OD_ADD2}</span>
-								</p><br>
-								<p class="d-flex total-price"></p>
-							</div>
-						</div>
-						<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-							<div class="cart-total mb-3">
-								<h5><b>결제 정보</b></h5><br>
-						<!-- 		<p class="d-flex total-price">
-									<span>적립 포인트</span>
-									<span>${jumo_point.JUMO_POINT}&nbsp;Point</span>
-								</p> -->
-								<p class="d-flex total-price">
-									<span>총 결제 금액</span>
-									<span>${orderInfo[0].OD_TOTAL}&nbsp;원</span>
-								</p>
-								<p class="d-flex total-price">
-									무통장 입금
-								</p>
-								<p class="d-flex total-price">
-									&emsp;&emsp;<span><b>국민은행</b></span>
-									<span>1222222-266</span>
-								</p>
-							</div>
-						</div>
-					</div>
-					
-					</c:if>
-					--%>
 					<div align="center">
-						<td>
-							<input type="button" value="메인" class="btn btn-primary py-2 px-3"
-								onClick="location.href='main.omc'">
-						</td>
+						<input type="button" value="메인" class="btn btn-primary py-2 px-3" onClick="location.href='main.omc'">
 					</div>
 			</div>
 	 </div>

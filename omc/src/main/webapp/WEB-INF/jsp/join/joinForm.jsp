@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/include/include-header.jspf" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/include/include-header.jspf"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>오메추</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 /* 아이디 중복 체크 */
 function checkId() {
@@ -18,8 +19,6 @@ function checkId() {
         alert("아이디에는 공백이 들어갈 수 없습니다.");        
     } else {             
         if(MEM_ID.trim().length != 0) {
-        	
-        	
         	
             $.ajax({
                 url: "/confirmId.omc", //통신할 url
@@ -58,15 +57,12 @@ function checkId() {
 		var MEM_ADD2 = document.getElementById("MEM_ADD2");
 		var MEM_ZIPCODE = document.getElementById("MEM_ZIPCODE");
 		var MEM_PHONE = document.getElementById("MEM_PHONE");
-	
-		
 		
 		if(MEM_ID.value.trim() == ""){
 			alert("아이디를 입력해주세요.");
 			MEM_ID.focus();
 			return false;
 		}
-
 		
 		if(MEM_PW.value.trim() == ""){
 			alert("비밀번호를 입력해주세요.");
@@ -74,7 +70,7 @@ function checkId() {
 			return false;
 		}
 		
-		if(MEM_PW2.value != MEM_PW2.value){
+		if(MEM_PW.value != MEM_PW2.value){
 			alert("비밀번호가 일치하지 않습니다.");
 			MEM_PW2.focus();
 			return false;
@@ -112,17 +108,13 @@ function checkId() {
 		document.joinForm.submit();
 	}
 </script>
-<!-- 
-$(document).on("keyup", "input[numberOnly]", function() {$(this).val( $(this).val().replace(/[^0-9]/gi,"") );})
-$(document).on("keyup", "input[noSpecial]", function() {$(this).val( $(this).val().replace(/[^ㄱ-힣a-zA-Z0-9@]/gi,"") );})
-$(document).on("keyup", "input[noBlank]", function() {$(this).val( $(this).val().replace(/\s/gi,"") );})
- -->
 <script>
 $(document).ready(function() {
 	var MEM_ID=$('#MEM_ID').val();
 });
 </script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     function sample6_execDaumPostcode() {
         new daum.Postcode({
@@ -179,101 +171,108 @@ window.onload = function() {
 }
 </script>
 </head>
-<body class="goto-here">
-<section class="ftco-section">
-<div class="container" style="text-align:center;">
-	<div class="row justify-content-center">
-		<div class="col-xl-7 ftco-animate">
-			<form id="joinForm" name="joinForm" method="POST" action="/joinSuccess.omc" class="billing-form" >
-			<h2 class="mb-4 billing-heading">회원가입</h2>
-				<div class="row align-items-end" style="padding-left:150px;">
-					
-					<!-- 이메일 -->
-					<h6 class="mb-4" style="text-align:left;">아이디</h6>
-					<div class="w-100"></div>
-					<div class="form-group d-flex">
-						<input type="text" class="form-control" id="MEM_ID" name="MEM_ID" style="width:300px;" 
-							maxlength="10" noSpecial>
-						<input type="button" value="중복확인" class="submit px-3" name="check_id"
-						onClick="checkId()">
+<body>
+	<div id="container">
+		<div id="contents">
+			<div class="sub_content">
+				<div class="content_box">
+					<div class="join_base_wrap">
+						<div class="member_tit">
+							<form id="joinForm" name="joinForm" method="POST" action="/joinSuccess.omc" class="billing-form">
+								<h2>회원가입</h2>
+						</div>
+						<!-- //member_tit -->
+						<div class="member_cont">
+							<!-- 회원가입/정보 기본정보 -->
+							<div class="base_info_box">
+								<h3>기본정보</h3>
+								<div class="base_info_sec">
+									<table border="0" cellpadding="0" cellspacing="0">
+										<colgroup>
+											<col width="25%">
+											<col width="75%">
+										</colgroup>
+										<tbody>
+											<tr>
+												<th><span class="important">아이디</span></th>
+												<td>
+													<div class="member_warning">
+														<input type="text" style="width: 200px;" id="MEM_ID" name="MEM_ID" data-pattern="gdMemberId">
+														<input type="button" value="중복확인" class="submit px-3" name="check_id" onClick="checkId()">
+													</div>
+												</td>
+											</tr>
+											<tr class="">
+												<th><span class="important">비밀번호</span></th>
+												<td class="member_password">
+													<div class="member_warning">
+														<input type="password" style="width: 200px;" id="MEM_PW" name="MEM_PW" autocomplete="off" placeholder="">
+													</div>
+												</td>
+											</tr>
+											<tr class="">
+												<th><span class="important">비밀번호 확인</span></th>
+												<td>
+													<div class="member_warning">
+														<input type="password" style="width: 200px;" id="MEM_PW2" name="MEM_PW2" autocomplete="off">
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<th><span class="important">이름</span></th>
+												<td>
+													<div class="member_warning">
+														<input type="text" style="width: 200px;" id="MEM_NAME" name="MEM_NAME" data-pattern="gdMemberNmGlobal" value="" maxlength="30">
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<th><span class="important">휴대폰번호</span></th>
+												<td class="member_address">
+													<div class="address_postcode">
+														<input type="text" style="width: 200px;" id="MEM_PHONE" name="MEM_PHONE" maxlength="12" placeholder="- 없이 입력하세요." data-pattern="gdNum" value="">
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<th><span>주소</span></th>
+												<td class="member_address">
+													<div class="address_postcode">
+														<input type="text" style="width: 100px;" name="MEM_ZIPCODE" id="MEM_ZIPCODE" value="" numberOnly>
+														<input type="button" class="submit px-3" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+													</div> <br />
+													<div class="address_input">
+														<div class="member_warning">
+															<input type="text" name="MEM_ADD1" id="MEM_ADD1" readonly="readonly" value="">
+														</div>
+														<br />
+														<div class="member_warning js_address_sub">
+															<input type="text" name="MEM_ADD2" id="MEM_ADD2" value="">
+														</div>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="btn_center_box" align="center">
+								<br /> <br />
+								<button type="button" id="btnCancel" class="btn btn-black py-3 px-5" onclick="location.href='/loginForm.omc'">취소</button>
+								&nbsp;&nbsp;
+								<button type="reset" class="btn btn-black py-3 px-5">다시 입력</button>
+								&nbsp;&nbsp;
+								<button type="button" class="btn btn-primary py-3 px-5" value="회원가입" onClick="checks(this.form)">회원가입</button>
+							</div>
+							<!-- //btn_center_box -->
+							</form>
+						</div>
+						<!-- //member_cont -->
 					</div>
-					<div class="w-100"></div>
-           
-					<!-- 비밀번호 -->
-					<div class="form-group">
-						<h6 class="mb-4" style="text-align:left;">비밀번호</h6>
-						<input type="password" id="MEM_PW" name="MEM_PW" class="form-control" style="width:400px;" 
-							maxlength="10" noBlank>
-					</div>
-					<div class="w-100"></div>
-					
-					<!-- 비밀번호 확인 -->
-					<div class="form-group">
-						<h6 class="mb-4" style="text-align:left;">비밀번호 확인</h6>
-						<input type="password" id="MEM_PW2" name="MEM_PW2"  class="form-control" style="width:400px;" 
-							maxlength="10" noBlank>
-					</div>
-					<div class="w-100"></div>
-					<br/><br/>
-		
-					<!-- 이름 -->
-					<div class="form-group">
-						<h6 class="mb-4" style="text-align:left;">이름</h6>
-						<input type="text" id="MEM_NAME" name="MEM_NAME"  class="form-control" style="width:400px;" 
-							maxlength="8" noBlank>
-					</div>
-					<div class="w-100"></div>
-
-					<!-- 핸드폰 번호 -->
-					<div class="form-group">
-						<h6 class="mb-4" style="text-align:left;">핸드폰 번호</h6>
-						<input type="text" id="MEM_PHONE" name="MEM_PHONE" class="form-control"
-							size="24" style="width:400px;" maxlength="11" numberOnly> 
-						<div class="w-100"></div>
-						<h6 class="mb-4" style="text-align:left;">'-'는 빼고 숫자만 입력해주세요.</h6>
-					</div>
-					<div class="w-100"></div>
-					<br/><br/>
-					
-					<!-- 주소 -->
-					<h6 class="mb-4" style="text-align:left;">우편번호</h6>
-					<div class="w-100"></div>
-					<div class="form-group d-flex">
-						<input type="text" class="form-control" name="MEM_ZIPCODE" id="MEM_ZIPCODE" placeholder="우편번호"
-							maxlength="7" style="width:270px;" numberOnly>
-						<input type="button" class="submit px-3" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
-					</div>
-					<div class="w-100"></div>
-					<div class="form-group">
-						<h6 class="mb-4" style="text-align:left;">주소</h6>
-						<input type="text" name="MEM_ADD1" id="MEM_ADD1" placeholder="주소" 
-							class="form-control" style="width:190px;" maxlength="100">
-					</div>
-					&emsp;
-					<div class="form-group">
-						<input type="text" name="MEM_ADD2" id="MEM_ADD2" placeholder="상세주소" 
-						 class="form-control" style="width:190px;" maxlength="100">
-					</div>			
-					<div class="w-100"></div>
-					<br/><br/><br/><br/>
-					</div>
-
-					
-				<!-- 버튼 -->
-					<div class="form-group" align="center">
-						 <button type="button" class="btn btn-primary py-3 px-5" onClick="checks(this.form)">회원가입</button>
-				            
-				          &emsp;&emsp;
-				          <button type="reset" class="btn btn-black py-3 px-5">다시 입력</button>
-				
-				          &emsp;&emsp;
-				          <button type="button" class="btn btn-black py-3 px-5" onclick="location.href='/loginForm.omc'">취소</button>
-				     
-					</div>
-			</form>
+					<!-- //join_base_wrap -->
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
-</section>
 </body>
 </html>

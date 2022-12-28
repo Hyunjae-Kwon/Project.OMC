@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import omc.common.board.BoardService;
 import omc.common.common.CommandMap;
+import omc.common.goods.GoodsService;
 import omc.common.order.OrderService;
 import omc.member.login.LoginService;
 
@@ -35,6 +37,9 @@ public class MyPageController {
 	
 	@Resource(name = "boardService")
 	private BoardService boardService;
+	
+	@Resource(name = "goodsService")
+	private GoodsService goodsService;
 	
 	/* 마이페이지 */
 	@RequestMapping(value = "/myPage.omc")
@@ -126,6 +131,28 @@ public class MyPageController {
 		return mv;
 	}
 	
+	/* 마이페이지 주문 취소 */
+	@RequestMapping(value = "/deleteOrder.omc", method = RequestMethod.POST)
+	public ModelAndView deleteOrder(CommandMap commandMap, HttpServletRequest request, Model model) throws Exception {
+		ModelAndView mv = new ModelAndView("member/myInfoOrderDelete");
+		
+		// ordercommand 테이블 삭제
+		orderService.deleteOrder(commandMap.getMap());
+		// goods 재고 증가
+		goodsService.sellCountUpdateC(commandMap.getMap());
+		// goods 판매량 감소
+		goodsService.saleCountUpdateC(commandMap.getMap());
+		// payment 테이블 삭제
+		orderService.deletePay(commandMap.getMap());
+	
+		model.addAttribute("msg", "주문을 취소했습니다.");
+		String urlParam = "/myOrderList.omc";
+		model.addAttribute("url", urlParam);
+		
+		return mv;
+
+	}
+	
 	/* 사용자가 작성한 후기리스트 */
 	@RequestMapping(value="/myReviewList.omc", method = RequestMethod.GET)
 	public ModelAndView myReviewList(CommandMap commandMap, HttpServletRequest request) throws Exception{
@@ -156,35 +183,5 @@ public class MyPageController {
 		mv.addObject("qna", map);
 		
 		return mv;
-	}
-	
-//	//회원정보수정 - 비밀번호 체크 폼
-//	@RequestMapping(value = "/myPage/checkPwForm")
-//	public ModelAndView checkPwForm(CommandMap commandMap) throws Exception {
-//		ModelAndView mv = new ModelAndView("checkPwForm");
-//		return mv;
-//	}
-//
-//	// 회원정보수정 - 비밀번호 체크
-//	@RequestMapping(value= "/myPage/checkPw", method = RequestMethod.POST) 
-//	public ModelAndView checkPw(CommandMap commandMap, HttpServletRequest request) throws Exception { 
-//		ModelAndView mv = new ModelAndView("checkPw");
-//		HttpSession session = request.getSession(true);
-//		
-//		String message = "";
-//		
-//		Map<String, Object> result = myPageService.checkPw(commandMap.getMap());
-//		System.out.println(result);
-//		
-//		if(result == null) {
-//			message = "비밀번호가 일치하지 않습니다.";
-//		} else if(result.get("USER_PW").equals(commandMap.get("USER_PW"))) {
-//			session.setAttribute("USER_ID", result.get("USER_ID"));
-//		}
-//		mv.addObject("message", message);
-//		
-//		return mv;
-//	}
-	
-	
+	}	
 }

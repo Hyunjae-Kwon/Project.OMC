@@ -44,41 +44,44 @@
 								<div class="col-md-6 col-lg-3 ftco-animate"
 									style="float: left; width: 33%; padding: 10px;">
 									<div class="goods">
-										<a href="/goodsDetail.omc?GD_GID=${goods.GD_GID}"
-											class="img-prod"><img class="img-fluid"
-											src="resources/img/goods/${goods.GD_IMAGE}"
-											style="height: 250px;">
-											<div class="overlay"></div> </a>
+										<a href="/goodsDetail.omc?GD_GID=${goods.GD_GID}" class="img-prod">
+											<img class="img-fluid" src="resources/img/goods/${goods.GD_IMAGE}" style="height: 250px;">
+										</a>
 										<div class="text py-3 pb-4 px-3 text-center">
-											<h3>
+											<h5>
 												<a href="/goodsDetail.omc?GD_GID=${goods.GD_GID}">${goods.GD_GNAME}</a>
-											</h3>
-											<div class="d-flex">
-												<div class="pricing">
-													<p class="dcPrice">
-														<span>할인가 : ${goods.GD_DCPRICE}원</span>
-													</p>
-													<p class="price">
-														<span>판매가 : ${goods.GD_PRICE}원</span>
-													</p>
-												</div>
+											</h5>
+											<div class="pricing">
+												<c:choose>
+													<c:when test="${goods.GD_DCPRICE==goods.GD_PRICE}">
+														<p class="dcPrice">
+														<fmt:formatNumber value="${goods.GD_DCPRICE}" pattern="#,###"/>원
+														</p>
+														</c:when>
+													<c:otherwise>
+														<p class="price" style="color: gray;">
+														<strike><fmt:formatNumber value="${goods.GD_PRICE}" pattern="#,###"/>원</strike>
+														</p>
+														<p class="dcPrice">
+														<fmt:formatNumber value="${goods.GD_DCPRICE}" pattern="#,###"/>원
+														</p>
+													</c:otherwise>
+												</c:choose>
 											</div>
 										</div>
 									</div>
 								</div>
 							</c:forEach>
 						</div>
+						<c:if test="${not empty paginationInfo}">
+							<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="fn_search" />
+						</c:if>
+						<input type="hidden" id="currentPageNo" name="currentPageNo" /> <br />
 					</div>
 				</div>
 			</div>
-		</form>
+			</form>
 		<form id="commonForm" name="commonForm"></form>
-		<!-- ***** -->
-		<c:if test="${not empty paginationInfo}">
-			<ui:pagination paginationInfo="${paginationInfo}" type="text"
-				jsFunction="fn_search" />
-		</c:if>
-		<input type="hidden" id="currentPageNo" name="currentPageNo" /> <br />
 	</section>
 </body>
 </html>

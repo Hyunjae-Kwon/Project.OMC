@@ -5,8 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 public interface GoodsService {
 	
 	/* 전체 상품 리스트 */
@@ -36,11 +34,17 @@ public interface GoodsService {
 	/* 상품 문의 리스트 (상품 상세) */
 	List<Map<String, Object>> goodsQna(Map<String, Object> map) throws Exception;
 	
-	/* 구매 수량 재고 업데이트 */
+	/* 구매 수량 재고 업데이트 (재고 감소) */
 	void sellCountUpdate(Map<String, Object> map) throws Exception;
 	
-	/* 판매 수량 업데이트 */
+	/* 판매 수량 업데이트 (판매량 증가) */
 	void saleCountUpdate(Map<String, Object> map) throws Exception;
+	
+	/* 주문 취소 수량 재고 업데이트 (재고 증가) */
+	void sellCountUpdateC(Map<String, Object> map) throws Exception;
+	
+	/* 주문 취소 수량 판매량 업데이트 (판매량 감소) (판매량 감소) */
+	void saleCountUpdateC(Map<String, Object> map) throws Exception;
 	
 	/* 상품 전체 수량 구하기 */
 	int allGoodsCount() throws Exception;

@@ -32,12 +32,7 @@ public class OrderDAO extends AbstractDAO {
 	public List<Map<String, Object>> selectTotalPay(int orderNum) {
 		return (List<Map<String, Object>>) selectList("order.selectTotalPay", orderNum);
 	}
-	
-//	@SuppressWarnings("unchecked")
-//	public List<Map<String, Object>> insertOrderDirect(Map<String, Object> map) {
-//		return (List<Map<String, Object>>) selectList("order.insertOrderDirect", map);
-//	}
-	
+
 	/* 마이페이지 주문조회 */
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> myOrderListPaging(Map<String, Object> map) throws Exception{
@@ -90,5 +85,15 @@ public class OrderDAO extends AbstractDAO {
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> selectPayODNum(int orderNum) throws Exception{
 		return (Map<String, Object>) selectOne("order.selectPayODNum", orderNum);
+	}
+	
+	/* 마이페이지 주문 취소 */
+	public void deleteOrder(Map<String, Object> map) throws Exception {
+		delete("order.deleteOrder", map);
+	}
+	
+	/* 마이페이지 주문 취소 결제 정보 삭제 */
+	public void deletePay(Map<String, Object> map) throws Exception {
+		delete("order.deletePay", map);
 	}
 }

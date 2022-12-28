@@ -389,17 +389,31 @@
 	<include refid="common.pagingPost"/>
 	</select>
 	
-	<!-- [sellCountUpdate] 구매 수량 재고 업데이트 -->
+	<!-- [sellCountUpdate] 구매 수량 재고 업데이트 (재고 감소) -->
 	<update id="sellCountUpdate" parameterType="hashmap">
 		UPDATE GOODS
 		SET GD_STOCK = GD_STOCK - #{OD_COUNT}
 		WHERE GD_GID = #{OD_GID}
 	</update>
 	
-	<!-- [saleCountUpdate] 판매 수량 업데이트 -->
+	<!-- [saleCountUpdate] 판매 수량 업데이트 (판매량 증가) -->
 	<update id="saleCountUpdate" parameterType="hashmap">
 		UPDATE GOODS
 		SET GD_SELL = GD_SELL + #{OD_COUNT}
+		WHERE GD_GID = #{OD_GID}
+	</update>
+	
+	<!-- [sellCountUpdateC] 주문 취소 수량 재고 업데이트 (재고 증가) -->
+	<update id="sellCountUpdateC" parameterType="hashmap">
+		UPDATE GOODS
+		SET GD_STOCK = GD_STOCK + #{OD_COUNT}
+		WHERE GD_GID = #{OD_GID}
+	</update>
+	
+	<!-- [saleCountUpdateC] 주문 취소 수량 판매량 업데이트 (판매량 감소) -->
+	<update id="saleCountUpdateC" parameterType="hashmap">
+		UPDATE GOODS
+		SET GD_SELL = GD_SELL - #{OD_COUNT}
 		WHERE GD_GID = #{OD_GID}
 	</update>
 	

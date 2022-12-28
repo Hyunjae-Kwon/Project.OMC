@@ -275,25 +275,25 @@ window.onload = function(){
 									<td class="count">${goods.CT_COUNT} 개</td>
 									
 									<!-- 상품 금액 -->
-									<td class="price">${goods.CT_PRICE} 원</td>
+									<td class="price"><fmt:formatNumber value="${goods.CT_PRICE}" pattern="#,###"/>원</td>
 									
 									<!-- 판매금액 -->
 									<td class="price">
 				          				<c:set var="salePrice" value="${goods.CT_DCPRICE}" />
-				          				<fmt:formatNumber value="${salePrice}" pattern="#.#" />원
+				          				<fmt:formatNumber value="${salePrice}" pattern="#,###" />원
 									</td>
 									
 									<!-- 할인금액 -->
 									<td class="price" style="color:Crimson">
 									<c:set var="sale" value="${(goods.CT_PRICE-goods.CT_DCPRICE)*goods.CT_COUNT}" />
 									<fmt:parseNumber var="saled" integerOnly="true" value="${sale}"/>
-									<fmt:formatNumber value="${saled}" pattern="#.#" />원</td> 
+									<fmt:formatNumber value="${saled}" pattern="#,###" />원</td> 
 									
 									<!-- 결제 금액 -->
 									<td class="total">
 										<c:set var="total" value="${salePrice * goods.CT_COUNT}" />
 										<fmt:parseNumber var="totalPrice" integerOnly="true" value="${total}"/>
-										<b><fmt:formatNumber value="${totalPrice}" pattern="#.#" />원</b>
+										<b><fmt:formatNumber value="${totalPrice}" pattern="#,###" />원</b>
 									</td>
 								</tr><!-- END TR-->
 							</tbody>
@@ -420,7 +420,7 @@ window.onload = function(){
 	    					</p>
 	    					<p class="d-flex">
 	    						<span>배송비</span>
-	    						<span>3000원</span>
+	    						<span>3,000원</span>
 	    					</p>
 	    					<hr>
 	    					<p class="d-flex total-price">

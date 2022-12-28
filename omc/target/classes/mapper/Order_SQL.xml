@@ -157,8 +157,7 @@
 		SELECT
 			PAY_SEQ.NEXTVAL,
 			#{OD_NUM},
-			#{TOTALPAY},
-			''
+			#{TOTALPAY}
 		FROM
 			DUAL
 		WHERE
@@ -308,5 +307,25 @@
 	]]>
 	<include refid="common.pagingPost"/>
 	</select>
+	
+	<!-- [deleteOrder] 마이페이지 주문 취소 -->
+	<delete id="deleteOrder" parameterType="hashmap">
+	<![CDATA[
+		DELETE
+			FROM ORDERCOMMAND
+		WHERE
+			OD_NUM = #{OD_NUM}
+	]]>
+	</delete>
+	
+	<!-- [deletePay] 마이페이지 주문 취소 결제 정보 삭제 -->
+	<delete id="deletePay" parameterType="hashmap">
+	<![CDATA[
+		DELETE
+			FROM PAYMENT
+		WHERE
+			ODNUM = #{OD_NUM}
+	]]>
+	</delete>
 
 </mapper>

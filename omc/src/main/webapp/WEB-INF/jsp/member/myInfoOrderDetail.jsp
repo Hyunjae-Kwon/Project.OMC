@@ -43,8 +43,8 @@
 									<th>수량</th>
 									<th>상품 단가</th>
 									<th>할인 단가</th>
-									<th>합계 금액</th>
 									<th>할인 금액</th>
+									<th>합계 금액</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -62,22 +62,23 @@
 									<td class="count">${order.OD_COUNT}</td>
 									
 									<!-- 상품 단가 -->
-									<td class="price">${order.OD_PRICE}원</td>
+									<td class="price"><fmt:formatNumber value="${order.OD_PRICE}" pattern="#,###" />원</td>
 									
 									<!-- 할인 단가 -->
-									<td class="dcPrice">${order.OD_DCPRICE}원</td>
-									
-									<!-- 합계 금액 -->
-									<td class="price">
-				          				<c:set var="salePrice" value="${order.OD_DCPRICE * order.OD_COUNT}" />
-				          				<fmt:formatNumber value="${salePrice}" pattern="#.#" />원
-									</td>
+									<td class="dcPrice"><fmt:formatNumber value="${order.OD_DCPRICE}" pattern="#,###" />원</td>
 									
 									<!-- 할인 금액 -->
 									<td class="saled" style="color:Crimson">
 										<c:set var="saled" value="${(order.OD_PRICE - order.OD_DCPRICE) * order.OD_COUNT}" />
-										<fmt:formatNumber value="${saled}" pattern="#.#" />원</td>
-								</tr><!-- END TR-->
+										<fmt:formatNumber value="${saled}" pattern="#,###" />원
+									</td>
+									
+									<!-- 합계 금액 -->
+									<td class="price">
+				          				<c:set var="salePrice" value="${order.OD_DCPRICE * order.OD_COUNT}" />
+				          				<fmt:formatNumber value="${salePrice}" pattern="#,###" />원
+									</td>
+								</tr>
 							</c:forEach>	
 							</tbody>
 						</table>
@@ -138,7 +139,7 @@
 								</p> -->
 								<p class="d-flex total-price">
 									<span>총 결제 금액</span>
-									<span>${payResult.TOTALPAY}&nbsp;원</span>
+									<span><b><fmt:formatNumber value="${payResult.TOTALPAY}" pattern="#,###" />&nbsp;원</b></span>
 								</p>
 								<p class="d-flex total-price">
 									무통장 입금
@@ -150,9 +151,14 @@
 							</div>
 						</div>
 						<div align="center" style="margin: 0 auto; text-align: center;">
-							<form action="deleteOrder.omc" method="GET">
-					        	<button type="button" class="btn btn-primary" onClick="form.submit()">주문취소</button>
-					        </form>
+							<c:forEach var="result" items="${orderResult}">
+							<div class="do_info">
+								<input type="hidden" id="OD_NUM" name="OD_NUM" value="${result.OD_NUM}">
+								<input type="hidden" id="OD_GID" name="OD_GID" value="${result.OD_GID}">
+								<input type="hidden" id="OD_COUNT" name="OD_COUNT" value="${result.OD_COUNT}">
+							</div>
+							</c:forEach>
+					        <button type="button" class="btn btn-primary" onClick="deleteChk()">주문취소</button>
 						</div>
 					</div>				
 			</div>
@@ -162,4 +168,28 @@
 </div>
 </div>
 </body>
+<script>
+function deleteChk() {
+	if(confirm("주문을 취소하시겠습니까?") == true) {
+		$(".do_info").each(function(){
+			var index = $(".do_info").index(this);
+			
+			num = parseInt($(".do_info").eq(index).find("#OD_NUM").val());
+			gid = parseInt($(".do_info").eq(index).find("#OD_GID").val());
+			cnt = parseInt($(".do_info").eq(index).find("#OD_COUNT").val());
+			
+			$.ajax({
+				type : "POST",
+				url : "<c:url value='/deleteOrder.omc'/>",
+				data :{OD_NUM:num, OD_GID:gid, OD_COUNT:cnt},
+				async: false,
+				success : function(data){
+				}
+			});
+		});
+		alert("주문이 취소되었습니다.");
+		location.href="myOrderList.omc";
+	}
+}
+</script>
 </html>

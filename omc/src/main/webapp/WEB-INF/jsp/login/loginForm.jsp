@@ -95,7 +95,7 @@ $(document).on("keyup", "input[noBlank]", function() {$(this).val( $(this).val()
 		<label for="PW">비밀번호</label>
 		<br/>
 		<input type="password" id="mem_pw" name="MEM_PW" onkeypress="keyPress()" >
-	
+		<br/><br/>
 		<!-- 아이디 저장 &nbsp; <input type="checkbox" id="ID_SAVE" name="ID_SAVE"><br> -->
 		<p></p>
 		

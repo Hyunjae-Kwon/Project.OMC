@@ -16,22 +16,22 @@ function logoutCheck() {
 		
 			<!-- 로그인을 하지 않았을 경우 -->
 			<c:if test="${ empty MEM_ID }">
-					<a class="text-dark" href="/loginForm.omc" style="font-size:small;">로그인</a> 
+					<a class="text-dark" href="/loginForm.omc" style="font-size:large;">로그인</a> 
 						<span class="text-dark px-2">|</span> 
-					<a class="text-dark" href="/joinForm.omc" style="font-size:small;">회원가입</a>
+					<a class="text-dark" href="/joinForm.omc" style="font-size:large;">회원가입</a>
 			</c:if>
 	
 			<!-- 로그인을 했을 경우 -->
 			<c:if test="${! empty MEM_ID }">
-				<span class="text-dark" style="font-size:small;">
+				<span class="text-dark" style="font-size:large;">
 				<%= session.getAttribute("MEM_ID") %>님
 				</span>
 					<span class="text-dark px-2">|</span>
-				<a class="text-dark" href="/myPage.omc" style="font-size:small;">마이페이지</a> 
+				<a class="text-dark" href="/myPage.omc" style="font-size:large;">마이페이지</a> 
 					<span class="text-dark px-2">|</span> 
-				<a class="text-dark" href="/myCart.omc" style="font-size:small;">장바구니</a>
+				<a class="text-dark" href="/myCart.omc" style="font-size:large;">장바구니</a>
 					<span class="text-dark px-2">|</span> 
-				<a class="text-dark" href="javascript:logoutCheck()" style="font-size:small;">로그아웃</a> 
+				<a class="text-dark" href="javascript:logoutCheck()" style="font-size:large;">로그아웃</a> 
 			</c:if>
 			
 		</div>
@@ -53,8 +53,7 @@ function logoutCheck() {
 				<div align="left">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active dropdown">
-              		<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-              	  		style="font-size:large; color:#fd7e14;">카테고리</a>
+              		<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:large; color:#fd7e14;">카테고리</a>
 	              		<div class="dropdown-menu" aria-labelledby="dropdown04">
 	              			<a class="dropdown-item" href="/allGoodsList.omc">전체 상품</a>
 	              			<a class="dropdown-item" href="/allGoodsListCategory.omc?GD_CATEGORY=KOREAN" >한식</a>
@@ -88,11 +87,18 @@ function logoutCheck() {
 		        	<li class="nav-item active"><a href="/adminMain.omc" class="nav-link" style="font-size:large; color:#fd7e14;">관리</a></li>
 		          </c:if>
 		        </ul>
-		        <form action="searchGoodsList.omc" method="GET">
-		        	<input type="text" id="keyword" name="keyword" />
-		        	<span>&nbsp;</span>
-		        	<input type="button" class="btn btn-primary" style="height: 35px;" onClick="form.submit()" value="검색"/>
-		        </form>
+		        <div align="right">
+		        	<br/><br/>
+			        <ul class="navbar-nav ml-auto">
+			        	<li class="nav-item active">
+					        <form action="searchGoodsList.omc" method="GET">
+					        	<input type="text" id="keyword" name="keyword" />
+					        	<span>&nbsp;</span>
+					        	<input type="button" class="btn btn-primary" style="height: 35px;" onClick="form.submit()" value="검색"/>
+					        </form>
+				        </li>
+			        </ul>
+		        </div>
 	      </div>
 	    </div>
 	  </nav>

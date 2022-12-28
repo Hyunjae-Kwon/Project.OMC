@@ -176,12 +176,14 @@ $(document).ready(function(){
 					          	</td>
 					          	
 					          	<!-- 정가 -->
-						        <td class="price">${goods.CT_PRICE}원
+						        <td class="price">
+				          			<fmt:formatNumber value="${goods.CT_PRICE}" pattern="#,###" />원
 						        	<input type="hidden" id="CT_PRICE" name="CT_PRICE" value="${goods.CT_PRICE}">
 						        </td>
 						        
 						        <!-- 할인가 -->
-						        <td class="saleprice">${goods.CT_DCPRICE}원
+						        <td class="saleprice">
+						        	<fmt:formatNumber value="${goods.CT_DCPRICE}" pattern="#,###" />원
 			    					<input type="hidden" id="CT_DCPRICE" name="CT_DCPRICE" value="${goods.CT_DCPRICE}">
 				          		</td>
 						        
@@ -189,7 +191,8 @@ $(document).ready(function(){
 						        <td style="font-weight : bold;">
 						        	<c:set var="total" value="${goods.CT_DCPRICE * goods.CT_COUNT}" />
 						        	<fmt:parseNumber var="totalPrice" integerOnly="true" value="${total}" />
-						        	<span class="totalSum">${goods.CT_DCPRICE * goods.CT_COUNT}원</span>
+						        	<span class="totalSum">
+						        	<fmt:formatNumber value="${goods.CT_DCPRICE * goods.CT_COUNT}" pattern="#,###" />원</span>
 						        </td>
 						      </tr>
 			 				</tbody>
@@ -215,7 +218,7 @@ $(document).ready(function(){
     					</p>
     					<p class="d-flex">
     						<span>배송비</span>
-    						<span>3000원</span>
+    						<span>3,000원</span>
     					</p>
     					<hr>
     					<p class="d-flex total-price">

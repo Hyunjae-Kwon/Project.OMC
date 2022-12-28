@@ -10,43 +10,40 @@
 <title>오늘의 메뉴 추천, 오메추</title>
 <script>
 function getCount() {
-	var count = document.getElementById('GD_STOCK').value;
+	var count = document.getElementById('orderCount').value;
 	var price = document.getElementById('GD_PRICE').value;
-	var sale = document.getElementById('GD_DCPRICE').value;
-	var salePrice = price * (100-sale) / 100;
-	/* var totalPrice = salePrice * count; */
-	var totalPrice = sale
+	var salePrice = document.getElementById('GD_DCPRICE').value;
+	var totalPrice = salePrice * count;
 	
-	document.getElementById("totalPrice").innerText = totalPrice + '원';
+	document.getElementById("totalPrice").innerText = totalPrice.toLocaleString() + '원';
 	return count;
 }
 
 function insertCart(){
-	   var items=$("td[id=contain]").get();
-	   if(${MEM_ID ne null}){
-	      $.each(items,function(index,item){
-	         var goodsName=$("td[id=contain]:eq("+index+")").find('#GD_GNAME').val();
-	         var goodsID=$("td[id=contain]:eq("+index+")").find('#GD_GID').val();
-	         var goodsPrice=parseInt($("td[id=contain]:eq("+index+")").find('#GD_PRICE').val());
-	         var goodsDCPrice=parseInt($("td[id=contain]:eq("+index+")").find('#GD_DCPRICE').val());
-	         var count=parseInt($("td[id=contain]:eq("+index+")").find('#orderCount').val());
+	var items=$("td[id=contain]").get();
+	if(${MEM_ID ne null}){
+		$.each(items,function(index,item){
+			var goodsName=$("td[id=contain]:eq("+index+")").find('#GD_GNAME').val();
+			var goodsID=$("td[id=contain]:eq("+index+")").find('#GD_GID').val();
+			var goodsPrice=parseInt($("td[id=contain]:eq("+index+")").find('#GD_PRICE').val());
+			var goodsDCPrice=parseInt($("td[id=contain]:eq("+index+")").find('#GD_DCPRICE').val());
+			var count=parseInt($("td[id=contain]:eq("+index+")").find('#orderCount').val());
 	         
-	         $.ajax({
-	            type : "POST",
-	            url : '<c:url value="insertCart.omc"/>',
-	            data : {CT_NAME:goodsName,CT_GID:goodsID,CT_PRICE:goodsPrice,CT_DCPRICE:goodsDCPrice,CT_COUNT:count},
-	            success : function(data){
-	                
-	            }
-	         });  
-	      })
-	      if(confirm("장바구니에 상품을 담았습니다.\n장바구니로 이동하시겠습니까?") == true){
-	      location.href="<c:url value='myCart.omc'/>";
-	      }	      
-	   } else {
-	      alert("로그인 후 이용해주세요.");
-	      location.href = "/loginForm.omc";
-	   }
+	        $.ajax({
+				type : "POST",
+				url : '<c:url value="insertCart.omc"/>',
+				data : {CT_NAME:goodsName,CT_GID:goodsID,CT_PRICE:goodsPrice,CT_DCPRICE:goodsDCPrice,CT_COUNT:count},
+				success : function(data){
+				}
+			});  
+		})
+		if(confirm("장바구니에 상품을 담았습니다.\n장바구니로 이동하시겠습니까?") == true){
+			location.href="<c:url value='myCart.omc'/>";
+		}	      
+		} else {
+			alert("로그인 후 이용해주세요.");
+			location.href = "/loginForm.omc";
+		}
 }
 
 function orderForm() {
@@ -85,25 +82,41 @@ window.onload = function() {
 			    				<input type="hidden" id="GD_GID" name="GD_GID" value="${goods.GD_GID}">
 							<div class="col-md-12">
 				          		<table style="width:80%; margin-left:auto">
+				          			<c:choose>
+										<c:when test="${goods.GD_DCPRICE==goods.GD_PRICE}">
+											<tr>
+						          				<td style="text-align: left">
+						          				<b>정가</b>
+						          				<td style="text-align: right; width: 50%">
+						          				<fmt:formatNumber value="${goods.GD_DCPRICE}" pattern="#,###"/>원
+						          				<input type="hidden" id="GD_PRICE" name="GD_PRICE" value="${goods.GD_PRICE}">
+						          				<input type="hidden" id="GD_DCPRICE" name="GD_DCPRICE" value="${goods.GD_DCPRICE}">
+						          				</td>
+						          			</tr>
+										</c:when>
+										<c:otherwise>
+											<tr>
+						          				<td style="text-align: left">
+						          				<b>정가</b>
+						          				<td style="text-align: right; width: 50%"><fmt:formatNumber value="${goods.GD_PRICE}" pattern="#,###"/>원</td>
+						          			</tr>
+						          			<tr>
+						          				<td style="text-align: left">
+						          				<b>할인가</b>
+						          				<td style="text-align: right; width: 50%">
+						          				<b><fmt:formatNumber value="${goods.GD_DCPRICE}" pattern="#,###"/>원</b>
+						          				<input type="hidden" id="GD_PRICE" name="GD_PRICE" value="${goods.GD_PRICE}">
+						          				<input type="hidden" id="GD_DCPRICE" name="GD_DCPRICE" value="${goods.GD_DCPRICE}">
+						          				</td>
+						          			</tr>
+										</c:otherwise>
+									</c:choose>
 				          			<tr>
-				          				<td style="text-align: left">
-				          				<b>정가</b>
-				          				<td style="text-align: right; width: 50%">${goods.GD_PRICE} 원</td>
-				          			</tr>
-				          			<tr>
-				          				<td style="text-align: left">
-				          				<b>할인가</b>
-				          				<td style="text-align: right; width: 50%">${goods.GD_DCPRICE} 원
-				          				<input type="hidden" id="GD_PRICE" name="GD_PRICE" value="${goods.GD_PRICE}">
-				          				<input type="hidden" id="GD_DCPRICE" name="GD_DCPRICE" value="${goods.GD_DCPRICE}">
-				          				</td>
-				          			</tr>
-									<tr>
 				          				<td style="text-align:left;">
 				          				<b>수량</b>
 				          				</td>
 				          				<td id="contain" style="text-align:right; width:50%">
-				          					<input type="number" min="0" max="${goods.GD_STOCK}" id="orderCount" name="orderCount" value="1" onChange="getCount()">
+				          					<input type="number" min="1" max="${goods.GD_STOCK}" id="orderCount" name="orderCount" value="1" onChange="getCount()">
 				          					<input type="hidden" id="GD_GNAME" name="GD_GNAME" value="${goods.GD_GNAME}">
 			    							<input type="hidden" id="GD_GID" name="GD_GID" value="${goods.GD_GID}">
 			    							<input type="hidden" id="GD_PRICE" name="GD_PRICE" value="${goods.GD_PRICE}">
@@ -116,8 +129,7 @@ window.onload = function() {
 				          				<b>총 상품 금액</b>
 				          				</td>
 				          				<td style="text-align:right; width:50%">
-				          				<div id="totalPrice" style="font-weight:bold; font-size:25px; color:#82AE46">
-				          				</div>
+				          				<div id="totalPrice" style="font-weight:bold; font-size:25px; color:#fd7e14"></div>
 				          				</td>
 				          			</tr>
 				          			<tr>
@@ -182,7 +194,7 @@ window.onload = function() {
 			<div class="col-lg-10 mb-5">
 				<table style="text-align:center; margin-left:auto; margin-right:auto; width:80%;">
 					<tr>
-						<td style="width:80%; text-align:right" colspan="4">
+						<td style="width:80%; text-align:right" colspan="3">
 			   				<ul class="product-category">
 			   					<li><a href="goodsReviewForm.omc?GD_GID=${GD_GID}">상품 후기 글쓰기</a></li>
 			   				</ul>
@@ -190,22 +202,22 @@ window.onload = function() {
 					</tr>
 					<c:forEach var="review" items="${reviewList}">
 					<tr bgcolor="#E4F7BA">
-						<td style="width:40%; text-align:left;">
-						<h5 class="heading">${review.BD_TITLE}</h5>
+						<td style="width:60%; text-align:left;">
+						<h5 class="heading"><b>${review.BD_TITLE}</b></h5>
 						</td>
-						<td style="width:30%; text-align:center;">
-						<h5 class="heading">${review.BD_ID}</h5>
+						<td style="width:20%; text-align:right;">
+						<h5 class="heading"><b>${review.BD_ID}</b></h5>
 						</td>
-						<td style="width:30%; text-align:right;">
-						<h5 class="heading">${review.BD_REGDATE}</h5>
+						<td style="width:20%; text-align:right;">
+						<h5 class="heading"><b><fmt:formatDate value="${review.BD_REGDATE}" pattern="yy/MM/dd" type="date"/></b></h5>
 						</td>
 					</tr>
 					<tr>
-						<td style="width:100%; text-align:left" colspan="4">
+						<td style="width:80%; text-align:left" colspan="3">
 						<p>${review.BD_CONTENT}</p>
 						</td>
 					</tr>
-					<tr><td colspan="4"><hr></td></tr>
+					<tr><td colspan="3"><hr></td></tr>
 					</c:forEach>
 				</table>
 				<hr>				
@@ -217,30 +229,31 @@ window.onload = function() {
 			<div class="col-lg-10 mb-5">
 				<table style="text-align:center; margin-left:auto; margin-right:auto; width:80%;">
 					<tr>
-						<td style="width:80%; text-align:right" colspan="4">
+						<td style="width:80%; text-align:right" colspan="3">
 			   				<ul class="product-category">
 			   					<li><a href="goodsQnaForm.omc?GD_GID=${GD_GID}">상품 문의 글쓰기</a></li>
 			   				</ul>
 						</td>
 					</tr>
+										
 					<c:forEach var="qna" items="${qnaList}">
 					<tr bgcolor="#E4F7BA">
-						<td style="width:40%; text-align:left;">
-						<a href="boardDetail.omc?BD_NUM=${qna.BD_NUM}"><h5 class="heading">${qna.BD_TITLE}</h5></a>						
+						<td style="width:60%; text-align:left;">
+						<h5 class="heading"><b>${qna.BD_TITLE}</b></h5>
 						</td>
-						<td style="width:30%; text-align:center;">
-						<h5 class="heading">${qna.BD_ID}</h5>
+						<td style="width:20%; text-align:right;">
+						<h5 class="heading"><b>${qna.BD_ID}</b></h5>
 						</td>
-						<td style="width:30%; text-align:right;">
-						<h5 class="heading">${qna.BD_REGDATE}</h5>
+						<td style="width:20%; text-align:right;">
+						<h5 class="heading"><b><fmt:formatDate value="${qna.BD_REGDATE}" pattern="yy/MM/dd" type="date"/></b></h5>
 						</td>
 					</tr>
 					<tr>
-						<td style="width:80%; text-align:left" colspan="4">
+						<td style="width:80%; text-align:left" colspan="3">
 						<p>${qna.BD_CONTENT}</p>
 						</td>
 					</tr>
-					<tr><td colspan="4"><hr></td></tr>
+					<tr><td colspan="3"><hr></td></tr>
 					</c:forEach>
 				</table>
 				<hr>				

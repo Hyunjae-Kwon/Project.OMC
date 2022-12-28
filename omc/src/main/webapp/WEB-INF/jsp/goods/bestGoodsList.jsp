@@ -33,13 +33,24 @@
 	    						<div class="overlay"></div>
 	    					</a>
 	    					<div class="text py-3 pb-4 px-3 text-center">
-	    						<h3><a href="/goodsDetail.omc?GD_GID=${goods.GD_GID}">${goods.GD_GNAME}</a></h3>
-	    						<div class="d-flex">
-	    							<div class="pricing">
-	    								<p class="dcPrice"><span>할인가 : ${goods.GD_DCPRICE}원</span></p>
-			    						<p class="price"><span>판매가 : ${goods.GD_PRICE}원</span></p>
-			    					</div>
-		    					</div>
+	    						<h5><a href="/goodsDetail.omc?GD_GID=${goods.GD_GID}">${goods.GD_GNAME}</a></h5>
+	    						<div class="pricing">
+									<c:choose>
+										<c:when test="${goods.GD_DCPRICE==goods.GD_PRICE}">
+											<p class="dcPrice">
+											<fmt:formatNumber value="${goods.GD_DCPRICE}" pattern="#,###"/>원
+											</p>
+											</c:when>
+										<c:otherwise>
+											<p class="price" style="color: gray;">
+											<strike><fmt:formatNumber value="${goods.GD_PRICE}" pattern="#,###"/>원</strike>
+											</p>
+											<p class="dcPrice">
+											<fmt:formatNumber value="${goods.GD_DCPRICE}" pattern="#,###"/>원
+											</p>
+										</c:otherwise>
+									</c:choose>
+								</div>
 	    					</div>
 	    				</div>
 	    			</div>

@@ -38,12 +38,6 @@ public class OrderServiceImpl implements OrderService {
 		return orderDAO.selectOrderOID(map);
 	}
 	
-	/* 총 결제 금액 */
-//	@Override
-//	public List<Map<String, Object>> selectTotalPay(int orderNum) {
-//		return orderDAO.selectTotalPay(orderNum);
-//	}
-
 	/* 마이페이지 주문조회 */
 	@Override
 	public Map<String, Object> myOrderListPaging(Map<String, Object> map) throws Exception{
@@ -118,5 +112,16 @@ public class OrderServiceImpl implements OrderService {
 	public List<Map<String, Object>> selectOrderODNum(int orderNum) throws Exception {
 		return orderDAO.selectOrderODNum(orderNum);
 	}
-	
+
+	/* 마이페이지 주문 취소 */
+	@Override
+	public void deleteOrder(Map<String, Object> map) throws Exception {
+		orderDAO.deleteOrder(map);
+	}
+
+	/* 마이페이지 주문 취소 결제 정보 삭제 */
+	@Override
+	public void deletePay(Map<String, Object> map) throws Exception {
+		orderDAO.deletePay(map);
+	}	
 }
