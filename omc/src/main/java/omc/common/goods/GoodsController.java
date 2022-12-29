@@ -71,7 +71,7 @@ public class GoodsController {
 		return mv;
 	}
 	
-	/* 카테고리 상품 리스트 */
+	/* 카테고리 상품 리스트(페이징) */
 	@RequestMapping(value="/allGoodsListCategory.omc")
 	public ModelAndView categoryGoodsList(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("goods/categoryGoodsList");
@@ -79,10 +79,9 @@ public class GoodsController {
 		String GD_CATEGORY = (String)commandMap.get("GD_CATEGORY");
 		Map<String,Object> resultMap = goodsService.categoryGoodsListPaging(commandMap.getMap());
 	
-		List<Map<String, Object>> list = goodsService.categoryGoodsList(commandMap.getMap());
 		mv.addObject("paginationInfo", (PaginationInfo)resultMap.get("paginationInfo"));
 		mv.addObject("category", GD_CATEGORY);
-		mv.addObject("categoryGoodsList", list);
+		mv.addObject("categoryGoodsList", resultMap.get("result"));
 		
 		return mv;
 	}
@@ -120,7 +119,7 @@ public class GoodsController {
 		return mv;
 	}
 	
-	/* 상품 후기 작성 */
+	/* 상품 후기 작성 폼 */
 	@RequestMapping("/goodsReviewForm.omc")
 	public ModelAndView goodsReviewForm(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("goods/goodsReviewForm");

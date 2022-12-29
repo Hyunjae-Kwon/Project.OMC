@@ -36,7 +36,7 @@ public class AdminFaqController {
 	
 	//디테일
 	@RequestMapping(value = "/adminFaqDetail.omc")
-	public ModelAndView boardDetail1(CommandMap commandMap, HttpServletRequest request) throws Exception{
+	public ModelAndView adminFaqDetail(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("admin/community/adminFaqDetail");
 		List<Map<String, Object>> boardDetail = adminComService.selectFaqId(commandMap.getMap());
 
@@ -52,14 +52,14 @@ public class AdminFaqController {
 	//faq 글쓰기
 	
 	@RequestMapping(value="/adminFaqWriteForm.omc")
-	public ModelAndView openBoardWrite(CommandMap commandMap , HttpServletRequest request) throws Exception{
+	public ModelAndView adminFaqWriteForm(CommandMap commandMap , HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("admin/community/adminFaqWrite");
 		
 		return mv;
 	}
 	
 	@RequestMapping(value="/adminFaqWrite.omc", method = RequestMethod.POST)
-	public ModelAndView insertBoard(CommandMap commandMap, HttpServletRequest request) throws Exception{
+	public ModelAndView adminFaqWrite(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("redirect:/adminFaqList.omc");
 		
 		adminComService.insertBoard(commandMap.getMap());
@@ -71,30 +71,30 @@ public class AdminFaqController {
 	}
 	
 	//faq 글수정폼
-		@RequestMapping(value="/adminUpdateFaqForm.omc") 
-		public ModelAndView adminupdateBoardForm(CommandMap commandMap) throws Exception{
-			ModelAndView mv = new ModelAndView("admin/community/adminFaqModify");
-			Map<String, Object> map = adminComService.updateBoardForm(commandMap.getMap());
-			
-			mv.addObject("board", map);
-		            
-			return mv;
-		}
-		//faq 글수정 완성
-		@RequestMapping(value="/adminFaqUpdate.omc")
-		public ModelAndView adminupdateBoard(CommandMap commandMap)throws Exception{
-			ModelAndView mv = new ModelAndView("redirect:/adminFaqList.omc");
-			adminComService.updateBoard(commandMap.getMap());
-			
-			return mv;
-		}
-	
-		//faq 글삭제
-		@RequestMapping(value = "/adminFaqDelete.omc")
-		public ModelAndView boardDelete(CommandMap commandMap) throws Exception {
-			ModelAndView mv = new ModelAndView("redirect:/adminFaqList.omc");
-			adminComService.deleteBoard(commandMap.getMap());
-			      
-			return mv;      
-		}
+	@RequestMapping(value="/adminUpdateFaqForm.omc") 
+	public ModelAndView adminUpdateFaqForm(CommandMap commandMap) throws Exception{
+		ModelAndView mv = new ModelAndView("admin/community/adminFaqModify");
+		Map<String, Object> map = adminComService.updateBoardForm(commandMap.getMap());
+		
+		mv.addObject("board", map);
+	            
+		return mv;
+	}
+	//faq 글수정 완성
+	@RequestMapping(value="/adminFaqUpdate.omc")
+	public ModelAndView adminFaqUpdate(CommandMap commandMap)throws Exception{
+		ModelAndView mv = new ModelAndView("redirect:/adminFaqList.omc");
+		adminComService.updateBoard(commandMap.getMap());
+		
+		return mv;
+	}
+
+	//faq 글삭제
+	@RequestMapping(value = "/adminFaqDelete.omc")
+	public ModelAndView adminFaqDelete(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:/adminFaqList.omc");
+		adminComService.deleteBoard(commandMap.getMap());
+		      
+		return mv;      
+	}
 }

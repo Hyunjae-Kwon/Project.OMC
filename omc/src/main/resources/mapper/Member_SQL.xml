@@ -4,7 +4,7 @@
 <mapper namespace="member">
 
 
-<!--  selectMemberId(아이디중복검사,로그인, 회원정보수정폼,  회원상세) -->
+	<!-- [selectMemberId] 아이디중복검사, 로그인, 회원정보수정폼, 회원상세 -->
 	<select id="selectMemberId" parameterType="hashmap" resultType="hashmap">	
 	<![CDATA[
 		SELECT *

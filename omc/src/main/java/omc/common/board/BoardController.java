@@ -107,7 +107,7 @@ public class BoardController {
 
 	//커뮤니티 글쓰기폼
 	@RequestMapping(value="/boardWrite.omc")
-	public ModelAndView openBoardWrite(CommandMap commandMap , HttpServletRequest request) throws Exception{
+	public ModelAndView boardWrite(CommandMap commandMap , HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("board/boardWrite");
 
 		return mv;

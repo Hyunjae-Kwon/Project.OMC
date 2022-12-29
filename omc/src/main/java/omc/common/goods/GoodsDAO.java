@@ -10,12 +10,6 @@ import omc.common.common.AbstractDAO;
 @Repository("goodsDAO")
 public class GoodsDAO extends AbstractDAO {
 	
-	//메인 페이지
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> maingoods(Map<String, Object> map){
-		return (List<Map<String, Object>>) selectList("goods.maingoods",map);
-	}
-	
 	/* 전체 상품 리스트 */
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> allGoodsList(Map<String, Object> map) throws Exception{
@@ -34,12 +28,6 @@ public class GoodsDAO extends AbstractDAO {
 		return (List<Map<String, Object>>) selectList ("goods.bestGoodsList", map);
 	}
 	
-	/* 카테고리 상품 리스트 */
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> categoryGoodsList(Map<String, Object> map) throws Exception {
-		return (List<Map<String, Object>>) selectList ("goods.categoryGoodsList", map);
-	}
-	
 	/* 카테고리 상품 리스트 페이징 */
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> categoryGoodsListPaging(Map<String, Object> map) throws Exception{
@@ -52,10 +40,10 @@ public class GoodsDAO extends AbstractDAO {
 		return (Map<String, Object>) selectOne ("goods.goodsDetail", map);
 	}
 	
-	/* 장바구니에서 주문하기로 넘어가는 상품 상세 정보 */
+	/* 상품 검색 */
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> goodsDetailCart(Map<String, Object> map) throws Exception {
-		return (List<Map<String, Object>>) selectList ("goods.goodsDetailCart", map);
+	public List<Map<String, Object>> searchGoodsList(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList ("goods.searchGoodsList", map);
 	}
 	
 	/* 상품 리뷰 리스트 (상품 상세) */
@@ -76,7 +64,7 @@ public class GoodsDAO extends AbstractDAO {
 		return (Map<String, Object>)selectOne("goods.selectGD_GIDMax");
 	}
 	
-	/* 구매 수량 재고 업데이트 (재고 감소) */
+	/* 판매 수량 재고 업데이트 (재고 감소) */
 	public void sellCountUpdate(Map<String, Object> map) throws Exception {
 		update("goods.sellCountUpdate", map);
 	}
@@ -102,9 +90,4 @@ public class GoodsDAO extends AbstractDAO {
 		return (Map<String, Object>) selectOne("goods.allGoodsCount");
 	}
 	
-	/* 상품 검색 */
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> searchGoodsList(Map<String, Object> map) throws Exception {
-		return (List<Map<String, Object>>) selectList ("goods.searchGoodsList", map);
-	}
 }

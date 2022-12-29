@@ -8135,7 +8135,7 @@ h1, h2, h3, h4, h5,
         background: #fd7e14; } }
   .ftco-navbar-light .navbar-nav > .nav-item.active > a {
   	font-family: 'Nanum Gothic', sans-serif;
-  	font-size:23px;
+  	font-size:20px;
   	font-weight: 600;
     color: #fd7e14; }
     @media (max-width: 991.98px) {
@@ -8245,7 +8245,7 @@ h1, h2, h3, h4, h5,
       font-weight: 800;
       color: #fff;
       font-size: 30px;
-      font-family: "Poppins", Arial, sans-serif;
+      font-family: 'Nanum Gothic', sans-serif;
       letter-spacing: 3px;
       text-transform: uppercase; }
     .hero-wrap .slider-text .btn-primary {
@@ -8403,7 +8403,7 @@ h1, h2, h3, h4, h5,
           line-height: 1.3;
           font-family: 'Nanum Gothic', sans-serif;
           font-weight: 700;
-          font-size: 80px;
+          font-size: 60px;
           }
           @media (max-width: 767.98px) {
             .owl-carousel.home-slider .slider-item .slider-text h1 {
@@ -8607,7 +8607,7 @@ h1, h2, h3, h4, h5,
 
 .deal-of-the-day h3 {
   font-size: 30px;
-  font-family: "Lora", Georgia, serif;
+  font-family: 'Nanum Gothic', sans-serif;
   font-style: italic; }
   .deal-of-the-day h3 a {
     color: #fd7e14; }
@@ -8749,7 +8749,7 @@ h1, h2, h3, h4, h5,
       font-weight: 300;
       text-transform: uppercase;
       letter-spacing: 1px;
-      font-family: "Poppins", Arial, sans-serif; }
+      font-family: 'Nanum Gothic', sans-serif; }
       .product .text h3 a {
         color: #000000; }
     .goods .text .pricing p.price {
@@ -9364,7 +9364,7 @@ textarea.form-control {
       font-size: 15px;
       text-transform: uppercase;
       font-weight: 500;
-      font-family: "Poppins", Arial, sans-serif;
+      font-family: 'Nanum Gothic', sans-serif;
       color: #000000; }
     .ftco-services .services .media-body span {
       text-transform: uppercase;
@@ -9384,7 +9384,7 @@ textarea.form-control {
     background: #fd7e14; }
     .ftco-category .category-wrap .text h2 {
       font-size: 18px;
-      font-family: "Poppins", Arial, sans-serif; }
+      font-family: 'Nanum Gothic', sans-serif; }
       .ftco-category .category-wrap .text h2 a {
         color: #fff; }
 
@@ -9394,7 +9394,7 @@ textarea.form-control {
     width: 100%; }
     .ftco-category .category-wrap-2 .text h2 {
       color: #fd7e14;
-      font-family: "Lora", Georgia, serif;
+      font-family: 'Nanum Gothic', sans-serif;
       font-style: italic;
       font-size: 24px; }
 

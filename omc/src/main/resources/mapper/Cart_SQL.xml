@@ -4,45 +4,7 @@
 
 <mapper namespace="cart">
 
-	<!-- 상품ID CID를 갖는 CART 정보  -->
-	<select id="selectCartCID" parameterType="hashmap" resultType="hashmap">
-	<![CDATA[
-		SELECT
-			* 
-		FROM
-			CART 
-		WHERE
-			CT_CID=#{CT_CID}
-	]]>
-	</select>
-	
-	<!-- 상품ID GID를 갖는 CART 정보  -->
-	<select id="selectCartGID" parameterType="hashmap" resultType="hashmap">
-	<![CDATA[
-		SELECT
-			* 
-		FROM
-			CART 
-		WHERE
-			CT_GID=#{CT_GID}  
-			AND
-			CT_ID=#{CT_ID}
-	]]>
-	</select>
-
-	<!-- CT_ID 사용자가 가진 장바구니번호 -->
-	<select id="selectCartNum" parameterType="hashmap" resultType="hashmap">
-	<![CDATA[
-		SELECT
-			MAX(CT_NUM) MAX
-		FROM
-			CART 
-		WHERE
-			CT_ID=#{CT_ID}
-	]]>
-	</select>
-	
-	<!-- [selectCartList] 회원 번호로 장바구니 보기 -->
+	<!-- [selectCartList] 내 장바구니 리스트 -->
 	<select id="selectCartList" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
 		SELECT * 
@@ -51,51 +13,7 @@
 	]]>
 	</select>
 	
-	<!-- 장바구니의 테이블의 CT_NUM 최대값 -->
-	<select id="selectCartNumMAX" resultType="hashmap">
-	<![CDATA[
-		SELECT
-			MAX(CT_NUM) MAX
-		FROM
-			CART
-	]]>
-	</select>
-	
-	<!-- Cart 장바구니 리스트보기 -->
-	<select id="cartList" parameterType="hashmap" resultType="hashmap">
-	<![CDATA[
-		SELECT
-			* 
-		FROM
-			CART 
-		WHERE
-			CT_ID=#{MEM_ID}
-	]]>
-	</select>	
-	
-	<!-- [cartDetail] 장바구니 구매 상품 리스트 -->
-   	<select id="cartDetail" parameterType="hashmap" resultType="hashmap">
-   	<![CDATA[
-    	SELECT
-       		* 
-      	FROM
-         	CART 
-      	WHERE
-         	CT_ID = #{MEM_ID} AND NOT CT_NUM IS NULL  
-   ]]>
-   </select>  
-	
-	<!-- [addCart] 장바구니 추가 -->
-	<insert id="addCart" parameterType="hashmap" >
-		INSERT INTO CART VALUES(CT_CID_SEQ.NEXTVAL,'',#{CT_NAME},#{CT_GID},#{CT_PRICE},#{CT_DCPRICE},#{MEM_ID},#{CT_COUNT})
-	</insert>
-	
-	<!-- [findCart] 장바구니에 같은 상품이 있는지 확인 -->
-	<select id="findCart"  parameterType="hashmap" resultType="int">
-		SELECT COUNT(*) FROM CART WHERE CT_ID=#{MEM_ID} AND CT_GID=#{CT_GID}
-	</select>
-	
-	<!-- updateCart 장바구니 구매수량 변경 -->
+	<!-- [updateCart] 장바구니 구매수량 변경 -->
 	<update id="updateMyCart" parameterType="hashmap">
 	<![CDATA[
 		UPDATE
@@ -107,7 +25,7 @@
 	]]>
 	</update>
 
-	<!-- deleteCart 장바구니 삭제 -->
+	<!-- [deleteCart] 장바구니 삭제 -->
 	<delete id="deleteMyCart" parameterType="hashmap">
 	<![CDATA[
 		DELETE
@@ -117,13 +35,27 @@
 	]]>
 	</delete>
 	
-	<!-- 장바구니에서 상품ID가 GID인 모든 장바구니 삭제 -->
-	<!-- <delete id="deleteCartGID" parameterType="hashmap">
+	<!-- [cartDetail] 장바구니 구매 상품 리스트 -->
+   	<select id="cartDetail" parameterType="hashmap" resultType="hashmap">
+   	<![CDATA[
+    	SELECT
+       		* 
+      	FROM
+         	CART 
+      	WHERE
+         	CT_ID = #{MEM_ID} AND NOT CT_NUM IS NULL  
+   ]]>
+   </select>
+	
+	<!-- [delCartOrder] 장바구니 주문 상품 장바구니에서 삭제 -->
+	<delete id="delCartOrder" parameterType="hashmap">
+	<![CDATA[
 		DELETE
 			FROM CART
 		WHERE
-			CT_GID = #{CT_GID}
-	</delete> -->
+			CT_NUM > 0 AND CT_ID = #{CT_ID}
+	]]>
+	</delete>
 	
 	<!-- [updateNum] 장바구니 구매 상품 카트 번호 부여 -->
 	<update id="updateNum" parameterType="hashmap">
@@ -137,14 +69,22 @@
 	]]>
 	</update>
 	
-	<!-- [delCartOrder] 장바구니 주문 상품 장바구니에서 삭제 -->
-	<delete id="delCartOrder" parameterType="hashmap">
-	<![CDATA[
+	<!-- [addCart] 장바구니 추가 -->
+	<insert id="addCart" parameterType="hashmap" >
+		INSERT INTO CART VALUES(CT_CID_SEQ.NEXTVAL,'',#{CT_NAME},#{CT_GID},#{CT_PRICE},#{CT_DCPRICE},#{MEM_ID},#{CT_COUNT})
+	</insert>
+	
+	<!-- [findCart] 장바구니에 같은 상품이 있는지 확인 -->
+	<select id="findCart"  parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) FROM CART WHERE CT_ID=#{MEM_ID} AND CT_GID=#{CT_GID}
+	</select>
+	
+	<!-- 장바구니에서 상품ID가 GID인 모든 장바구니 삭제 -->
+	<delete id="deleteCartGID" parameterType="hashmap">
 		DELETE
 			FROM CART
 		WHERE
-			CT_NUM > 0 AND CT_ID = #{CT_ID}
-	]]>
+			CT_GID = #{CT_GID}
 	</delete>
 	
 </mapper>

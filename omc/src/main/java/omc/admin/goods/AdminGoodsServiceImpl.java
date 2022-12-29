@@ -127,15 +127,4 @@ public class AdminGoodsServiceImpl implements AdminGoodsService {
 		adminGoodsDAO.adminGoodsDelete(map);
 	}
 	
-	/* 전체 상품 리스트, 매출 리스트 */
-    @Override
-	public Map<String, Object> selectGoodsListPaging(Map<String, Object> map) throws Exception {
-		return adminGoodsDAO.selectGoodsListPaging(map);
-	}
-
-    /* 매출 총합 */
-	@Override
-	public Map<String, Object> sellSum(Map<String, Object> map) throws Exception {
-		return adminGoodsDAO.sellSum(map);
-	}
 }

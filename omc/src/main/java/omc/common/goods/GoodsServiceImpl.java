@@ -28,12 +28,6 @@ public class GoodsServiceImpl implements GoodsService {
 		return goodsDAO.allGoodsList(map);
 	}
 	
-	/* 카테고리 상품 리스트 페이징 */
-	@Override
-	public Map<String, Object> categoryGoodsListPaging(Map<String, Object> map) throws Exception {
-		return goodsDAO.categoryGoodsListPaging(map);
-	}
-	
 	/* 신상품 리스트 */
 	@Override
 	public List<Map<String, Object>> newGoodsList(Map<String, Object> map) throws Exception {
@@ -46,12 +40,10 @@ public class GoodsServiceImpl implements GoodsService {
 		return goodsDAO.bestGoodsList(map);
 	}
 	
-	/* 카테고리 상품 리스트 */
+	/* 카테고리 상품 리스트 페이징 */
 	@Override
-	public List<Map<String, Object>> categoryGoodsList(Map<String, Object> map) throws Exception {
-		List<Map<String, Object>> resultMap = goodsDAO.categoryGoodsList(map);
-		
-		return resultMap; 
+	public Map<String, Object> categoryGoodsListPaging(Map<String, Object> map) throws Exception {
+		return goodsDAO.categoryGoodsListPaging(map);
 	}
 	
 	/* 상품 상세 정보 */
@@ -61,12 +53,11 @@ public class GoodsServiceImpl implements GoodsService {
 		return resultMap;
 	}
 	
-	/* 장바구니에서 주문하기로 넘어가는 상품 상세 정보 */
+	/* 상품 검색 */
 	@Override
-	public List<Map<String, Object>> goodsDetailCart(Map<String, Object> map) throws Exception {
-		List<Map<String, Object>> resultMap = goodsDAO.goodsDetailCart(map);
-		return resultMap;
-	}
+	public List<Map<String, Object>> searchGoodsList(Map<String, Object> map, HttpServletRequest request) throws Exception {
+		return goodsDAO.searchGoodsList(map);
+	}	
 	
 	/* 상품 리뷰 리스트 (상품 상세) */
 	@Override
@@ -80,7 +71,7 @@ public class GoodsServiceImpl implements GoodsService {
 		return goodsDAO.goodsQna(map);
 	}
 
-	/* 구매 수량 재고 업데이트 (재고 감소) */
+	/* 판매 수량 재고 업데이트 (재고 감소) */
 	@Override
 	public void sellCountUpdate(Map<String, Object> map) throws Exception {
 		goodsDAO.sellCountUpdate(map);
@@ -110,10 +101,4 @@ public class GoodsServiceImpl implements GoodsService {
 		Map<String,Object> mapCount = goodsDAO.allGoodsCount();
 		return Integer.parseInt(String.valueOf(mapCount.get("COUNT")));
 	}
-
-	/* 상품 검색 */
-	@Override
-	public List<Map<String, Object>> searchGoodsList(Map<String, Object> map, HttpServletRequest request) throws Exception {
-		return goodsDAO.searchGoodsList(map);
-	}	
 }

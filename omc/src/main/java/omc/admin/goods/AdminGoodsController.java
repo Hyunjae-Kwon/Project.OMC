@@ -32,7 +32,7 @@ public class AdminGoodsController {
 	
 	/* 관리자 상품 리스트 */
 	@RequestMapping(value="/adminGoodsList.omc")
-	public ModelAndView adminPList(CommandMap commandMap, HttpServletRequest request) throws Exception{
+	public ModelAndView adminGoodsList(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("admin/goods/adminGoodsList");
 		/* 페이징을 위한 변수 */
 		int pageSize = 10; // 페이지당 출력할 상품의 수
@@ -128,7 +128,7 @@ public class AdminGoodsController {
 	/* 상품 등록 기능 */
 	@RequestMapping(value = "/adminGoodsWrite.omc",  method = RequestMethod.POST)
 	public ModelAndView adminGoodsWrite(CommandMap commandMap, MultipartHttpServletRequest request) throws Exception {		
-		ModelAndView mv = new ModelAndView("redirect:/adminGoodsList.omc");
+		ModelAndView mv = new ModelAndView("admin/goods/adminGoodsWrite");
 		
 		// DB에 상품 정보 입력
 		adminGoodsService.adminGoodsWrite(commandMap.getMap(), request);
@@ -256,7 +256,7 @@ public class AdminGoodsController {
 		// DB에 상품 정보 삭제
 		adminGoodsService.adminGoodsDelete(commandMap.getMap(), request);
 		
-		adminGoodsService.deleteCartGID(commandMap.getMap());		
+		adminGoodsService.deleteCartGID(commandMap.getMap());
 		
 		mv.addObject("msg", "상품을 삭제하였습니다.");
 		mv.addObject("url", "/adminGoodsList.omc");
@@ -264,20 +264,4 @@ public class AdminGoodsController {
 		return mv;
 	}
 
-	/* 매출 리스트 */
-	@RequestMapping(value="/adminSellList.omc")
-	public ModelAndView allGoodsList(CommandMap commandMap) throws Exception{
-		ModelAndView mv = new ModelAndView("admin/goods/adminSellList");
-		
-		Map<String,Object> resultMap = adminGoodsService.selectGoodsListPaging(commandMap.getMap());
-		Map<String,Object> sum = adminGoodsService.sellSum(commandMap.getMap());
-		String sort = (String)commandMap.get("sort");		
-		
-		mv.addObject("sum", sum.get("SUM"));
-		mv.addObject("sort", sort);
-		mv.addObject("paginationInfo", (PaginationInfo)resultMap.get("paginationInfo"));
-		mv.addObject("sellList", resultMap.get("result"));
-		
-		return mv;
-	}
 }

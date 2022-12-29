@@ -12,6 +12,31 @@ import omc.common.common.AbstractDAO;
 public class AdminCommunityDAO extends AbstractDAO {
 	
 	Logger log = Logger.getLogger(this.getClass());
+	
+	/* 고객 후기 리스트 */
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>>reviewList() throws Exception {
+		return (List<Map<String, Object>>) selectList("board.reviewList");
+	}
+	
+	/* 고객 후기 리스트 (페이징) */
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>>reviewListPaging(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("board.reviewListPaging", map);
+	}
+	
+	/* 고객 후기 리스트 (페이징을 위한 수량 구하기) */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> reviewListCount() throws Exception {
+		return (Map<String, Object>) selectOne("board.reviewListCount");
+	}
+	
+	/* 고객 후기 삭제 */
+	public void deleteCommunityId(Map<String, Object> map) throws Exception {
+		delete("board.deleteCommunityId", map);
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////
 	 	
 	//관리자 공지 게시판 리스트
 	@SuppressWarnings("unchecked")
@@ -35,12 +60,6 @@ public class AdminCommunityDAO extends AbstractDAO {
 		update("board.updateNoticeId",map);
 	}
 	
-	//관리자 고객후기 게시판 리스트
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>>reviewList() throws Exception {
-		return (List<Map<String, Object>>) selectList("board.reviewList");
-	}
-		
 	//관리자 고객센터 게시판 리스트
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>>qnaList() throws Exception {
@@ -74,20 +93,10 @@ public class AdminCommunityDAO extends AbstractDAO {
 		delete("board.deleteComment", map);
 	}
 	
-	//관리자 공지,후기 삭제 기능
-	public void deleteCommunityId(Map<String, Object> map) throws Exception {
-		delete("board.deleteCommunityId", map);
-	}
-	
 	/* 페이징 */
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> noticeListPaging(Map<String, Object> map) throws Exception {
 		return (List<Map<String, Object>>) selectList("board.noticeListPaging", map);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>>reviewListPaging(Map<String, Object> map) throws Exception {
-		return (List<Map<String, Object>>) selectList("board.reviewListPaging", map);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -98,11 +107,6 @@ public class AdminCommunityDAO extends AbstractDAO {
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> noticeListCount() throws Exception {
 		return (Map<String, Object>) selectOne("board.noticeListCount");
-	}
-	
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> reviewListCount() throws Exception {
-		return (Map<String, Object>) selectOne("board.reviewListCount");
 	}
 	
 	@SuppressWarnings("unchecked")

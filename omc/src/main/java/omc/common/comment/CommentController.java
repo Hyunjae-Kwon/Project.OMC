@@ -18,7 +18,7 @@ public class CommentController {
 	private CommentService commentService;
 	 
 	@RequestMapping(value="/boardComWrite.omc")
-	public String commentBoardWrite(CommandMap commandMap,Model model) throws Exception {	
+	public String boardComWrite(CommandMap commandMap,Model model) throws Exception {	
 
 		model.addAttribute("msg", "댓글 작성이 완료되었습니다.");
 		model.addAttribute("url", "/boardDetail.omc?BD_NUM="+commandMap.get("BC_NUM"));

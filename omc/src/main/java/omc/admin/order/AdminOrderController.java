@@ -1,6 +1,7 @@
 package omc.admin.order;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,10 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import omc.common.common.CommandMap;
 import omc.common.order.OrderService;
 import omc.util.Paging;
-
 
 @Controller
 public class AdminOrderController {
@@ -25,9 +26,9 @@ public class AdminOrderController {
 	@Resource(name="orderService")
 	private OrderService orderService;
 
-	/* 매출 리스트 */
+	/* 주문 리스트 */
 	@RequestMapping(value = "/adminOrderList.omc")
-	public ModelAndView memberList(HttpServletRequest request) throws Exception {
+	public ModelAndView adminOrderList(HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("admin/order/adminOrderList");
 		/* 페이징을 위한 변수 */
 		int pageSize = 10; // 페이지당 출력할 회원의 수
@@ -94,6 +95,7 @@ public class AdminOrderController {
 		return mv;
 	}
 	
+	/* 주문 상세 보기 */
 	@RequestMapping("/adminOrderDetail.omc")
 	public ModelAndView adminOrderDetail (CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView("admin/order/adminOrderDetail");
@@ -104,6 +106,7 @@ public class AdminOrderController {
 		return mv;
 	}
 	
+	/* 주문 수정 */
 	@RequestMapping("/adminOrderModify.omc")
 	public ModelAndView adminOrderModify (CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView("/admin/order/adminOrderModify");
@@ -115,4 +118,21 @@ public class AdminOrderController {
 		
 		return mv;
 	}	
+	
+	/* 매출 리스트 */
+	@RequestMapping(value="/adminSellList.omc")
+	public ModelAndView adminSellList(CommandMap commandMap) throws Exception{
+		ModelAndView mv = new ModelAndView("admin/goods/adminSellList");
+		
+		Map<String,Object> resultMap = adminOrderService.selectGoodsListPaging(commandMap.getMap());
+		Map<String,Object> sum = adminOrderService.sellSum(commandMap.getMap());
+		String sort = (String)commandMap.get("sort");		
+		
+		mv.addObject("sum", sum.get("SUM"));
+		mv.addObject("sort", sort);
+		mv.addObject("paginationInfo", (PaginationInfo)resultMap.get("paginationInfo"));
+		mv.addObject("sellList", resultMap.get("result"));
+		
+		return mv;
+	}
 }

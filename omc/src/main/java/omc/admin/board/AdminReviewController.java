@@ -19,6 +19,7 @@ public class AdminReviewController {
 	@Resource(name="adminCommunityService")
 	private AdminCommunityService adminCommunityService;
 
+	/* 고객 후기 리스트 */
 	@RequestMapping(value="/adminReviewList.omc")
 	public ModelAndView adminReviewList(CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView("admin/community/adminReviewListAjax");
@@ -54,19 +55,10 @@ public class AdminReviewController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/adminReviewDelete.omc")
-	public ModelAndView adminReviewDelete(CommandMap commandMap) throws Exception{
-		ModelAndView mv = new ModelAndView("admin/community/adminReviewDelete");
-		mv.addObject("msg", "후기 삭제가 완료되었습니다.");
-		mv.addObject("url", "/adminReviewList.omc");
-		adminCommunityService.deleteCommunityId(commandMap.getMap());
-		
-		return mv;
-	}	
-
+	/* 고객 후기 삭제 */
 	@RequestMapping(value="/adminReviewDeleteAjax.omc")
 	public ModelAndView adminReviewDeleteAjax(CommandMap commandMap) throws Exception{
-		ModelAndView mv = new ModelAndView("admin/community/adminReviewList");
+		ModelAndView mv = new ModelAndView("admin/community/adminReviewListAjax");
 		
 		adminCommunityService.deleteCommunityId(commandMap.getMap());
 	

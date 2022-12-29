@@ -38,13 +38,12 @@
 	<br>
 	<div style="text-align: center">
 		<h3>커뮤니티</h3>
-		<!-- 글쓰기 버튼 -->
-		<div style='position: absolute; width: 100px; right: 80px;'>
-			<input type="button" class="btn btn-dark py-2 px-3" value="글쓰기" onclick="return fn_writeForm()" />
-		</div>
 	</div>
 	<br>
 	<div class="container">
+		<div style='width:100px; float: right;'>
+			<input type="button" class="btn btn-dark py-2 px-3" value="글쓰기" onclick="return fn_writeForm()" />
+		</div>
 		<br> <br>
 		<!-- 고객센터 목록 부분 -->
 		<div style="text-align: center" id="board">

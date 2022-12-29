@@ -193,12 +193,18 @@ window.onload = function() {
 		<div class="row slider-text justify-content-center align-items-center">
 			<div class="col-lg-10 mb-5">
 				<table style="text-align:center; margin-left:auto; margin-right:auto; width:80%;">
+					<h3 style="text-align: center;">상품 후기</h3>
 					<tr>
 						<td style="width:80%; text-align:right" colspan="3">
 			   				<ul class="product-category">
 			   					<li><a href="goodsReviewForm.omc?GD_GID=${GD_GID}">상품 후기 글쓰기</a></li>
 			   				</ul>
 						</td>
+					</tr>
+					<tr>
+						<th>내 용</th>
+						<th style="text-align: right;">작성자</th>
+						<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성 일자</th>
 					</tr>
 					<c:forEach var="review" items="${reviewList}">
 					<tr bgcolor="#FFFFFF">
@@ -228,12 +234,18 @@ window.onload = function() {
 		<div class="row slider-text justify-content-center align-items-center">
 			<div class="col-lg-10 mb-5">
 				<table style="text-align:center; margin-left:auto; margin-right:auto; width:80%;">
+					<h3 style="text-align: center;">상품 문의</h3>
 					<tr>
 						<td style="width:80%; text-align:right" colspan="3">
 			   				<ul class="product-category">
 			   					<li><a href="goodsQnaForm.omc?GD_GID=${GD_GID}">상품 문의 글쓰기</a></li>
 			   				</ul>
 						</td>
+					</tr>
+					<tr>
+						<th>내 용</th>
+						<th style="text-align: right;">작성자</th>
+						<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성 일자</th>
 					</tr>
 										
 					<c:forEach var="qna" items="${qnaList}">

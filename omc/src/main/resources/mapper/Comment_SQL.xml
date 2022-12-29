@@ -7,19 +7,18 @@
 	<select id="selectCommentList" parameterType="hashmap" resultType="hashmap">
       <![CDATA[
           SELECT
-            C.BC_BCID,
-            C.BC_NUM,
-            C.BC_COMMENT,
-            C.BC_REGDATE,
-            C.BC_ID      
+            BC_BCID,
+            BC_NUM,
+            BC_COMMENT,
+            BC_REGDATE,
+            BC_ID      
          FROM 
-            MEMBER M, BOARD B, BOARDCOMMENT C
+            BOARDCOMMENT
             WHERE 
-              C.BC_NUM = #{BD_NUM} AND  B.BD_NUM = C.BC_NUM AND 
-               C.BC_ID = M.MEM_ID
-            ORDER BY C.BC_BCID DESC
+              BC_NUM = #{BD_NUM}
+            ORDER BY BC_BCID DESC
       ]]>
-	</select>
+   </select>
 
 	<!-- [insertBoardComment] 게시판 댓글 작성 -->
 	<insert id="insertBoardComment" parameterType="hashmap">

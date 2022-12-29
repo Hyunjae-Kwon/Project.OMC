@@ -28,7 +28,7 @@ public class AdminCommunityController {
 	
 	/* 관리자 커뮤니티 리스트 */
 	@RequestMapping(value = "/adminBoardList.omc")
-	public ModelAndView adminBoardListPaging(CommandMap commandMap, HttpServletRequest request) throws Exception {
+	public ModelAndView adminBoardList(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("admin/community/adminBoardList");
 		
 		Map<String, Object> resultMap = adminCommunityService.adminBoardListPaging(commandMap.getMap());
@@ -41,7 +41,7 @@ public class AdminCommunityController {
 	
 	/* 관리자 커뮤니티 상세보기 (조회수 증가 X) */
 	@RequestMapping(value = "/adminBoardDetail.omc")
-	public ModelAndView boardDetail(CommandMap commandMap, Model model,HttpServletRequest request) throws Exception{
+	public ModelAndView adminBoardDetail(CommandMap commandMap, Model model,HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("admin/community/adminBoardDetail");
 		List<Map<String, Object>> boardDetail = adminCommunityService.adminBoardDetail(commandMap.getMap());
 		commandMap.put("BC_NUM", commandMap.get("BD_NUM"));

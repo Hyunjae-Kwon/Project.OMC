@@ -9,7 +9,7 @@
 </head>
 <body>
 <section class="ftco-section ftco-degree-bg">
-		<div class="container">	
+		<div class="container" style="text-align:center;">	
 				<div class="col-lg-9 ftco-animate">
 					<p>
 						<img src="/resources/img/omc_logoIcon.png" alt="" class="img-fluid">

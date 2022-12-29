@@ -26,7 +26,7 @@ public class LoginDAO extends AbstractDAO {
 		return (List<Map<String, Object>>) selectList("member.findPw", map);
 	}
 	
-	/* 상품 상세 정보에서 주문하기로 넘어갈 때 같이 전송하는 로그인 되어있는 회원 정보 */
+	/* 상품 주문하는 회원 정보 (상품 상세 -> 바로 주문) */
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> selectMember(String memberId) throws Exception {
 		return (Map<String, Object>) selectOne("member.selectMemberId", memberId);

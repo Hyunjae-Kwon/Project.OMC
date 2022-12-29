@@ -4,6 +4,20 @@ import java.util.List;
 import java.util.Map;
 
 public interface AdminCommunityService {
+	
+	/* 고객 후기 리스트 */
+	public List<Map<String, Object>> reviewList()throws Exception;
+	
+	/* 고객 후기 리스트 (페이징) */
+	public List<Map<String, Object>> reviewListPaging(int START, int END)throws Exception;
+	
+	/* 고객 후기 리스트 (페이징을 위한 수량 구하기) */
+	public int reviewListCount() throws Exception;
+	
+	/* 고객 후기 삭제 */
+	public void deleteCommunityId(Map<String, Object> map)throws Exception;
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public List<Map<String, Object>> noticeList()throws Exception;
 	
@@ -12,8 +26,6 @@ public interface AdminCommunityService {
 	public void insertNotice(Map<String, Object> map)throws Exception;
 		
 	public void updateNoticeId(Map<String, Object> map)throws Exception;
-	
-	public List<Map<String, Object>> reviewList()throws Exception;
 	
 	public List<Map<String, Object>> qnaList()throws Exception;
 	
@@ -27,20 +39,14 @@ public interface AdminCommunityService {
 	
 	public void deleteComment(Map<String, Object> map)throws Exception;
 	
-	public void deleteCommunityId(Map<String, Object> map)throws Exception;
-	
 	/* 페이징 */
 	public List<Map<String, Object>> noticeListPaging(int START, int END) throws Exception;
-	
-	public List<Map<String, Object>> reviewListPaging(int START, int END)throws Exception;
 	
 	public List<Map<String, Object>> qnaListPaging(int START, int END)throws Exception;
 	
 	public int noticeListCount() throws Exception;
 	
 	public int qnaListCount() throws Exception;
-	
-	public int reviewListCount() throws Exception;
 	
 	//관리자 faq페이징
 	Map<String,Object> adminFaqListPaging(Map<String, Object>map) throws Exception;

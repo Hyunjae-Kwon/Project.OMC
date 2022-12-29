@@ -80,12 +80,6 @@ function logoutCheck() {
 					</c:if>
 				</ul>
 				</div>
-		        <ul class="navbar-nav ml-auto">
-		          <!-- 관리자일 경우 관리 탭 추가 -->
-		          <c:if test="${ MEM_ID == 'ADMIN' }">
-		           	<li class="nav-item active"><a href="/adminMain.omc" class="nav-link">관리</a></li>
-		          </c:if>
-		        </ul>
 		        <div align="right">
 		        	<br/>
 			        <ul class="navbar-nav ml-auto">
@@ -98,12 +92,15 @@ function logoutCheck() {
 				        </li>
 			        </ul>
 		        </div>
-		       <!--  <form action="searchGoodsList.omc" method="GET">
-		        	<input type="text" id="keyword" name="keyword" />
-		        	<span>&nbsp;</span>
-		        	<input type="button" class="btn btn-primary" style="height: 35px;" onClick="form.submit()" value="검색"/>
-		        </form> -->
-	      </div>
+		   </div>
 	    </div>
 	  </nav>
+	  <div class="ftco-navbar-light" style="text-align:center;">
+		  <ul class="navbar-nav ml-auto">
+			<!-- 관리자일 경우 관리 탭 추가 -->
+			<c:if test="${ MEM_ID == 'ADMIN' }">
+				<li class="nav-item active"><a href="/adminMain.omc" class="nav-link">< 관리 ></a></li>
+			</c:if>
+		  </ul>
+	  </div>
 </body>

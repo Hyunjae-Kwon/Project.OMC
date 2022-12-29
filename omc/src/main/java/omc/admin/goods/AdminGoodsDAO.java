@@ -66,15 +66,4 @@ public class AdminGoodsDAO extends AbstractDAO {
 		delete("goods.adminGoodsDelete", map);
 	}
 	
-    /* 매출 총합 */
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> sellSum(Map<String, Object> map) throws Exception {
-		return (Map<String, Object>) selectOne("goods.sellSum", map);
-	}
-
-	/* 전체 상품 리스트, 매출 리스트 */
-    @SuppressWarnings("unchecked")
-	public Map<String, Object> selectGoodsListPaging(Map<String, Object> map) throws Exception{
-		return (Map<String, Object>) selectPagingList("goods.selectGoodsListPaging", map);
-	}
 }

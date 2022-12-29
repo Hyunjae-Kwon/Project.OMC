@@ -14,6 +14,42 @@ public class AdminCommunityServiceImpl implements AdminCommunityService {
 	@Resource(name = "adminCommunityDAO")
 	private AdminCommunityDAO adminCommunityDAO;
 	
+	/* 고객 후기 리스트 */
+	@Override
+	public List<Map<String, Object>> reviewList() throws Exception {
+		return adminCommunityDAO.reviewList();
+		
+	}
+	
+	/* 고객 후기 리스트 (페이징) */
+	@Override
+	public List<Map<String, Object>> reviewListPaging(int START, int END) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("START", START);
+		map.put("END", END);
+		
+		return adminCommunityDAO.reviewListPaging(map);
+	}
+	
+	/* 고객 후기 리스트 (페이징을 위한 수량 구하기) */
+	@Override
+	public int reviewListCount() throws Exception {
+		Map<String,Object> mapCount = adminCommunityDAO.reviewListCount();
+		return Integer.parseInt(String.valueOf(mapCount.get("COUNT")));
+	}
+	
+	/* 고객 후기 삭제 */
+	@Override
+	public void deleteCommunityId(Map<String, Object> map) throws Exception {
+		//Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("BD_NUM", map.get("BD_NUM"));
+		
+		adminCommunityDAO.deleteCommunityId(map);
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	@Override
 	public List<Map<String, Object>> noticeList() throws Exception {
@@ -51,11 +87,7 @@ public class AdminCommunityServiceImpl implements AdminCommunityService {
 		adminCommunityDAO.updateNoticeId(map);
 	}
 
-	@Override
-	public List<Map<String, Object>> reviewList() throws Exception {
-		return adminCommunityDAO.reviewList();
-		
-	}
+	
 
 	@Override
 	public List<Map<String, Object>> qnaList() throws Exception {
@@ -114,15 +146,6 @@ public class AdminCommunityServiceImpl implements AdminCommunityService {
 		
 	}
 
-	@Override
-	public void deleteCommunityId(Map<String, Object> map) throws Exception {
-		//Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("BD_NUM", map.get("BD_NUM"));
-		
-		adminCommunityDAO.deleteCommunityId(map);
-	}
-	
 	/* 페이징 */
 	@Override
 	public List<Map<String, Object>> noticeListPaging(int START, int END) throws Exception {
@@ -134,15 +157,7 @@ public class AdminCommunityServiceImpl implements AdminCommunityService {
 		return adminCommunityDAO.noticeListPaging(map);
 	}
 
-	@Override
-	public List<Map<String, Object>> reviewListPaging(int START, int END) throws Exception {
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("START", START);
-		map.put("END", END);
-		
-		return adminCommunityDAO.reviewListPaging(map);
-	}
+	
 
 	@Override
 	public List<Map<String, Object>> qnaListPaging(int START, int END) throws Exception {
@@ -163,12 +178,6 @@ public class AdminCommunityServiceImpl implements AdminCommunityService {
 	@Override
 	public int qnaListCount() throws Exception {
 		Map<String,Object> mapCount = adminCommunityDAO.qnaListCount();
-		return Integer.parseInt(String.valueOf(mapCount.get("COUNT")));
-	}
-	
-	@Override
-	public int reviewListCount() throws Exception {
-		Map<String,Object> mapCount = adminCommunityDAO.reviewListCount();
 		return Integer.parseInt(String.valueOf(mapCount.get("COUNT")));
 	}
 	

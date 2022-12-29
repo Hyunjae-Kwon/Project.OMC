@@ -3,6 +3,45 @@
 
 <mapper namespace="goods">
 
+	<!-- [selectGoodsList] 전체상품 게시판 리스트 (메인 페이지용 : 열 번호 1~3 까지만 꺼내기) -->
+	<select id="selectGoodsList" resultType="hashmap">
+	<![CDATA[
+		SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, R
+		FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, ROWNUM R
+			FROM (SELECT GD_GID, GD_GNAME, GD_SELL, GD_IMAGE, GD_PRICE, GD_DCPRICE
+				FROM GOODS
+				ORDER BY GD_SELL DESC)
+			)
+		WHERE R BETWEEN 1 AND 3
+	    ]]>
+	</select>
+	
+	<!-- [allGoodsList] 전체상품 정렬 -->
+	<select id="allGoodsList" parameterType="hashmap" resultType="hashmap">
+	<include refid="common.pagingPre"/> 
+	<choose>
+	    <when test="sort==1">
+			SELECT *
+			FROM (SELECT ROWNUM AS RNUM,S.*
+			FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE
+			    	FROM GOODS 
+			    	ORDER BY GD_DCPRICE ASC)S)
+	    </when>
+	    <when test="sort==2">
+			SELECT *
+			FROM (SELECT ROWNUM AS RNUM,S.*
+			FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE
+			    	FROM GOODS 
+			    	ORDER BY GD_DCPRICE DESC)S)
+	    </when>
+	    <otherwise>
+			SELECT ROW_NUMBER() OVER (ORDER BY GD_GID DESC) RNUM, GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_CATEGORY
+			FROM GOODS
+	    </otherwise>
+	</choose>
+	<include refid="common.pagingPost"/>
+	</select>
+
 	<!-- [newGoodsList] 신상품 리스트 -->
 	<select id="newGoodsList" parameterType="hashmap" resultType="hashmap"> 
       <![CDATA[
@@ -46,29 +85,23 @@
             WHERE AAA.RNUM BETWEEN 0 AND 8
       ]]>
    </select>
+   
+   <!-- [goodsCategoryList] 카테고리별 상품 리스트 페이징 -->
+	<select id="categoryGoodsList" parameterType="hashmap" resultType="hashmap">
+	<include refid="common.pagingPre"/> 
+	<![CDATA[
+		SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_REGDATE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY, ROW_NUMBER() OVER (ORDER BY GD_GID DESC) RNUM
+		FROM(
+			SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_REGDATE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY
+			FROM GOODS	
+			WHERE GD_CATEGORY=#{GD_CATEGORY}
+			ORDER BY GD_GID DESC
+		)
+		ORDER BY RNUM
+	]]>
+	<include refid="common.pagingPost"/> 
+	</select>
 
-	<!-- [selectGoodsList] 전체상품 게시판 리스트 (메인 페이지용 : 열 번호 1~3 까지만 꺼내기) -->
-	<select id="selectGoodsList" resultType="hashmap">
-	<![CDATA[
-		SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, R
-		FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, ROWNUM R
-			FROM (SELECT GD_GID, GD_GNAME, GD_SELL, GD_IMAGE, GD_PRICE, GD_DCPRICE
-				FROM GOODS
-				ORDER BY GD_SELL DESC)
-			)
-		WHERE R BETWEEN 1 AND 3
-	    ]]>
-	</select>
-	
-	<!-- [selectGoodsId] 상품 디테일 -->
-	<select id="selectGoodsId" parameterType="hashmap" resultType="hashmap">
-	<![CDATA[
-	 	SELECT * 
-		FROM GOODS
-		WHERE GD_GID=#{GD_GID}
-		]]>
-	</select>
-	
 	<!-- [goodsDetail] 상품 상세 정보 -->
 	<select id="goodsDetail" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
@@ -78,13 +111,13 @@
 		]]>
 	</select>
 	
-	<!-- [goodsDetailCart] 장바구니에서 넘어가는 상품 상세 정보 -->
-	<select id="goodsDetailCart" parameterType="hashmap" resultType="hashmap">
+	<!-- [searchGoodsList] 상품 검색 -->
+	<select id="searchGoodsList" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
-	 	SELECT * 
+		SELECT *
 		FROM GOODS
-		WHERE GD_GID=#{CT_GID}
-		]]>
+		WHERE GD_GNAME LIKE '%'||#{keyword}||'%'
+	]]>
 	</select>
 	
 	<!-- [goodsReview] 상품 리뷰 리스트 (상품 상세) -->
@@ -105,93 +138,50 @@
 		]]>
 	</select>
 	
-	<!-- [allGoodsList] 전체 상품 리스트 페이징 -->
-	<!-- <select id="allGoodsList" parameterType="hashmap" resultType="hashmap">
-	<include refid="common.pagingPre"/> 
+	<!-- [sellCountUpdate] 구매 수량 재고 업데이트 (재고 감소) -->
+	<update id="sellCountUpdate" parameterType="hashmap">
+		UPDATE GOODS
+		SET GD_STOCK = GD_STOCK - #{OD_COUNT}
+		WHERE GD_GID = #{OD_GID}
+	</update>
+	
+	<!-- [saleCountUpdate] 판매 수량 업데이트 (판매량 증가) -->
+	<update id="saleCountUpdate" parameterType="hashmap">
+		UPDATE GOODS
+		SET GD_SELL = GD_SELL + #{OD_COUNT}
+		WHERE GD_GID = #{OD_GID}
+	</update>
+	
+	<!-- [sellCountUpdateC] 주문 취소 수량 재고 업데이트 (재고 증가) -->
+	<update id="sellCountUpdateC" parameterType="hashmap">
+		UPDATE GOODS
+		SET GD_STOCK = GD_STOCK + #{OD_COUNT}
+		WHERE GD_GID = #{OD_GID}
+	</update>
+	
+	<!-- [saleCountUpdateC] 주문 취소 수량 판매량 업데이트 (판매량 감소) -->
+	<update id="saleCountUpdateC" parameterType="hashmap">
+		UPDATE GOODS
+		SET GD_SELL = GD_SELL - #{OD_COUNT}
+		WHERE GD_GID = #{OD_GID}
+	</update>
+	
+	<!-- [sellSum] 매출 총합 -->
+	<select id="sellSum" resultType="hashmap">
+	   SELECT SUM(GD_DCPRICE*GD_SELL) SUM
+	   FROM GOODS	
+	</select>
+	
+	<!-- 관리자 -->
+	<!-- [allGoodsCount] 전체상품 수량 -->
+	<select id="allGoodsCount" resultType="hashmap">
 	<![CDATA[
-		SELECT ROW_NUMBER() OVER (ORDER BY GD_GID DESC) RNUM, GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE
+		SELECT COUNT(*) COUNT
 		FROM GOODS
 	]]>
-	<include refid="common.pagingPost"/> 
-	</select> -->
-	
-	<!-- [] 신상품순 정렬 -->
-	<!-- <select id="allGoodsList" parameterType="hashmap" resultType="hashmap">
-	<include refid="common.pagingPre"/> 
-	<![CDATA[
-		SELECT *
-		FROM (SELECT ROWNUM AS RNUM,S.*
-		        FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE
-		                FROM GOODS  
-					   	ORDER BY GD_REGDATE DESC)S)
-		WHERE RNUM >= #{START} AND RNUM <= #{END}
-	]]>
-	<include refid="common.pagingPost"/> 
-	</select> -->
-	
-	<!-- [allGoodsList] 전체상품 정렬 -->
-	<select id="allGoodsList" parameterType="hashmap" resultType="hashmap">
-	<include refid="common.pagingPre"/> 
-	<choose>
-	    <when test="sort==1">
-			SELECT *
-			FROM (SELECT ROWNUM AS RNUM,S.*
-			FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE
-			    	FROM GOODS 
-			    	ORDER BY GD_DCPRICE ASC)S)
-	    </when>
-	    <when test="sort==2">
-			SELECT *
-			FROM (SELECT ROWNUM AS RNUM,S.*
-			FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE
-			    	FROM GOODS 
-			    	ORDER BY GD_DCPRICE DESC)S)
-	    </when>
-	    <otherwise>
-			SELECT ROW_NUMBER() OVER (ORDER BY GD_GID DESC) RNUM, GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_CATEGORY
-			FROM GOODS
-	    </otherwise>
-	</choose>
-	<include refid="common.pagingPost"/>
 	</select>
 	
-	<!-- [allGoodsListSearch] 전체 상품 리스트 검색 -->
-	<select id="allGoodsListSearch" parameterType="hashmap" resultType="hashmap">
-	<![CDATA[
-		SELECT *
-		FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY, ROWNUM R
-		    FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY
-		        FROM GOODS 
-				]]>
-			 	<trim prefix="WHERE" prefixOverrides="AND">
-					<if test="GD_CATEGORY != NULL">
-						AND GD_CATEGORY=#{GD_CATEGORY}
-					</if>
-					<if test="GD_PRICEMIN != -1">
-						AND GD_PRICE BETWEEN #{GD_PRICEMIN} AND #{GD_PRICEMAX} 
-					</if>
-				</trim>
-				<trim prefix="ORDER BY">
-			 		<if test="GD_SELL != NULL">
-						GD_SELL DESC  
-					</if>
-					<if test="GD_ORDER!=NULL and GD_ORDER.equals('LOW')">
-						GD_PRICE ASC 
-					</if>
-					<if test="GD_ORDER!=NULL and GD_ORDER.equals('HIGH')">
-						GD_PRICE DESC 
-					</if>
-					<if test="GD_REGDATE!=NULL">
-						GD_REGDATE DESC 
-					</if>
-				</trim>
-			)
-			ORDER BY R
-		)
-		WHERE R BETWEEN #{START} AND #{END}
-	</select>
-	
-	<!-- [allGoodsKeywordSearch] 전체 상품 키워드 검색 -->
+	<!-- [allListKeywordPaging] 전체 상품 키워드 검색 -->
 	<select id="allListKeywordPaging" parameterType="hashmap" resultType="hashmap">
 		SELECT *
 		FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY, ROWNUM R
@@ -215,46 +205,6 @@
 		) WHERE R BETWEEN #{START} AND #{END}
 	</select>
 	
-	<!-- [goodsCategoryList] 카테고리별 상품 리스트 페이징 -->
-	<select id="categoryGoodsList" parameterType="hashmap" resultType="hashmap">
-	<include refid="common.pagingPre"/> 
-	<![CDATA[
-		SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_REGDATE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY, ROW_NUMBER() OVER (ORDER BY GD_GID DESC) RNUM
-		FROM(
-			SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_REGDATE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY
-			FROM GOODS	
-			WHERE GD_CATEGORY=#{GD_CATEGORY}
-			ORDER BY GD_GID DESC
-		)
-		ORDER BY RNUM
-	]]>
-	<include refid="common.pagingPost"/> 
-	</select>
-	
-	<!-- [allGoodsCount] 전체상품 수량 -->
-	<select id="allGoodsCount" resultType="hashmap">
-	<![CDATA[
-		SELECT COUNT(*) COUNT
-		FROM GOODS
-	]]>
-	</select>
-	
-	<!-- [allGoodsSearchCount] 전체상품 검색 수량 -->
-	<select id="allGoodsSearchCount" parameterType="hashmap" resultType="hashmap">
-	<![CDATA[
-		SELECT COUNT(*) COUNT
-		FROM PRODUCT
-		]]>
-	 	<trim prefix="WHERE" prefixOverrides="AND">
-			<if test='GD_CATEGORY != NULL'>
-				AND GD_CATEGORY = #{GD_CATEGORY} 
-			</if>
-			<if test="GD_PRICEMIN != -1">
-				AND GD_PRICE BETWEEN #{GD_PRICEMIN} AND #{GD_PRICEMAX}
-			</if>
-		</trim>
-	</select>
-	
 	<!-- [allgoodsKeywordSearchCount] 전체 상품 키워드 검색 수량 -->
 	<select id="allgoodsKeywordSearchCount" parameterType="hashmap" resultType="hashmap">
 		SELECT COUNT(*) COUNT
@@ -274,15 +224,6 @@
 			</if>
 		</trim>
 	</select>
-	
-	<!-- [goodsCategoryCount] 카테고리별 상품 수량 -->
-	<select id="goodsCategoryCount" resultType="hashmap">
-	<![CDATA[
-		SELECT COUNT(*) COUNT
-		FROM GOODS
-		WHERE GD_CATEGORY=#{GD_CATEGORY}
-	]]>
-	</select> 
 	
 	<!-- [adminGoodsWrite] 상품 입력 -->
 	<insert id="adminGoodsWrite" parameterType="hashmap" useGeneratedKeys="true" keyProperty="GD_GID">
@@ -346,24 +287,6 @@
 	]]>
 	</select>
 	
-	<!-- [selectGoodsListPaging] 전체 상품 게시판 페이징, 매출 리스트 -->
-	<!-- <select id="selectGoodsListPaging" parameterType="hashmap" resultType="hashmap">
-	<![CDATA[
-		SELECT *
-		FROM (
-		   SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY, ROWNUM R
-		   FROM (
-		      SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY
-		      FROM 
-				  GOODS
-			  ORDER BY GD_SELL DESC
-			)
-			ORDER BY R
-		)
-		WHERE R BETWEEN #{START} AND #{END}
-	    ]]>
-	</select> -->
-	
 	<select id="selectGoodsListPaging" parameterType="hashmap" resultType="hashmap">
 	<include refid="common.pagingPre"/> 
 	<choose>
@@ -389,48 +312,6 @@
 	<include refid="common.pagingPost"/>
 	</select>
 	
-	<!-- [sellCountUpdate] 구매 수량 재고 업데이트 (재고 감소) -->
-	<update id="sellCountUpdate" parameterType="hashmap">
-		UPDATE GOODS
-		SET GD_STOCK = GD_STOCK - #{OD_COUNT}
-		WHERE GD_GID = #{OD_GID}
-	</update>
-	
-	<!-- [saleCountUpdate] 판매 수량 업데이트 (판매량 증가) -->
-	<update id="saleCountUpdate" parameterType="hashmap">
-		UPDATE GOODS
-		SET GD_SELL = GD_SELL + #{OD_COUNT}
-		WHERE GD_GID = #{OD_GID}
-	</update>
-	
-	<!-- [sellCountUpdateC] 주문 취소 수량 재고 업데이트 (재고 증가) -->
-	<update id="sellCountUpdateC" parameterType="hashmap">
-		UPDATE GOODS
-		SET GD_STOCK = GD_STOCK + #{OD_COUNT}
-		WHERE GD_GID = #{OD_GID}
-	</update>
-	
-	<!-- [saleCountUpdateC] 주문 취소 수량 판매량 업데이트 (판매량 감소) -->
-	<update id="saleCountUpdateC" parameterType="hashmap">
-		UPDATE GOODS
-		SET GD_SELL = GD_SELL - #{OD_COUNT}
-		WHERE GD_GID = #{OD_GID}
-	</update>
-	
-	<!-- [searchGoods] 상품 검색 -->
-	<select id="searchGoodsList" parameterType="hashmap" resultType="hashmap">
-	<![CDATA[
-		SELECT *
-		FROM GOODS
-		WHERE GD_GNAME LIKE '%'||#{keyword}||'%'
-	]]>
-	</select>
-	
-	<!-- [sellSum] 매출 총합 -->
-	<select id="sellSum" resultType="hashmap">
-	   SELECT SUM(GD_DCPRICE*GD_SELL) SUM
-	   FROM GOODS	
-	</select>
 	
 	<!-- [testResultGoods] 테스트 결과에 따른 추천 상품 -->
 	<select id="testResultGoods" parameterType="hashmap" resultType="hashmap">
@@ -445,5 +326,66 @@
 		WHERE R BETWEEN 1 AND 3
 	    ]]>
 	</select>
+	
+	<!-- [goodsCategoryCount] 카테고리별 상품 수량 -->
+	<!-- <select id="goodsCategoryCount" resultType="hashmap">
+	<![CDATA[
+		SELECT COUNT(*) COUNT
+		FROM GOODS
+		WHERE GD_CATEGORY=#{GD_CATEGORY}
+	]]>
+	</select>  -->
+	
+	<!-- [allGoodsListSearch] 전체 상품 리스트 검색 -->
+	<!-- <select id="allGoodsListSearch" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT *
+		FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY, ROWNUM R
+		    FROM (SELECT GD_GID, GD_GNAME, GD_IMAGE, GD_PRICE, GD_DCPRICE, GD_STOCK, GD_SELL, GD_CATEGORY
+		        FROM GOODS 
+				]]>
+			 	<trim prefix="WHERE" prefixOverrides="AND">
+					<if test="GD_CATEGORY != NULL">
+						AND GD_CATEGORY=#{GD_CATEGORY}
+					</if>
+					<if test="GD_PRICEMIN != -1">
+						AND GD_PRICE BETWEEN #{GD_PRICEMIN} AND #{GD_PRICEMAX} 
+					</if>
+				</trim>
+				<trim prefix="ORDER BY">
+			 		<if test="GD_SELL != NULL">
+						GD_SELL DESC  
+					</if>
+					<if test="GD_ORDER!=NULL and GD_ORDER.equals('LOW')">
+						GD_PRICE ASC 
+					</if>
+					<if test="GD_ORDER!=NULL and GD_ORDER.equals('HIGH')">
+						GD_PRICE DESC 
+					</if>
+					<if test="GD_REGDATE!=NULL">
+						GD_REGDATE DESC 
+					</if>
+				</trim>
+			)
+			ORDER BY R
+		)
+		WHERE R BETWEEN #{START} AND #{END}
+	</select> -->
+	
+	<!-- [allGoodsSearchCount] 전체상품 검색 수량 -->
+	<!-- <select id="allGoodsSearchCount" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT COUNT(*) COUNT
+		FROM PRODUCT
+		]]>
+	 	<trim prefix="WHERE" prefixOverrides="AND">
+			<if test='GD_CATEGORY != NULL'>
+				AND GD_CATEGORY = #{GD_CATEGORY} 
+			</if>
+			<if test="GD_PRICEMIN != -1">
+				AND GD_PRICE BETWEEN #{GD_PRICEMIN} AND #{GD_PRICEMAX}
+			</if>
+		</trim>
+	</select> -->
 	
 </mapper>

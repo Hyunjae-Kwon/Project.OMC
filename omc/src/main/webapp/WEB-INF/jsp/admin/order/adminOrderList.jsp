@@ -56,8 +56,8 @@
 						<c:when test="${fn:length(orderBeanList)>0}">
 							<c:forEach var="order" items="${orderBeanList}" varStatus="status">
 							<tr>
-							<td>&emsp;&emsp;${order.OD_OID}&emsp;&emsp;</td>
-							<td>${order.OD_REGDATE}</td>
+							<td>&emsp;&emsp;${order.OD_NUM}&emsp;&emsp;</td>
+							<td><fmt:formatDate value="${order.OD_REGDATE}" pattern="yyyy-MM-dd"/></td>
 							<td>${order.OD_ID}</td>
 							<td><a href="adminOrderDetail.omc?OD_OID=${order.OD_OID}">${order.OD_GNAME}</a></td>
 							<td>${order.OD_ADD1}</td>

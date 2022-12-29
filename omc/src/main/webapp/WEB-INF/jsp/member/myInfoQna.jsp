@@ -29,7 +29,6 @@
 	<div style="text-align:center">
 		<h3> 내 문의내역 </h3><br><br>
 	</div>
-	<button type="button" class="btn btn-dark py-2 px-3" style="float:right;" onClick="location.href='/boardWriteForm.omc'">글쓰기</button>
 	<br><br>
 		<div class="row">
 			<div class="col-md-12 ftco-animate">

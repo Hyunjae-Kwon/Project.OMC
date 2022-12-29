@@ -10,6 +10,24 @@ import omc.common.common.AbstractDAO;
 @Repository("orderDAO")
 public class OrderDAO extends AbstractDAO {
 	
+//	@SuppressWarnings("unchecked")
+//	public List<Map<String, Object>> selectOrderOId(Map<String, Object> map) {
+//		// TODO Auto-generated method stub
+//		return (List<Map<String, Object>>) selectList("order.selectOrderOId", map);
+//	}
+	
+//	/* 총 결제 금액 */
+//	@SuppressWarnings("unchecked")
+//	public List<Map<String, Object>> selectTotalPay(int orderNum) {
+//		return (List<Map<String, Object>>) selectList("order.selectTotalPay", orderNum);
+//	}
+	
+	/* 주문하기 폼 (장바구니 -> 주문하기) 주문번호 최대값 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectODNumMax() throws Exception {
+		return (Map<String, Object>) selectOne("order.selectODNumMax");
+	}
+	
 	/* 주문하기 (상품 상세 -> 주문하기) */
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> insertOrderDirect(Map<String, Object> map) {
@@ -20,19 +38,40 @@ public class OrderDAO extends AbstractDAO {
 	public int insertOrderCart(Map<String, Object> map) {
 		return (int) insert("order.insertOrderCart", map);
 	}
+
+	/* 결제 정보 입력 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> insertPay(Map<String, Object> map) {
+		return (Map<String, Object>) selectOne("order.insertPay", map);
+	}
 	
-	/* 주문 결과 확인 */
+	/* 단품상품 구매 시 사용하는 OID 최대값 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectOIDMax() throws Exception {
+		// TODO Auto-generated method stub
+		return (Map<String, Object>) selectOne("order.selectOIDMax");
+	}
+	
+	/* 주문 결과 확인 (상품 상세 -> 주문하기) */
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> selectOrderOID(Map<String, Object> map) {
 		return (Map<String, Object>) selectOne("order.selectOrderOId", map);
 	}
 	
-	/* 총 결제 금액 */
+	/* 주문 결과 확인 (장바구니 -> 주문하기) */
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> selectTotalPay(int orderNum) {
-		return (List<Map<String, Object>>) selectList("order.selectTotalPay", orderNum);
+	   public List<Map<String, Object>> selectOrderODNum(int orderNum) throws Exception{
+	      return (List<Map<String, Object>>) selectList("order.selectOrderODNum", orderNum);
 	}
-
+	
+	/* 결제 정보 확인 (장바구니 -> 주문하기) */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectPayODNum(int orderNum) throws Exception{
+		return (Map<String, Object>) selectOne("order.selectPayODNum", orderNum);
+	}
+	
+	//주문하기//////////////////////////////////////////////////////////////////////////////////////
+	
 	/* 마이페이지 주문조회 */
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> myOrderListPaging(Map<String, Object> map) throws Exception{
@@ -49,42 +88,6 @@ public class OrderDAO extends AbstractDAO {
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> selectPayODNum(Map<String, Object> map) throws Exception{
 		return (Map<String, Object>) selectOne("order.selectPayODNum", map);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> selectOrderOId(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return (List<Map<String, Object>>) selectList("order.selectOrderOId", map);
-	}
-
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> selectOIDMax() throws Exception {
-		// TODO Auto-generated method stub
-		return (Map<String, Object>) selectOne("order.selectOIDMax");
-	}
-	
-	/* 주문번호 최대값 */
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> selectODNumMax() throws Exception {
-		return (Map<String, Object>) selectOne("order.selectODNumMax");
-	}
-	
-	/* 결제 정보 입력 */
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> insertPay(Map<String, Object> map) {
-		return (Map<String, Object>) selectOne("order.insertPay", map);
-	}
-	
-	/* 주문 결과 확인 (장바구니 -> 주문하기) */
-	@SuppressWarnings("unchecked")
-	   public List<Map<String, Object>> selectOrderODNum(int orderNum) throws Exception{
-	      return (List<Map<String, Object>>) selectList("order.selectOrderODNum", orderNum);
-	}
-	
-	/* 결제 정보 확인 (장바구니 -> 주문하기) */
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> selectPayODNum(int orderNum) throws Exception{
-		return (Map<String, Object>) selectOne("order.selectPayODNum", orderNum);
 	}
 	
 	/* 마이페이지 주문 취소 */

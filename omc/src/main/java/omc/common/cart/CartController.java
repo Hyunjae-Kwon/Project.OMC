@@ -39,37 +39,10 @@ public class CartController {
 		String loginId = (String) request.getSession().getAttribute("MEM_ID");
 		
 		List<Map<String, Object>> list = cartService.selectCartList(loginId);
-        Map<String,Object> memInfo = loginService.selectMember(loginId);
         
         mv.addObject("cartList", list);
-		mv.addObject("memInfo", memInfo);
 		
 		return mv;
-	}
-	
-	/* 상품 장바구니에 추가 */
-	@RequestMapping(value="insertCart.omc", method=RequestMethod.POST)
-	@ResponseBody
-    public boolean addCart(CommandMap commandMap,HttpServletRequest request) throws Exception{
-    	
-    	String loginId="";
-    	
-    	if(request.getSession().getAttribute("MEM_ID")!=null) {
-    		loginId = (String)request.getSession().getAttribute("MEM_ID");
-    	}
-		
-    	if(loginId.isEmpty()) {
-    		
-    	} else {
-    		commandMap.put("MEM_ID", loginId);
-    	}
-
-    	
-    	int i = cartService.insertCart(commandMap.getMap());
-    	if(i == 0) {
-    		return false;
-    	}
-    	return true;
 	}
 	
 	/* 장바구니 수량 변경 */
@@ -83,16 +56,6 @@ public class CartController {
 		return mv;
 	}
 	
-	/* 장바구니 구매 상품 카트 번호 업데이트 */
-	@RequestMapping(value="/updateNum.omc", method=RequestMethod.POST)
-	public ModelAndView updateNum(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("jsonView");
-		
-		cartService.updateNum(commandMap.getMap());
-		
-		return mv;
-	}
-	
 	/* 장바구니 상품 삭제 */
 	@RequestMapping(value = "/delSelectMyCart.omc")
 	public ModelAndView delSelectMyCart(CommandMap commandMap, HttpServletRequest request) throws Exception {
@@ -100,6 +63,31 @@ public class CartController {
 		
 		cartService.delSelectMyCart(commandMap.getMap());
 	 
+		return mv;
+	}
+	
+	/* 상품 장바구니에 추가 */
+	@RequestMapping(value="insertCart.omc", method=RequestMethod.POST)
+	@ResponseBody
+    public boolean insertCart(CommandMap commandMap,HttpServletRequest request) throws Exception{
+    	
+		String loginId = (String) request.getSession().getAttribute("MEM_ID");
+		commandMap.put("MEM_ID", loginId);
+		
+    	int i = cartService.insertCart(commandMap.getMap());
+    	if(i == 0) {
+    		return false;
+    	}
+    	return true;
+	}
+	
+	/* 장바구니 구매 상품 카트 번호 업데이트 */
+	@RequestMapping(value="/updateNum.omc", method=RequestMethod.POST)
+	public ModelAndView updateNum(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		cartService.updateNum(commandMap.getMap());
+		
 		return mv;
 	}
 }
