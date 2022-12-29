@@ -35,7 +35,7 @@
 		<div class="row">
 				<div class="col-md-12 ftco-animate">
 				
-					<div class="cart-list">
+					<div class="overlay">
 						<table class="table">
 							<thead class="thead-primary">
 								<tr class="text-center">

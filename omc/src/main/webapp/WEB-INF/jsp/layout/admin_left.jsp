@@ -26,7 +26,6 @@
 				<a href="adminReviewList.omc" style="font-size: 0.8vw;">후기</a>
 				<a href="adminQnaList.omc" style="font-size: 0.8vw;">Q&A</a>
 			</li>
-			<li><a href="adminMainForm.omc" style="font-size: 1vw; color:#fd7e14;">페이지 관리</a></li>
 		</ul>
 </div>
 </body>

@@ -85,7 +85,7 @@ public class MyPageController {
 	}
 	
 	/* 회원탈퇴 */
-	@RequestMapping(value="/myInfoDelete.omc", method = RequestMethod.POST)
+	@RequestMapping(value="/deleteMember.omc")
 	public ModelAndView deleteMember(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("redirect:/logout.omc");
 			

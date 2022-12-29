@@ -231,7 +231,7 @@ window.onload = function() {
 												<th><span class="important">휴대폰번호</span></th>
 												<td class="member_address">
 													<div class="address_postcode">
-														<input type="text" style="width: 200px;" id="MEM_PHONE" name="MEM_PHONE" maxlength="12" placeholder="- 없이 입력하세요." data-pattern="gdNum" value="">
+														<input type="text" style="width: 200px;" id="MEM_PHONE" name="MEM_PHONE" maxlength="11" placeholder="- 없이 입력하세요." data-pattern="gdNum" value="">
 													</div>
 												</td>
 											</tr>

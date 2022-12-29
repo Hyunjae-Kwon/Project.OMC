@@ -31,7 +31,7 @@
 	</div>
 <br><br>
 	<div class="container">
-			<div class="cart-list">
+			<div class="overlay">
 				
 				<table class="table">
 					<thead class="thead-primary">

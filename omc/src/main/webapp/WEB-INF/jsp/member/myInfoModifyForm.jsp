@@ -79,7 +79,7 @@
 <script>
 	function submit2(del) {
 		if (confirm("탈퇴하시겠습니까?") == true) {
-			del.action = "/myInfoDelete.omc";
+			del.action = "/deleteMember.omc";
 			del.submit();
 			return true;
 		}
@@ -183,9 +183,7 @@
 																				<th><span class="important">아이디</span></th>
 																				<td>
 																					<div class="member_warning">
-																						<input type="text" id="MEM_ID" name="MEM_ID"
-																							style="width: 200px" value="${map.MEM_ID}"
-																							readonly>
+																						<input type="text" id="MEM_ID" name="MEM_ID" style="width: 200px" value="${map.MEM_ID}" readonly>
 																					</div>
 																				</td>
 																			</tr>
@@ -193,9 +191,7 @@
 																				<th><span class="important">비밀번호</span></th>
 																				<td class="member_password">
 																					<div class="member_warning">
-																						<input type="password" id="MEM_PW" name="MEM_PW"
-																							style="width: 200px" autocomplete="off"
-																							placeholder="" value="${map.MEM_PW}">
+																						<input type="password" id="MEM_PW" name="MEM_PW" style="width: 200px" autocomplete="off" placeholder="" value="${map.MEM_PW}">
 																					</div>
 																				</td>
 																			</tr>
@@ -203,9 +199,7 @@
 																				<th><span class="important">비밀번호 확인</span></th>
 																				<td>
 																					<div class="member_warning">
-																						<input type="password" id="MEM_PW2" name="MEM_PW2"
-																							style="width: 200px" autocomplete="off"
-																							value="${map.MEM_PW}">
+																						<input type="password" id="MEM_PW2" name="MEM_PW2" style="width: 200px" autocomplete="off" value="${map.MEM_PW}">
 																					</div>
 																				</td>
 																			</tr>
@@ -213,10 +207,7 @@
 																				<th><span class="important">이름</span></th>
 																				<td>
 																					<div class="member_warning">
-																						<input type="text" id="MEM_NAME" name="MEM_NAME"
-																							style="width: 200px"
-																							data-pattern="gdMemberNmGlobal" maxlength="30"
-																							value="${map.MEM_NAME}" readonly>
+																						<input type="text" id="MEM_NAME" name="MEM_NAME" style="width: 200px" data-pattern="gdMemberNmGlobal" maxlength="30" value="${map.MEM_NAME}" readonly>
 																					</div>
 																				</td>
 																			</tr>
@@ -224,11 +215,7 @@
 																				<th><span class="important">휴대폰번호</span></th>
 																				<td class="member_address">
 																					<div class="address_postcode">
-																						<input type="text" id="MEM_PHONE" name="MEM_PHONE"
-																							style="width: 200px" maxlength="12"
-																							placeholder="- 없이 입력하세요." data-pattern="gdNum"
-																							onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"
-																							value="${map.MEM_PHONE}">
+																						<input type="text" id="MEM_PHONE" name="MEM_PHONE" style="width: 200px" maxlength="11" placeholder="- 없이 입력하세요." data-pattern="gdNum" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="${map.MEM_PHONE}">
 																					</div>
 																				</td>
 																			</tr>
@@ -236,22 +223,16 @@
 																				<th><span>주소</span></th>
 																				<td class="member_address">
 																					<div class="address_postcode">
-																						<input type="text" name="MEM_ZIPCODE"
-																							id="MEM_ZIPCODE" style="width: 100px"
-																							value="${map.MEM_ZIPCODE}" readonly> <input
-																							type="button" class="submit px-3"
-																							onclick="sample6_execDaumPostcode()"
-																							value="우편번호 찾기">
+																						<input type="text" name="MEM_ZIPCODE" id="MEM_ZIPCODE" style="width: 100px" value="${map.MEM_ZIPCODE}" readonly>
+																						<input type="button" class="submit px-3" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 																					</div> <br>
 																					<div class="address_input">
 																						<div class="member_warning">
-																							<input type="text" name="MEM_ADD1" id="MEM_ADD1"
-																								readonly="readonly" value="${map.MEM_ADD1}">
+																							<input type="text" name="MEM_ADD1" id="MEM_ADD1" readonly="readonly" value="${map.MEM_ADD1}">
 																						</div>
 																						<br>
 																						<div class="member_warning js_address_sub">
-																							<input type="text" name="MEM_ADD2" id="MEM_ADD2"
-																								value="${map.MEM_ADD2}">
+																							<input type="text" name="MEM_ADD2" id="MEM_ADD2" value="${map.MEM_ADD2}">
 																						</div>
 																						<br>
 																					</div>
