@@ -61,7 +61,7 @@ function deleteCheckAjax(BD_NUM, index) {
 							
 							    <c:choose>
 							    	<c:when test="${qnaCount!=0}"> 
-							    		<c:forEach var="qna" items="${qnaList}" varStatus="status"> 
+							    		<c:forEach var="qna" items="${qnaListArr}" varStatus="status"> 
 											<tr class="text-center" id="qna${status.index}">
 												<td>${qna.BD_NUM}</td>
 												

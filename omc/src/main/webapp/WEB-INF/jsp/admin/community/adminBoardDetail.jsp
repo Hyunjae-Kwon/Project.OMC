@@ -76,7 +76,7 @@
 									 	<input type="hidden" id="BC_BCID" name="BC_BCID" value="${comment.BC_BCID }">
 										<input type="hidden" id="BC_NUM" name="BC_NUM" value="${comment.BC_NUM }">
 									 </p>
-									<p><a onClick="deleteCheck1()" class="reply">삭제</a>
+									<p><a onClick="deleteCheck1()" class="reply" style="cursor:pointer">삭제</a>
 								</div>
 						
 						     </li>
@@ -87,7 +87,7 @@
 				
 			</div>
 	 
- 	<form action="boardComWrite.omc?BD_NUM=${boardDetail.BD_NUM}" name="frm" id="frm" method="post" enctype="multipart/form-data">
+ 	<form action="adminBoardComWrite.omc?BD_NUM=${boardDetail.BD_NUM}" name="frm" id="frm" method="post" enctype="multipart/form-data">
    
    <input type="hidden" name="BC_NUM" id="BD_NUM" value="${boardDetail.BD_NUM}">
    <input type="hidden" id="MEM_ID" name="MEM_ID" value="${MEM_ID}"/>
@@ -137,8 +137,8 @@ function deleteCheck1() {
 	var BC_BCID = document.getElementById('BC_BCID').value;
 	var BC_NUM = document.getElementById('BC_NUM').value;
 	if(confirm("삭제하시겠습니까?") == true) {
-		location.href="commentDelete.omc?BC_BCID=" + BC_BCID +"&BC_NUM="+ BC_NUM;
-	}/* adminQnaComDelete.al?COMMENTIDX=${comment.COMMENTIDX}&ARTICLEIDX=${comment.ARTICLEIDX } */
+		location.href="adminCommentDelete.omc?BC_BCID=" + BC_BCID +"&BC_NUM="+ BC_NUM;
+	}
 }
 
 <!-- 수정 유효성검사 -->

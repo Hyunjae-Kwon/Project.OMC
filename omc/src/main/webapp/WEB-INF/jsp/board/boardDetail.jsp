@@ -76,7 +76,7 @@
 										<input type="hidden" id="BC_NUM" name="BC_NUM" value="${comment.BC_NUM }">
 									 </p>
 									 <c:if test="${MEM_ID eq comment.BC_ID}">
-									<p><a onClick="deleteCheck1()" class="reply">삭제</a>
+									<p><a onClick="deleteCheck1()" class="reply" style="cursor:pointer">삭제</a>
 									</c:if>
 								</div>
 						     </li>
@@ -100,7 +100,15 @@
 	<br/>
 	<hr>
 	  <div align="center" style="height:100px;"> 
-		<input type="button" value="이전" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="window.history.back()">	
+		<c:if test="${boardDetail.BD_TYPE eq 'C' }">
+			<input type="button" value="이전" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='boardList.omc'">
+		</c:if>
+		<c:if test="${boardDetail.BD_TYPE eq 'N' }">
+			<input type="button" value="이전" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='noticeList.omc'">
+		</c:if>
+		<c:if test="${boardDetail.BD_TYPE eq 'F' }">
+			<input type="button" value="이전" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='faqList.omc'">
+		</c:if>
 		<c:if test="${MEM_ID eq boardDetail.BD_ID}">
 			<input type="button" value="수정" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='updateBoardForm.omc?BD_NUM=${boardDetail.BD_NUM}'">
 			<input type="button" value="삭제" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="return deleteCheck()">

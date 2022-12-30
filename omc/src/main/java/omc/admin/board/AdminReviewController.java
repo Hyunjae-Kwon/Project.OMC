@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,22 +22,28 @@ public class AdminReviewController {
 
 	/* 고객 후기 리스트 */
 	@RequestMapping(value="/adminReviewList.omc")
-	public ModelAndView adminReviewList(CommandMap commandMap) throws Exception{
+	public ModelAndView adminReviewList(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("admin/community/adminReviewListAjax");
 		/* 페이징을 위한 변수 */
-		int pageSize = 20; // 페이지당 출력할 공지의 수
+		int pageSize = 10; // 페이지당 출력할 공지의 수
 		int START = 1;
 		int END = pageSize;
 		int currentPage = 1; // 현재 페이지
 
 		int reviewListCount; // 전체 공지글의 수
 		int pageBlock = 5; // 표시할 페이지의 수
-		String url = "noticeList.omc";
+		String url = "adminReviewList.omc";
 		String searchUrl = "";
+		
+		/* 기본 페이지가 아닐 경우 */
+		if(request.getParameter("page")!=null) {
+			currentPage = Integer.parseInt(request.getParameter("page"));
+			START = 1 + pageSize*(currentPage-1); 
+			END = pageSize*currentPage;
+		}
 		
 		List<Map<String, Object>> list = adminCommunityService.reviewListPaging(START, END);
 		List<Map<String, Object>> reviewListArr = new ArrayList<Map<String, Object>>();
-		List<Map<String, Object>> reviewList = adminCommunityService.reviewList();
 		for(Map<String, Object> mapObject : list) {
 			reviewListArr.add(mapObject);
 		}
@@ -50,7 +57,6 @@ public class AdminReviewController {
 		mv.addObject("paging", paging);
 
 		mv.addObject("reviewListArr", reviewListArr);
-		mv.addObject("reviewList", reviewList);
 		
 		return mv;
 	}

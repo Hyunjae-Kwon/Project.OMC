@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +22,10 @@ public class AdminNoticeController {
 	private AdminCommunityService adminComService;
 
 	@RequestMapping(value = "/adminNoticeList.omc", method = RequestMethod.GET)
-	public ModelAndView adminNoticeList(CommandMap commandMap) throws Exception {
+	public ModelAndView adminNoticeList(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("admin/community/adminNoticeListAjax");
 		/* 페이징을 위한 변수 */
-		int pageSize = 20; // 페이지당 출력할 공지의 수
+		int pageSize = 10; // 페이지당 출력할 공지의 수
 		int START = 1;
 		int END = pageSize;
 		int currentPage = 1; // 현재 페이지
@@ -33,10 +34,16 @@ public class AdminNoticeController {
 		int pageBlock = 5; // 표시할 페이지의 수
 		String url = "adminNoticeList.omc";
 		String searchUrl = "";
+		
+		/* 기본 페이지가 아닐 경우 */
+		if(request.getParameter("page")!=null) {
+			currentPage = Integer.parseInt(request.getParameter("page"));
+			START = 1 + pageSize*(currentPage-1); 
+			END = pageSize*currentPage;
+		}
 
 		List<Map<String, Object>> list = adminComService.noticeListPaging(START, END);
 		List<Map<String, Object>> noticeListArr = new ArrayList<Map<String, Object>>();
-		List<Map<String, Object>> noticeList = adminComService.noticeList();
 
 		for (Map<String, Object> mapObject : list) {
 			noticeListArr.add(mapObject);
@@ -51,7 +58,6 @@ public class AdminNoticeController {
 		mv.addObject("paging", paging);
 
 		mv.addObject("noticeListArr", noticeListArr);
-		mv.addObject("noticeList", noticeList);
 
 		return mv;
 	}
@@ -68,7 +74,7 @@ public class AdminNoticeController {
 		ModelAndView mv = new  ModelAndView("admin/community/adminNoticeWrite");
 
 		mv.addObject("msg", "게시글 작성이 완료되었습니다.");
-		mv.addObject("url", "/adminNoticeList.omc");
+		mv.addObject("url", "/adminNoticeListAjax.omc");
 		adminComService.insertNotice(commandMap.getMap());
 
 		return mv;
@@ -91,7 +97,7 @@ public class AdminNoticeController {
 
 		adminComService.updateNoticeId(commandMap.getMap());
 		mv.addObject("msg", "게시글 수정이 완료되었습니다.");
-		mv.addObject("url", "/adminNoticeList.omc");
+		mv.addObject("url", "/adminNoticeListAjax.omc");
 
 		return mv;
 	}

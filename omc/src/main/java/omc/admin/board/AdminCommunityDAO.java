@@ -82,11 +82,6 @@ public class AdminCommunityDAO extends AbstractDAO {
 	public void insertComment(Map<String, Object> map) throws Exception{
 		insert("board.insertComment",map);
 	}
-	
-	//관리자 고객센터 댓글 수정
-	public void updateComment(Map<String, Object> map) throws Exception {
-		update("board.updateComment", map);
-	}
 
 	//관리자 고객센터 댓글 삭제
 	public void deleteComment(Map<String, Object> map) throws Exception {

@@ -16,7 +16,7 @@
 <script type="text/javascript">
 	function fn_search(pageNo) {
 		var comSubmit = new ComSubmit();
-		comSubmit.setUrl("<c:url value='/noticeList.omc'/>");
+		comSubmit.setUrl("<c:url value='/adminBoradList.omc'/>");
 		comSubmit.addParam("currentPageNo", pageNo);
 		comSubmit.submit();
 	}

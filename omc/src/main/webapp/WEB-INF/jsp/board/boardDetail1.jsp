@@ -89,7 +89,15 @@
 	<br/>
 	
 	  <div align="center" style="height:100px;"> 
-		<input type="button" value="이전" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="window.history.back()">
+	  	<c:if test="${boardDetail.BD_TYPE eq 'C' }">
+			<input type="button" value="이전" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='boardList.omc'">
+		</c:if>
+		<c:if test="${boardDetail.BD_TYPE eq 'N' }">
+			<input type="button" value="이전" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='noticeList.omc'">
+		</c:if>
+		<c:if test="${boardDetail.BD_TYPE eq 'F' }">
+			<input type="button" value="이전" class="btn btn-primary py-2 px-2" style="height:55px;" onClick="location.href='faqList.omc'">
+		</c:if>
 	
       </div>
    </c:forEach>

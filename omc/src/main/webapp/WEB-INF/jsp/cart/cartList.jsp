@@ -170,9 +170,9 @@ $(document).ready(function(){
 						        
 						        <!-- 수량 -->
 						        <td>
-						        	<span class="minus">-</span>
+						        	<span class="minus" style="cursor:pointer">-</span>
 		            				<input type="number" class="count" style="width: 3em;" maxlength="2" oninput="numberMaxLength(this);" id="CT_COUNT" name="CT_COUNT" value="${goods.CT_COUNT}" readonly>
-									<span class="plus">+</span>
+									<span class="plus" style="cursor:pointer">+</span>
 					          	</td>
 					          	
 					          	<!-- 정가 -->

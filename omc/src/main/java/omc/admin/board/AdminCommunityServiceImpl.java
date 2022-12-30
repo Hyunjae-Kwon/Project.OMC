@@ -125,18 +125,6 @@ public class AdminCommunityServiceImpl implements AdminCommunityService {
 	}
 
 	@Override
-	public void updateComment(Map<String, Object> map) throws Exception {
-		//Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("BC_COMMENT", map.get("BC_COMMENT"));
-		map.put("BC_BCID", map.get("BC_BCID"));
-		map.put("BC_NUM", map.get("BC_NUM"));
-		map.put("BC_ID", map.get("BC_ID"));
-		
-		adminCommunityDAO.updateComment(map);
-	}
-
-	@Override
 	public void deleteComment(Map<String, Object> map) throws Exception {
 		//Map<String, Object> map = new HashMap<String, Object>();
 		

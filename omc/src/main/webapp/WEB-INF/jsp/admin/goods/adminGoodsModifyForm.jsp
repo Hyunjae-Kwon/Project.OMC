@@ -67,6 +67,14 @@ window.onload = function() {
 	document.getElementById("GD_NAME").focus();
 }
 </script>
+<script>
+function deleteCheck() {
+	var GD_GID = document.getElementById('GD_GID').value;
+	if(confirm("삭제하시겠습니까?") == true) {
+		location.href="adminGoodsDelete.omc?GD_GID=" + GD_GID;
+	}
+}
+</script>
 </head>
 <body>
 <form action="adminGoodsModify.omc" method="post" encType="multipart/form-data" id="adminGoodsWriteForm">
@@ -197,12 +205,9 @@ window.onload = function() {
 									</tr>
 									<tr>
 										<td colspan="2">
-											<input type="button" value="수정" class="btn btn-dark py-2 px-3"
-												onClick="return formCheck()">
-											<input type="button" value="삭제" class="btn btn-primary py-2 px-3"
-												onClick="location.href='adminGoodsDelete.omc'">
-											<input type="button" value="메뉴" class="btn btn-primary py-2 px-3"
-												onClick="location.href='adminMain.omc'">
+											<input type="button" value="수정" class="btn btn-dark py-2 px-3" onClick="return formCheck()">
+											<input type="button" value="삭제" class="btn btn-primary py-2 px-3" onClick="return deleteCheck()">
+											<input type="button" value="메뉴" class="btn btn-primary py-2 px-3" onClick="location.href='adminMain.omc'">
 										</td>
 									</tr>
 								</tbody>

@@ -16,7 +16,8 @@ public class CommentController {
 	
 	@Resource(name="commentService")
 	private CommentService commentService;
-	 
+	
+	/* 댓글 작성 */
 	@RequestMapping(value="/boardComWrite.omc")
 	public String boardComWrite(CommandMap commandMap,Model model) throws Exception {	
 
@@ -49,5 +50,29 @@ public class CommentController {
 		commentService.updateComment(commandMap.getMap());				
 		
 		return "/board/commentModify";
+	}
+	
+	/* 관리자 댓글 작성 */
+	@RequestMapping(value="/adminBoardComWrite.omc")
+	public String adminBoardComWrite(CommandMap commandMap,Model model) throws Exception {	
+
+		model.addAttribute("msg", "댓글 작성이 완료되었습니다.");
+		model.addAttribute("url", "/adminBoardDetail.omc?BD_NUM="+commandMap.get("BC_NUM"));
+		commentService.insertBoardComment(commandMap.getMap());		
+	         
+		return "/board/boardComWrite";
+	}
+	
+	/* 관리자 댓글 삭제 */
+	@RequestMapping(value="/adminCommentDelete.omc")
+	public String adminCommentDelete(CommandMap commandMap, Model model) 
+			throws Exception {
+
+		
+		model.addAttribute("msg", "댓글 삭제가 완료되었습니다.");
+		model.addAttribute("url", "/adminBoardDetail.omc?BD_NUM="+commandMap.get("BC_NUM"));
+		commentService.deleteComment(commandMap.getMap());				
+		
+		return "/board/commentDelete";
 	}
 }

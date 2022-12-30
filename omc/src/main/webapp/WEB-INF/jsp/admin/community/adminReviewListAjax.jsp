@@ -55,7 +55,7 @@ function deleteCheckAjax(BD_NUM, index) {
 					
 					    <c:choose>
 					    	<c:when test="${reviewCount!=0}"> 
-					    		<c:forEach var="review" items="${reviewList}" varStatus="status"> 
+					    		<c:forEach var="review" items="${reviewListArr}" varStatus="status"> 
 									<tr id="rev${status.index}" class="text-center">
 										<td>${review.BD_NUM}</td>
 										

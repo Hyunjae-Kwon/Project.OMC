@@ -293,16 +293,6 @@
 	]]>
 	</insert>
 
-	<!-- [updateComment] 고객센터 댓글 수정 기능 -->
-	<update id="updateComment" parameterType="hashmap">
-        <![CDATA[
-				UPDATE BOARDCOMMENT 
-					SET BC_COMMENT=#{BC_COMMENT} 
-				WHERE BC_BCID=#{BC_BCID}
-	   ]]>
-	</update>
-
-
 	<!-- [deleteComment] 고객센터 댓글 삭제기능 -->
 	<delete id="deleteComment" parameterType="hashmap">
 	<![CDATA[

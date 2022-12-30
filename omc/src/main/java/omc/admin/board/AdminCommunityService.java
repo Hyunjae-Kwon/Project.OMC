@@ -35,8 +35,6 @@ public interface AdminCommunityService {
 	
 	public void insertComment(Map<String, Object> map)throws Exception;
 	
-	public void updateComment(Map<String, Object> map)throws Exception;
-	
 	public void deleteComment(Map<String, Object> map)throws Exception;
 	
 	/* 페이징 */

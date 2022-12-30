@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,23 +23,28 @@ public class AdminQnaController {
 	private AdminCommunityService adminComService;
 	
 	@RequestMapping(value="/adminQnaList.omc", method = RequestMethod.GET)
-	public ModelAndView adminQnaList(CommandMap commandMap) throws Exception {
+	public ModelAndView adminQnaList(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("admin/community/adminQnaListAjax");
 		/* 페이징을 위한 변수 */
-		int pageSize = 20; // 페이지당 출력할 공지의 수
+		int pageSize = 10; // 페이지당 출력할 공지의 수
 		int START = 1;
 		int END = pageSize;
 		int currentPage = 1; // 현재 페이지
 
 		int qnaListCount; // 전체 공지글의 수
 		int pageBlock = 5; // 표시할 페이지의 수
-		String url = "qnaList.omc";
+		String url = "adminQnaList.omc";
 		String searchUrl = "";
+		
+		/* 기본 페이지가 아닐 경우 */
+		if(request.getParameter("page")!=null) {
+			currentPage = Integer.parseInt(request.getParameter("page"));
+			START = 1 + pageSize*(currentPage-1); 
+			END = pageSize*currentPage;
+		}
 		
 		List<Map<String, Object>> list = adminComService.qnaListPaging(START, END);
 		List<Map<String, Object>> qnaListArr = new ArrayList<Map<String, Object>>();
-		
-		List<Map<String, Object>> qnaList = adminComService.qnaList();
 		
 		for(Map<String, Object> mapObject : list) {
 			qnaListArr.add(mapObject);
@@ -53,7 +59,6 @@ public class AdminQnaController {
 		mv.addObject("currentPage", currentPage);
 		mv.addObject("paging", paging);
 
-		mv.addObject("qnaList", qnaList);
 		mv.addObject("qnaListArr", qnaListArr);
 		
 		return mv;
@@ -106,7 +111,7 @@ public class AdminQnaController {
 		ModelAndView mv = new ModelAndView("/admin/community/adminQnaComWrite");
 				
 		mv.addObject("msg", "댓글 작성이 완료되었습니다.");
-		mv.addObject("url", "/adminQnaDetail.omc?BD_NUM="+commandMap.get("BC_NUM"));
+		mv.addObject("url", "/adminQnaDetailAjax.omc?BD_NUM="+commandMap.get("BC_NUM"));
 		adminComService.insertComment(commandMap.getMap());		
 		
 		return mv;
@@ -121,34 +126,13 @@ public class AdminQnaController {
 		return "good";
 	}
 
-	@RequestMapping(value="/adminQnaComModify.omc")
-	public ModelAndView adminQnaComModify(CommandMap commandMap) throws Exception {
-
-		ModelAndView mv = new ModelAndView("/admin/community/adminQnaComModify");
-
-		mv.addObject("msg", "댓글 수정이 완료되었습니다.");
-		mv.addObject("url", "/adminQnaDetail.omc?BD_NUM="+commandMap.get("BC_NUM"));
-		adminComService.updateComment(commandMap.getMap());				
-		
-		return mv;
-	}
-	
-	@RequestMapping(value="/adminQnaComModifyAjax.omc")
-	@ResponseBody
-	public String adminQnaComModifyAjax(CommandMap commandMap) throws Exception {	
-		
-		adminComService.updateComment(commandMap.getMap());		
-		
-		return "good";
-	}
-	
 	@RequestMapping(value="/adminQnaComDelete.omc")
 	public ModelAndView adminQnaComDelete(CommandMap commandMap) throws Exception {
 
 		ModelAndView mv = new ModelAndView("/admin/community/adminQnaComDelete");
 		
 		mv.addObject("msg", "댓글 삭제가 완료되었습니다.");
-		mv.addObject("url", "/adminQnaDetail.omc?BD_NUM="+commandMap.get("BC_NUM"));
+		mv.addObject("url", "/adminQnaDetailAjax.omc?BD_NUM="+commandMap.get("BC_NUM"));
 		adminComService.deleteComment(commandMap.getMap());				
 		
 		return mv;
